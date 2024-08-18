@@ -5,7 +5,7 @@ const images = [
     },
     {
         src: "images/gallery/2.jpg",
-        title: "Gourmet Dishes"
+        title: "Mousaka"
     },
     {
         src: "images/gallery/3.jpg",
