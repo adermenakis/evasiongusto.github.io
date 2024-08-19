@@ -46,7 +46,7 @@ const translations = {
         gallery11Title: "Cooking Workshops",
         gallery12Title: "Team Building",
         contactTitle: "Contact Évasion Gusto",
-        contactDesc: "Ready to start planning your next event or have questions about our services? We would love to hear from you. Visit us, call us, or email us today to discuss your catering needs, request a quote, or schedule a consultation. Let Évasion Gusto bring the magic of fine dining to your table.",
+        contactDesc: "Ready to start planning your next event or have questions about our services? We would love to hear from you. Call us, or email us today to discuss your catering needs, request a quote, or schedule a consultation. Let Évasion Gusto bring the magic of fine dining to your table.",
         address: "Address: Rue Orger Meurice 12, 6500 Beaumont, Belgium",
         email: "Email: <a href=\"mailto:info@evasiongusto.be\">info@evasiongusto.be</a>",
         phone: "Phone: <a href=\"tel:+32491438890\">+32 (0) 491 43 88 90</a>"
@@ -79,7 +79,7 @@ const translations = {
         service6Desc: "Renforcez l'esprit d'équipe avec nos activités de team-building axées sur la cuisine. Participez à des ateliers de cuisine, de fabrication de fromage, de brassage, et de charcuterie tout en renforçant les liens avec votre équipe. Nos ateliers sont conçus pour favoriser la collaboration, la créativité et la communication, offrant une manière unique et agréable pour les équipes de se connecter et de grandir ensemble. Idéal pour les journées de team-building ou tout groupe souhaitant allier plaisir et apprentissage.",
         aboutTitle: "À propos d'Évasion Gusto",
         aboutDesc1: "Chez Évasion Gusto, nous sommes passionnés par la création d'expériences culinaires exceptionnelles. Basés à Beaumont, nous servons fièrement Beaumont, Sivry, Rance, Chimay, Mons, la région de l'OTAN SHAPE et les régions environnantes. Nous mettons un point d'honneur à offrir des solutions de restauration personnalisées qui surpassent les attentes. Notre équipe dévouée allie créativité, expertise et amour de la cuisine pour vous offrir le meilleur des services traiteur.",
-        aboutDesc2: "Notre cuisine est principalement influencée par les traditions culinaires grecques, belges, françaises, japonaises et nord-américaines. Nous proposons des solutions sur mesure, allant des préparations simples de viandes grillées aux plats complexes dressés avec perfection et accompagnés du vin, de la bière ou d'autres boissons appropriées. Évasion Gusto a été fondé pour partager la joie de l'exploration des techniques culinaires variées et pour offrir des connaissances de qualité professionnelle à un prix abordable.",
+        aboutDesc2: "Notre cuisine est principalement influencée par les traditions culinaires grecques, belges, françaises, japonaises et nord-américaines. Nous proposons des solutions sur mesure, allant des préparations simples de viandes grillées aux plats complexes dressés avec perfection et accompagnés de vin, de bière ou d'autres boissons appropriées. Évasion Gusto a été fondée pour partager la joie de l'exploration des techniques culinaires variées et pour offrir des connaissances de qualité professionnelle à un prix abordable.",
         aboutDesc3: "Chez Évasion Gusto, nous ne nous contentons pas de répondre à vos besoins; nous élevons votre expérience gastronomique.",
         galleryTitle: "Galerie",
         galleryDesc: "Notre cuisine est principalement influencée par les traditions grecque, belge, française, japonaise et nord-américaine. Nous proposons des solutions sur mesure, allant de la simple préparation de viandes grillées à des plats complexes dressés à la perfection et accompagnés du vin, de la bière ou d'autres boissons appropriés. Évasion Gusto a été fondé pour partager le plaisir de découvrir différentes préparations culinaires et offrir un savoir-faire de qualité professionnelle à un prix abordable.",
@@ -96,7 +96,7 @@ const translations = {
         gallery11Title: "Ateliers de Cuisine",
         gallery12Title: "Renforcement d'Équipe",
         contactTitle: "Contactez Évasion Gusto",
-        contactDesc: "Prêt à commencer à planifier votre prochain événement ou avez-vous des questions sur nos services? Nous serions ravis de vous entendre. Visitez-nous, appelez-nous, ou envoyez-nous un e-mail dès aujourd'hui pour discuter de vos besoins en matière de restauration, demander un devis, ou planifier une consultation. Laissez Évasion Gusto apporter la magie de la gastronomie à votre table.",
+        contactDesc: "Prêt à commencer à planifier votre prochain événement ou avez-vous des questions sur nos services? Nous serons ravis de vous écouter. Appelez-nous, ou envoyez-nous un e-mail dès aujourd'hui pour discuter de vos besoins en matière de restauration, demander un devis, ou planifier une consultation. Laissez Évasion Gusto apporter la magie de la gastronomie à votre table.",
         address: "Adresse : Rue Orger Meurice 12, 6500 Beaumont, Belgique",
         email: "E-mail : <a href=\"mailto:info@evasiongusto.be\">info@evasiongusto.be</a>",
         phone: "Téléphone : <a href=\"tel:+32491438890\">+32 (0) 491 43 88 90</a>"
