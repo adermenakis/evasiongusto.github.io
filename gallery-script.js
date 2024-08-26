@@ -13,7 +13,7 @@ const images = [
     },
     {
         src: "images/gallery/4.jpg",
-        title: "Elegant Presentations"
+        title: "Quiche lorraine camembert-jambon"
     },
     {
         src: "images/gallery/5.jpg",
