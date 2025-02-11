@@ -49,7 +49,7 @@ const translations = {
         contactDesc: "Ready to start planning your next event or have questions about our services? We would love to hear from you. Call us, or email us today to discuss your catering needs, request a quote, or schedule a consultation. Let Évasion Gusto bring the magic of fine dining to your table.",
         address: "Address: Rue Orger Meurice 12, 6500 Beaumont, Belgium",
         email: "Email: <a href=\"mailto:info@evasiongusto.be\">info@evasiongusto.be</a>",
-        phone: "Phone: <a href=\"tel:+32491438890\">+32 (0) 491 43 88 90</a>"
+        phone: "Phone: <a href=\"tel:+32480658012\">+32 (0) 480 65 80 12</a>"
     },
     fr: {
         home: "Accueil",
@@ -99,7 +99,7 @@ const translations = {
         contactDesc: "Prêt à commencer à planifier votre prochain événement ou avez-vous des questions sur nos services? Nous serons ravis de vous écouter. Appelez-nous, ou envoyez-nous un e-mail dès aujourd'hui pour discuter de vos besoins en matière de restauration, demander un devis, ou planifier une consultation. Laissez Évasion Gusto apporter la magie de la gastronomie à votre table.",
         address: "Adresse : Rue Orger Meurice 12, 6500 Beaumont, Belgique",
         email: "E-mail : <a href=\"mailto:info@evasiongusto.be\">info@evasiongusto.be</a>",
-        phone: "Téléphone : <a href=\"tel:+32491438890\">+32 (0) 491 43 88 90</a>"
+        phone: "Téléphone : <a href=\"tel:+32480658012\">+32 (0) 480 65 80 12</a>"
     }
 };
 
