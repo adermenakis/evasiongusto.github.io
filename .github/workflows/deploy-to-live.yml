@@ -3,15 +3,27 @@ name: Deploy to Live Website (Manual)
 on:
   workflow_dispatch:
     inputs:
-      source_branch:
-        description: 'Source branch to deploy from'
+      deploy_type:
+        description: 'Deploy from branch or specific commit?'
         required: true
-        default: 'main'
+        default: 'branch'
         type: choice
         options:
-          - main
+          - branch
+          - commit
+      source_branch:
+        description: 'Source branch to deploy from (if deploy_type = branch)'
+        required: false
+        default: 'dev'
+        type: choice
+        options:
           - dev
+          - main
           - master
+      commit_sha:
+        description: 'Specific commit SHA to deploy (if deploy_type = commit, e.g., abc1234 or full hash)'
+        required: false
+        type: string
 
 jobs:
   minify-and-deploy:
@@ -21,10 +33,10 @@ jobs:
       contents: write
 
     steps:
-      - name: 📥 Checkout source branch
+      - name: 📥 Checkout source
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.source_branch }}
+          ref: ${{ inputs.deploy_type == 'commit' && inputs.commit_sha || inputs.source_branch }}
           fetch-depth: 0  # Fetch all history for proper merging
 
       - name: 🟢 Setup Node.js
@@ -96,9 +108,20 @@ jobs:
       - name: 📊 Generate deployment report
         id: deployment_report
         run: |
+          # Get current commit info
+          COMMIT_SHA=$(git rev-parse HEAD)
+          COMMIT_SHORT=$(git rev-parse --short HEAD)
+          COMMIT_MSG=$(git log -1 --pretty=%B | head -1)
+
           echo "=== Deployment Report ===" > deployment-report.txt
           echo "" >> deployment-report.txt
-          echo "Source Branch: ${{ inputs.source_branch }}" >> deployment-report.txt
+          echo "Deploy Type: ${{ inputs.deploy_type }}" >> deployment-report.txt
+          if [ "${{ inputs.deploy_type }}" == "branch" ]; then
+            echo "Source Branch: ${{ inputs.source_branch }}" >> deployment-report.txt
+          else
+            echo "Source Commit: ${{ inputs.commit_sha }}" >> deployment-report.txt
+          fi
+          echo "Deployed Commit: $COMMIT_SHORT ($COMMIT_MSG)" >> deployment-report.txt
           echo "Target Branch: live-website" >> deployment-report.txt
           echo "Deployed at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> deployment-report.txt
           echo "" >> deployment-report.txt
@@ -213,7 +236,11 @@ jobs:
           echo "" >> commit-msg.txt
           cat deployment-report.txt >> commit-msg.txt
           echo "" >> commit-msg.txt
-          echo "Source: ${{ inputs.source_branch }}" >> commit-msg.txt
+          if [ "${{ inputs.deploy_type }}" == "branch" ]; then
+            echo "Source: ${{ inputs.source_branch }} branch" >> commit-msg.txt
+          else
+            echo "Source: commit ${{ inputs.commit_sha }}" >> commit-msg.txt
+          fi
           echo "Deployed by: @${{ github.actor }}" >> commit-msg.txt
 
           # Commit with the message file
@@ -233,6 +260,10 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## ✅ Deployment Successful!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🌐 **Branch**: live-website" >> $GITHUB_STEP_SUMMARY
-          echo "📦 **Source**: ${{ inputs.source_branch }}" >> $GITHUB_STEP_SUMMARY
+          echo "🌐 **Target Branch**: live-website" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ inputs.deploy_type }}" == "branch" ]; then
+            echo "📦 **Source**: ${{ inputs.source_branch }} branch" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "📦 **Source**: commit ${{ inputs.commit_sha }}" >> $GITHUB_STEP_SUMMARY
+          fi
           echo "👤 **Deployed by**: @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
