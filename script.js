@@ -199,13 +199,28 @@ const translations = {
     });
 
     // GDPR Consent Management
+    // Delay popup to improve LCP (Largest Contentful Paint)
     const gdprPopup = document.getElementById('gdpr-consent-popup');
     const acceptCookies = document.getElementById('accept-cookies');
     const declineCookies = document.getElementById('decline-cookies');
     const consentStatus = localStorage.getItem('gdpr-consent');
 
+    // Show popup after page has loaded and user can see content
     if (!consentStatus) {
-        gdprPopup.style.display = 'flex';
+        // Wait for page to be fully loaded and interactive
+        if (document.readyState === 'complete') {
+            // Page already loaded, show after 1 second
+            setTimeout(() => {
+                gdprPopup.style.display = 'flex';
+            }, 1000);
+        } else {
+            // Wait for page to load, then show after 1 second
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    gdprPopup.style.display = 'flex';
+                }, 1000);
+            });
+        }
     }
 
     acceptCookies.addEventListener('click', () => {

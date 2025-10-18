@@ -5,19 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Évasion Gusto - Services de Traiteur Exceptionnels</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z38L6G3HR0"></script>
+    <!-- Google Analytics (Optimized Loading) -->
+    <!-- Deferred to improve page load performance -->
     <script>
+    // Initialize dataLayer
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
-    var anonymize = localStorage.getItem('gdpr-consent');
+    // Load Google Analytics after page is interactive
+    function loadGoogleAnalytics() {
+        var anonymize = localStorage.getItem('gdpr-consent');
 
-    gtag('config', 'G-Z38L6G3HR0', { 'anonymize_ip' : anonymize != 'accepted'});
+        // Only load if user hasn't declined
+        if (anonymize !== 'declined') {
+            // Create and append script tag
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-Z38L6G3HR0';
+            document.head.appendChild(script);
+
+            // Configure after script loads
+            script.onload = function() {
+                gtag('js', new Date());
+                gtag('config', 'G-Z38L6G3HR0', {
+                    'anonymize_ip': anonymize != 'accepted'
+                });
+            };
+        }
+    }
+
+    // Load after page is fully loaded (doesn't block rendering)
+    if (document.readyState === 'complete') {
+        loadGoogleAnalytics();
+    } else {
+        window.addEventListener('load', loadGoogleAnalytics);
+    }
     </script>
-
-    <!-- End Google Tag Manager -->
 
     <!-- Meta Tags for SEO -->
     <meta name="description" content="Évasion Gusto à Beaumont offre des services de traiteur premium : chef privé, livraison de repas gastronomiques, dégustation de vins et bières, ateliers culinaires. Près de Mons et SHAPE OTAN.">

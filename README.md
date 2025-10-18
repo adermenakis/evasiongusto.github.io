@@ -115,7 +115,50 @@ The menu ranges from simple grilled meats to complex plated dishes with wine/bee
 Simply open `index.html` in a modern web browser. No build process required.
 
 ### Deployment
-The site is deployed via GitHub Pages from the repository root. Any push to the main branch automatically updates the live site.
+
+The site uses a **two-branch deployment strategy** to keep development code readable while serving optimized production code:
+
+#### Branch Structure
+- **`dev`** - Development branch with readable, unminified code
+- **`main`** - Stable branch for tested features
+- **`live-website`** - Production branch with minified code (auto-deployed to GitHub Pages)
+
+#### Deployment Process
+
+1. **Work on features** in the `dev` branch:
+   ```bash
+   git checkout dev
+   # Make changes, test locally
+   git add .
+   git commit -m "Your feature description"
+   git push origin dev
+   ```
+
+2. **Deploy to production** when ready:
+   - Go to the **Actions** tab on GitHub
+   - Click **"Deploy to Live Website (Manual)"** workflow
+   - Click **"Run workflow"** button
+   - Select source branch: `dev` (or `main`)
+   - Click **"Run workflow"**
+   - Wait ~30 seconds for deployment to complete
+
+3. **GitHub Pages** automatically serves the optimized `live-website` branch at https://evasiongusto.be
+
+#### What the Deployment Does
+
+The manual deployment workflow:
+- ✅ Minifies all CSS files (~33% size reduction)
+- ✅ Minifies all JavaScript files (~40% size reduction)
+- ✅ Replaces files with optimized versions on `live-website` branch
+- ✅ Generates detailed size savings report
+- ✅ Total savings: ~22 KB (~37% reduction)
+
+**Expected Performance Impact:**
+- Performance Score: +5-8 points on PageSpeed Insights
+- Total Blocking Time: -50-100ms
+- First Contentful Paint: -100-200ms
+
+For detailed deployment documentation, see [.github/workflows/README.md](.github/workflows/README.md)
 
 ### Browser Support
 - Chrome/Edge (latest)
