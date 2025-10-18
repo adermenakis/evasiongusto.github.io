@@ -393,9 +393,15 @@ const translations = {
     const backToTopButton = document.getElementById('backToTop');
 
     if (backToTopButton) {
-        // Show/hide button based on scroll position
+        // Show/hide button based on scroll position and footer proximity
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
+            const footer = document.querySelector('.footer');
+            const scrollPosition = window.scrollY + window.innerHeight;
+            const footerTop = footer.offsetTop;
+            const distanceFromFooter = footerTop - scrollPosition;
+
+            // Show button if scrolled down more than 500px and not near footer
+            if (window.scrollY > 500 && distanceFromFooter > 100) {
                 backToTopButton.classList.add('visible');
             } else {
                 backToTopButton.classList.remove('visible');

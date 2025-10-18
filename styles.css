@@ -606,25 +606,51 @@ header.shrink .header-logo {
 }
 
 .social-media, .social-media-footer {
-    margin: 10px;
+    margin: 30px auto;
     text-align: center;
 }
 
+.social-media a, .social-media-footer a {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-media a:hover, .social-media-footer a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 1);
+}
+
 .social-icon, .social-icon-footer {
-    max-width: 32px;
-    max-height: 32px;
-    margin-right: 5px;
-    vertical-align: middle;
-    color: var(--text-color);
+    width: 40px !important;
+    height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    filter: none;
+    transition: transform 0.3s ease;
+    margin-bottom: 0 !important;
+    border-radius: 0 !important;
+}
+
+.social-media a:hover .social-icon,
+.social-media-footer a:hover .social-icon-footer {
+    transform: scale(1.1);
 }
 
 .follow-text, .follow-text-footer {
     display: inline-block;
-    vertical-align: middle;
-    color: var(--nav-bar-font-color);
-    font-size: 1rem;
-    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 700;
     text-decoration: none;
+    margin: 0;
 }
 
 .follow-text:hover, .follow-text-footer:hover {
@@ -887,7 +913,7 @@ input:focus:not(:focus-visible) {
     height: 60px;
     background: var(--accent-color);
     border-radius: 50%;
-    display: flex;
+    display: none; /* Hidden on desktop */
     align-items: center;
     justify-content: center;
     font-size: 28px;
@@ -1072,19 +1098,6 @@ button,
         justify-content: space-between;
     }
     
-    .social-icon-footer {
-        max-width: 16px;
-        max-height: 16px;
-        margin-right: 5px;
-        vertical-align: middle;
-        color: var(--text-color);
-    }
-    
-    
-    .social-media, .social-media-footer {
-        margin: 0px;
-        text-align: center;
-    }
     
     .footer p {
         margin: 0; /* Adjust spacing */
@@ -1120,8 +1133,9 @@ button,
         max-width: 300px;
     }
 
-    /* Adjust floating buttons for mobile */
+    /* Show and adjust floating phone button for mobile */
     .floating-cta {
+        display: flex;
         width: 50px;
         height: 50px;
         bottom: 15px;
