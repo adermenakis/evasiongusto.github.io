@@ -1,0 +1,227 @@
+name: Deploy to Live Website (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_branch:
+        description: 'Source branch to deploy from'
+        required: true
+        default: 'main'
+        type: choice
+        options:
+          - main
+          - dev
+          - master
+
+jobs:
+  minify-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 Checkout source branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_branch }}
+          fetch-depth: 0  # Fetch all history for proper merging
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 Install minification tools
+        run: |
+          npm install -g csso-cli terser
+
+      - name: 🎨 Minify CSS
+        run: |
+          echo "=== Minifying CSS files ==="
+          for file in *.css; do
+            if [[ "$file" != *.min.css ]]; then
+              echo "Processing: $file"
+
+              # Create minified version
+              csso "$file" -o "${file%.css}.min.css"
+
+              # Get file sizes
+              original_size=$(stat -c%s "$file")
+              minified_size=$(stat -c%s "${file%.css}.min.css")
+              saved=$((original_size - minified_size))
+              percent=$((saved * 100 / original_size))
+
+              echo "✅ $file: ${original_size} → ${minified_size} bytes (saved ${saved} bytes, ${percent}%)"
+            fi
+          done
+
+      - name: 📜 Minify JavaScript
+        run: |
+          echo "=== Minifying JavaScript files ==="
+          for file in *.js; do
+            if [[ "$file" != *.min.js ]]; then
+              echo "Processing: $file"
+
+              # Create minified version
+              terser "$file" \
+                --compress passes=2 \
+                --mangle \
+                --output "${file%.js}.min.js"
+
+              # Get file sizes
+              original_size=$(stat -c%s "$file")
+              minified_size=$(stat -c%s "${file%.js}.min.js")
+              saved=$((original_size - minified_size))
+              percent=$((saved * 100 / original_size))
+
+              echo "✅ $file: ${original_size} → ${minified_size} bytes (saved ${saved} bytes, ${percent}%)"
+            fi
+          done
+
+      - name: 🔄 Update HTML to use minified files
+        run: |
+          echo "=== Updating index.html to use minified files ==="
+          if [ -f "index.html" ]; then
+            # Update references to use minified files directly in index.html
+            sed -i 's|<link rel="stylesheet" href="styles\.css">|<link rel="stylesheet" href="styles.min.css">|g' index.html
+            sed -i 's|<script src="script\.js"|<script src="script.min.js"|g' index.html
+            sed -i 's|<script src="gallery-script\.js"|<script src="gallery-script.min.js"|g' index.html
+            sed -i 's|<script src="fade-script\.js"|<script src="fade-script.min.js"|g' index.html
+            sed -i 's|<script src="mui-script\.js"|<script src="mui-script.min.js"|g' index.html
+
+            echo "✅ Updated index.html to reference minified files"
+          fi
+
+      - name: 📊 Generate deployment report
+        id: deployment_report
+        run: |
+          echo "=== Deployment Report ===" > deployment-report.txt
+          echo "" >> deployment-report.txt
+          echo "Source Branch: ${{ inputs.source_branch }}" >> deployment-report.txt
+          echo "Target Branch: live-website" >> deployment-report.txt
+          echo "Deployed at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> deployment-report.txt
+          echo "" >> deployment-report.txt
+          echo "=== File Size Report ===" >> deployment-report.txt
+          echo "" >> deployment-report.txt
+
+          total_original=0
+          total_minified=0
+
+          # CSS files
+          echo "CSS Files:" >> deployment-report.txt
+          for file in *.css; do
+            if [[ "$file" != *.min.css ]]; then
+              original_size=$(stat -c%s "$file")
+              minified_size=$(stat -c%s "${file%.css}.min.css" 2>/dev/null || echo "0")
+              if [ "$minified_size" != "0" ]; then
+                saved=$((original_size - minified_size))
+                percent=$((saved * 100 / original_size))
+                total_original=$((total_original + original_size))
+                total_minified=$((total_minified + minified_size))
+                printf "  %-30s %10d → %10d bytes (-%d%%)\n" "$file" "$original_size" "$minified_size" "$percent" >> deployment-report.txt
+              fi
+            fi
+          done
+
+          echo "" >> deployment-report.txt
+          echo "JavaScript Files:" >> deployment-report.txt
+          for file in *.js; do
+            if [[ "$file" != *.min.js ]]; then
+              original_size=$(stat -c%s "$file" 2>/dev/null || echo "0")
+              minified_size=$(stat -c%s "${file%.js}.min.js" 2>/dev/null || echo "0")
+              if [ "$original_size" != "0" ] && [ "$minified_size" != "0" ]; then
+                saved=$((original_size - minified_size))
+                percent=$((saved * 100 / original_size))
+                total_original=$((total_original + original_size))
+                total_minified=$((total_minified + minified_size))
+                printf "  %-30s %10d → %10d bytes (-%d%%)\n" "$file" "$original_size" "$minified_size" "$percent" >> deployment-report.txt
+              fi
+            fi
+          done
+
+          echo "" >> deployment-report.txt
+          echo "================================" >> deployment-report.txt
+          total_saved=$((total_original - total_minified))
+          total_percent=$((total_saved * 100 / total_original))
+          printf "Total:                          %10d → %10d bytes (-%d%%)\n" "$total_original" "$total_minified" "$total_percent" >> deployment-report.txt
+          printf "Total Savings:                  %10d bytes (%.1f KB)\n" "$total_saved" "$(echo "scale=1; $total_saved/1024" | bc)" >> deployment-report.txt
+
+          cat deployment-report.txt
+          cat deployment-report.txt >> $GITHUB_STEP_SUMMARY
+
+      - name: 🗑️ Remove original unminified files
+        run: |
+          echo "=== Removing original unminified files ==="
+          # Remove original CSS files (keep only .min.css)
+          for file in *.css; do
+            if [[ "$file" != *.min.css ]]; then
+              echo "Removing: $file"
+              rm "$file"
+            fi
+          done
+
+          # Remove original JS files (keep only .min.js)
+          for file in *.js; do
+            if [[ "$file" != *.min.js ]]; then
+              echo "Removing: $file"
+              rm "$file"
+            fi
+          done
+
+          # Rename minified files back to original names
+          for file in *.min.css; do
+            original="${file%.min.css}.css"
+            echo "Renaming: $file → $original"
+            mv "$file" "$original"
+          done
+
+          for file in *.min.js; do
+            original="${file%.min.js}.js"
+            echo "Renaming: $file → $original"
+            mv "$file" "$original"
+          done
+
+          echo "✅ Replaced all files with minified versions"
+
+      - name: 🔄 Revert HTML references
+        run: |
+          echo "=== Reverting index.html to original references ==="
+          if [ -f "index.html" ]; then
+            # Revert references back to original names (since we renamed .min files)
+            sed -i 's|<link rel="stylesheet" href="styles\.min\.css">|<link rel="stylesheet" href="styles.css">|g' index.html
+            sed -i 's|<script src="script\.min\.js"|<script src="script.js"|g' index.html
+            sed -i 's|<script src="gallery-script\.min\.js"|<script src="gallery-script.js"|g' index.html
+            sed -i 's|<script src="fade-script\.min\.js"|<script src="fade-script.js"|g' index.html
+            sed -i 's|<script src="mui-script\.min\.js"|<script src="mui-script.js"|g' index.html
+
+            echo "✅ Reverted index.html references (files are minified but use original names)"
+          fi
+
+      - name: 🚀 Configure Git
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: 📝 Commit minified files
+        run: |
+          # Add all changes
+          git add -A
+
+          # Create commit with deployment report
+          git commit -m "🚀 Deploy minified assets to live-website
+
+$(cat deployment-report.txt)
+
+Source: ${{ inputs.source_branch }}
+Deployed by: @${{ github.actor }}" || echo "No changes to commit"
+
+      - name: 📤 Push to live-website branch
+        run: |
+          # Force push to live-website branch (replaces all content)
+          git push origin HEAD:live-website --force
+
+          echo "✅ Successfully deployed to live-website branch!"
+          echo ""
+          echo "🌐 Your optimized site is now live!"
+          echo "📊 Check the deployment report above for file size savings"
