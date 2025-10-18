@@ -209,12 +209,14 @@ jobs:
           git add -A
 
           # Create commit with deployment report
-          git commit -m "🚀 Deploy minified assets to live-website
+          COMMIT_MSG="🚀 Deploy minified assets to live-website
 
 $(cat deployment-report.txt)
 
 Source: ${{ inputs.source_branch }}
-Deployed by: @${{ github.actor }}" || echo "No changes to commit"
+Deployed by: @${{ github.actor }}"
+
+          git commit -m "$COMMIT_MSG" || echo "No changes to commit"
 
       - name: 📤 Push to live-website branch
         env:
