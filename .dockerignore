@@ -1,0 +1,30 @@
+# Git files
+.git
+.gitignore
+
+# Documentation
+*.md
+!README.md
+
+# Docker files (don't need these in the container)
+docker-compose.yml
+.dockerignore
+Dockerfile
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/

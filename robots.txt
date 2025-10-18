@@ -1,2 +1,8 @@
 User-agent: *
 Allow: /
+Sitemap: https://www.evasiongusto.be/sitemap.xml
+
+# Optimize crawling
+User-agent: *
+Disallow: /images/og-image.jpg
+Disallow: /images/twitter-image.jpg
