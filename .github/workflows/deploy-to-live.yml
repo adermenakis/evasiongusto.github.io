@@ -217,6 +217,8 @@ Source: ${{ inputs.source_branch }}
 Deployed by: @${{ github.actor }}" || echo "No changes to commit"
 
       - name: 📤 Push to live-website branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Force push to live-website branch (replaces all content)
           git push origin HEAD:live-website --force
@@ -225,3 +227,9 @@ Deployed by: @${{ github.actor }}" || echo "No changes to commit"
           echo ""
           echo "🌐 Your optimized site is now live!"
           echo "📊 Check the deployment report above for file size savings"
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🌐 **Branch**: live-website" >> $GITHUB_STEP_SUMMARY
+          echo "📦 **Source**: ${{ inputs.source_branch }}" >> $GITHUB_STEP_SUMMARY
+          echo "👤 **Deployed by**: @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY

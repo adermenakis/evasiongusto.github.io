@@ -1,6 +1,6 @@
-# GitHub Actions Workflows
+# GitHub Actions Workflow
 
-## 🚀 Deploy to Live Website (Manual - RECOMMENDED)
+## 🚀 Deploy to Live Website (Manual)
 
 **File**: `deploy-to-live.yml`
 
@@ -24,85 +24,68 @@ This workflow allows you to **manually trigger** a deployment that minifies all 
 3. **Workflow minifies** all CSS and JS files
 4. **Replaces originals** with minified versions (e.g., styles.css becomes minified)
 5. **Force pushes** to `live-website` branch
-6. **GitHub Pages** serves from `live-website` branch
+6. **GitHub Pages** automatically deploys the live-website branch
 
 ### How to Use
 
+#### Step 1: Trigger the Deployment
+
 1. Go to **Actions** tab in your GitHub repository
-2. Click **"Deploy to Live Website (Manual)"** workflow
-3. Click **"Run workflow"** button
-4. Select source branch (usually `main` or `dev`)
-5. Click **"Run workflow"** to start deployment
+2. Click **"Deploy to Live Website (Manual)"** workflow in the left sidebar
+3. Click **"Run workflow"** button (top right)
+4. Select source branch (usually `dev` or `main`)
+5. Click the green **"Run workflow"** button
 6. Wait ~30 seconds for completion
 7. Check deployment report for file size savings
 
-### Important Notes
+#### Step 2: Set Up GitHub Pages (One-time setup)
 
-- The `live-website` branch will contain **only minified files**
-- Original source files remain untouched in your development branches
-- Files are renamed: `styles.min.css` → `styles.css` on live-website
-- `index.html` references remain unchanged (still loads `styles.css`, but it's minified)
-- Each deployment creates a commit with detailed report
+To serve your live site from the `live-website` branch:
 
-### Expected Savings
-
-Based on current file sizes:
-- **CSS**: 27 KB → ~18 KB (saving ~9 KB, 33%)
-- **JavaScript**: 32 KB → ~19 KB (saving ~13 KB, 40%)
-- **Total**: ~22 KB saved (~37% reduction)
-
-### Setting Up GitHub Pages
-
-To serve from the `live-website` branch:
 1. Go to **Settings** → **Pages**
 2. Under "Source", select branch: **live-website**
 3. Select folder: **/ (root)**
 4. Click **Save**
 
-Now your live site will always serve optimized code!
+After a few minutes, your site will be live at: `https://YOUR_USERNAME.github.io/REPO_NAME`
 
----
+### Workflow Process
 
-## 🗜️ Build and Deploy (Auto-Minification)
+```
+┌─────────────┐
+│   dev       │  ← Your development branch (readable code)
+└──────┬──────┘
+       │
+       │ Manual trigger
+       │ via GitHub Actions
+       ▼
+┌─────────────┐
+│  Workflow   │  1. Checkout dev branch
+│  Execution  │  2. Minify all CSS/JS
+│             │  3. Replace files with minified versions
+└──────┬──────┘  4. Force push to live-website
+       │
+       ▼
+┌─────────────┐
+│live-website │  ← Production branch (minified code)
+└──────┬──────┘
+       │
+       │ GitHub Pages
+       │ auto-deploys
+       ▼
+┌─────────────┐
+│  Live Site  │  🌐 Your optimized website
+└─────────────┘
+```
 
-**File**: `build-and-deploy.yml`
+### Important Notes
 
-### What It Does
-
-This workflow automatically minifies your CSS and JavaScript files when code is pushed to the main/master/live-website branch, helping improve website performance.
-
-### Features
-
-- ✅ **Automatic minification** of all CSS and JS files
-- ✅ **Keeps original files** for development
-- ✅ **Creates production HTML** (index.prod.html) with minified references
-- ✅ **Generates size report** showing savings
-- ✅ **Comments on PRs** with minification preview
-- ✅ **Only commits on merge** to main branches
-
-### When It Runs
-
-1. **On Push** to `main`, `master`, or `live-website` branches
-   - Minifies all CSS/JS files
-   - Creates `*.min.css` and `*.min.js` versions
-   - Updates `index.prod.html` to use minified files
-   - Commits and pushes changes
-
-2. **On Pull Request** to main branches
-   - Shows minification preview in PR comments
-   - Does NOT commit (preview only)
-
-3. **Manual Trigger** via GitHub Actions UI
-
-### Files Created
-
-| Original File | Minified File | Description |
-|---------------|---------------|-------------|
-| `styles.css` | `styles.min.css` | Minified CSS (~30% smaller) |
-| `script.js` | `script.min.js` | Minified JavaScript (~40% smaller) |
-| `gallery-script.js` | `gallery-script.min.js` | Minified gallery code |
-| `index.html` | `index.prod.html` | Production HTML with minified refs |
-| - | `size-report.txt` | Detailed size savings report |
+- The `live-website` branch contains **only minified files**
+- Original source files remain untouched in your development branches (`dev`, `main`)
+- Files are minified and renamed: `styles.min.css` → `styles.css` on live-website
+- `index.html` references remain unchanged (still loads `styles.css`, but it's the minified version)
+- Each deployment creates a commit with a detailed size report
+- The workflow uses **force push**, so live-website is always clean
 
 ### Expected Savings
 
@@ -111,84 +94,114 @@ Based on current file sizes:
 - **JavaScript**: 32 KB → ~19 KB (saving ~13 KB, 40%)
 - **Total**: ~22 KB saved (~37% reduction)
 
-### Usage for Development
+### Development Workflow
 
-#### Option 1: Use Original Files (Recommended for Development)
-Keep using `index.html` which loads unminified files for easier debugging:
-```html
-<link rel="stylesheet" href="styles.css">
-<script src="script.js"></script>
+```bash
+# 1. Work on your feature in dev branch
+git checkout dev
+# ... make changes ...
+git add .
+git commit -m "Add new feature"
+git push origin dev
+
+# 2. When ready to deploy to production:
+# - Go to GitHub Actions
+# - Run "Deploy to Live Website" workflow
+# - Select "dev" as source branch
+# - Wait for deployment to complete
+
+# 3. Your live site is updated!
+# No need to touch the live-website branch manually
 ```
-
-#### Option 2: Use Production Files (For Testing)
-Rename `index.prod.html` to `index.html` when deploying to production.
-
-#### Option 3: Automatic Switching (Best Approach)
-Keep both files and configure GitHub Pages to serve `index.prod.html` as the main page.
-
-### How to Enable
-
-The workflow is already configured and will run automatically. No additional setup needed!
-
-### How to Disable
-
-To disable auto-minification:
-1. Delete or rename `.github/workflows/build-and-deploy.yml`
-2. Or add this to the top of the file:
-```yaml
-on:
-  workflow_dispatch:  # Manual trigger only
-```
-
-### Monitoring
-
-View workflow runs at:
-https://github.com/YOUR_USERNAME/evasiongusto.github.io/actions
-
-Each run provides:
-- ✅ Success/failure status
-- 📊 Size report with savings
-- 📝 Commit with minified files
-- ⏱️ Build time
 
 ### Troubleshooting
 
-**Q: The workflow fails with "Permission denied"**
-A: Make sure the repository has "Allow GitHub Actions to create and approve pull requests" enabled in Settings → Actions → General.
+#### Workflow fails with "Permission denied"
 
-**Q: Changes aren't appearing on the live site**
-A: You need to update `index.html` to reference `.min.css` and `.min.js` files, or rename `index.prod.html` to `index.html`.
+**Solution**: Enable workflow permissions
+1. Go to **Settings** → **Actions** → **General**
+2. Under "Workflow permissions", select **"Read and write permissions"**
+3. Click **Save**
 
-**Q: I want to test minified files locally**
-A: Run these commands:
+#### Changes aren't appearing on live site
+
+**Possible causes**:
+1. GitHub Pages is still building (wait 1-2 minutes)
+2. Browser cache - hard refresh with `Ctrl+F5` (Windows) or `Cmd+Shift+R` (Mac)
+3. GitHub Pages source not set to `live-website` branch - check Settings → Pages
+
+#### Want to test locally before deploying
+
 ```bash
+# Install minification tools
 npm install -g csso-cli terser
+
+# Minify CSS
 csso styles.css -o styles.min.css
+
+# Minify JS
 terser script.js -c -m -o script.min.js
+
+# Compare file sizes
+ls -lh styles.css styles.min.css
 ```
 
 ### Tools Used
 
 - **csso-cli**: CSS minification (https://github.com/css/csso-cli)
+  - Removes whitespace, comments, and redundant code
+  - Optimizes CSS structure
+  - Typical savings: 30-40%
+
 - **terser**: JavaScript minification (https://terser.org/)
-- **html-minifier-terser**: HTML minification (optional)
-
-### Next Steps
-
-After the first run:
-1. Check the generated `size-report.txt` to see savings
-2. Review minified files (`*.min.css`, `*.min.js`)
-3. Update `index.html` to use minified files in production:
-   ```html
-   <link rel="stylesheet" href="styles.min.css">
-   <script src="script.min.js" defer></script>
-   ```
+  - Removes whitespace and comments
+  - Mangles variable names
+  - Compresses code structure
+  - Typical savings: 40-50%
 
 ### Performance Impact
 
-Expected PageSpeed Insights improvements:
-- ⬆️ Performance Score: +5-8 points
-- ⬇️ Total Blocking Time: -50-100ms
-- ⬇️ First Contentful Paint: -100-200ms
-- ✅ Passes "Minify CSS" audit
-- ✅ Passes "Minify JavaScript" audit
+Expected PageSpeed Insights improvements after deployment:
+- ⬆️ **Performance Score**: +5-8 points
+- ⬇️ **Total Blocking Time**: -50-100ms
+- ⬇️ **First Contentful Paint**: -100-200ms
+- ✅ **Passes "Minify CSS" audit**
+- ✅ **Passes "Minify JavaScript" audit**
+
+### Monitoring Deployments
+
+View all workflow runs at:
+```
+https://github.com/YOUR_USERNAME/REPO_NAME/actions
+```
+
+Each deployment provides:
+- ✅ Success/failure status
+- 📊 Detailed size report
+- 📝 Commit message with savings
+- ⏱️ Execution time (~30 seconds)
+
+### Why This Approach?
+
+**Keeps development clean**:
+- Work on `dev` or `main` with readable, formatted code
+- Easy debugging and collaboration
+- Git history remains clean and meaningful
+
+**Production is optimized**:
+- `live-website` branch has only minified code
+- Maximum performance for end users
+- Smaller file transfers = faster page loads
+
+**Full control**:
+- Deploy only when you're ready
+- Test changes before pushing to production
+- No automatic deployments on every commit
+
+### Next Steps
+
+1. ✅ Workflow is ready to use
+2. Configure GitHub Pages to serve from `live-website` branch
+3. Make some changes in your `dev` branch
+4. Test the workflow by running it manually
+5. Check the live site to verify everything works!
