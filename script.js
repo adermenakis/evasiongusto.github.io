@@ -8,12 +8,16 @@ const translations = {
         about: "About",
         gallery: "Gallery",
         contact: "Contact",
+        ctaViewMenu: "Discover This Week's Menu",
+        ctaContact: "Request a Quote",
+        followUsFooter: "Follow us on Facebook",
         intro: "Évasion Gusto: Elevate Your Culinary Journey",
         introDesc: "Based in Beaumont, we proudly serve Beaumont, Sivry, Rance, Chimay, Mons, the SHAPE NATO area, and other surrounding regions. Premium Catering Services Tailored to Your Needs. We offer a variety of services, including private chef experiences, takeout food, full-service catering, cooking classes, and beer and wine tastings. Our dedication to partnering with local producers ensures the freshest ingredients and top-quality service—all at an affordable price.",
         followUs: "Follow us on Facebook",
         thisWeekTitle: "This Week's Menu",
         thisWeekDesc: "This week, Évasion Gusto presents an exquisite selection of dishes crafted with the freshest seasonal ingredients sourced from local producers and other high-quality partners. Explore our weekly menu and discover new favorites that will delight your taste buds. We welcome your feedback and invite you to suggest specific dishes you'd like to see us prepare for you, your family, and your guests.",
         thisWeekLink: "Discover the Full Menu of This Week",
+        viewMenuButton: "📄 View This Week's Menu",
         servicesTitle: "Our Exquisite Services",
         service1Title: "Wine and Beer Tasting",
         service1Desc: "Savor carefully selected wine and beer tastings. We also offer the option to organize private events featuring beer or wine tastings paired with thoughtfully chosen food. Our wine and beer expert curates a sensory journey that blends flavors and aromas, providing an educational and deeply enjoyable experience. During these tastings, we emphasize understanding the products you will be enjoying, offering a mini presentation to explore their origins and craftsmanship. We can tailor your experience to focus on specific grape varieties, wine-producing regions, or countries. Whether you are a connoisseur or a casual enthusiast, our tastings are designed to broaden your horizons and deepen your appreciation of fine beverages.",
@@ -47,9 +51,12 @@ const translations = {
         gallery12Title: "Team Building",
         contactTitle: "Contact Évasion Gusto",
         contactDesc: "Ready to start planning your next event or have questions about our services? We would love to hear from you. Call us, or email us today to discuss your catering needs, request a quote, or schedule a consultation. Let Évasion Gusto bring the magic of fine dining to your table.",
-        address: "Address: Rue Orger Meurice 12, 6500 Beaumont, Belgium",
-        email: "Email: <a href=\"mailto:info@evasiongusto.be\">info@evasiongusto.be</a>",
-        phone: "Phone: <a href=\"tel:+32480658012\">+32 (0) 480 65 80 12</a>"
+        addressLabel: "Address",
+        addressValue: "Rue Orger Meurice 12, 6500 Beaumont, Belgium",
+        emailLabel: "Email",
+        phoneLabel: "Phone",
+        whatsappLabel: "WhatsApp",
+        swipeInstruction: "← Swipe to navigate →"
     },
     fr: {
         home: "Accueil",
@@ -58,12 +65,16 @@ const translations = {
         about: "À Propos",
         gallery: "Galerie",
         contact: "Contact",
+        ctaViewMenu: "Découvrez le Menu de Cette Semaine",
+        ctaContact: "Demander un Devis",
+        followUsFooter: "Suivez-nous sur Facebook",
         intro: "Évasion Gusto: Élevez Votre Voyage Culinaire",
         introDesc: "Basés à Beaumont, nous servons fièrement Beaumont, Sivry, Rance, Chimay, Mons, la région de l'OTAN SHAPE, ainsi que d'autres régions environnantes. Services de restauration de haut de gamme adaptés à vos besoins. Nous proposons une variété de services, y compris des expériences avec un chef privé, des plats à emporter, un service de restauration complet, des cours de cuisine, ainsi que des dégustations de bières et de vins. Notre engagement à collaborer avec des producteurs locaux garantit des ingrédients frais et un service de haute qualité, le tout à un prix abordable.",
         followUs: "Suivez-nous sur Facebook",
         thisWeekTitle: "Menu de Cette Semaine",
         thisWeekDesc: "Cette semaine, Évasion Gusto vous propose une sélection exquise de plats élaborés avec les ingrédients saisonniers les plus frais, provenant de producteurs locaux et d'autres partenaires de haute qualité. Découvrez notre menu hebdomadaire et laissez-vous séduire par de nouveaux favoris qui raviront vos papilles. Nous apprécions vos retours et nous vous invitons à suggérer des plats spécifiques que vous souhaiteriez que nous préparions pour vous, votre famille et vos invités.",
         thisWeekLink: "Découvrez le Menu Complet de Cette Semaine",
+        viewMenuButton: "📄 Voir le Menu de Cette Semaine",
         servicesTitle: "Nos Services Exquis",
         service1Title: "Dégustation de Vins et Bières",
         service1Desc: "Savourez des dégustations de vins et de bières soigneusement sélectionnés. Nous offrons également la possibilité d'organiser des événements privés avec des dégustations de bières ou de vins accompagnées de mets judicieusement choisis. Notre expert en vins et bières crée un voyage sensoriel qui associe saveurs et arômes, offrant une expérience à la fois éducative et profondément agréable. Lors de ces dégustations, nous mettons l'accent sur la compréhension des produits que vous allez déguster, en vous proposant une mini présentation pour explorer leurs origines et leur savoir-faire. Nous pouvons personnaliser votre expérience en fonction de cépages spécifiques, de régions viticoles ou de pays. Que vous soyez un connaisseur ou un amateur occasionnel, nos dégustations sont conçues pour élargir vos horizons et approfondir votre appréciation des boissons de qualité.",
@@ -97,9 +108,12 @@ const translations = {
         gallery12Title: "Renforcement d'Équipe",
         contactTitle: "Contactez Évasion Gusto",
         contactDesc: "Prêt à commencer à planifier votre prochain événement ou avez-vous des questions sur nos services? Nous serons ravis de vous écouter. Appelez-nous, ou envoyez-nous un e-mail dès aujourd'hui pour discuter de vos besoins en matière de restauration, demander un devis, ou planifier une consultation. Laissez Évasion Gusto apporter la magie de la gastronomie à votre table.",
-        address: "Adresse : Rue Orger Meurice 12, 6500 Beaumont, Belgique",
-        email: "E-mail : <a href=\"mailto:info@evasiongusto.be\">info@evasiongusto.be</a>",
-        phone: "Téléphone : <a href=\"tel:+32480658012\">+32 (0) 480 65 80 12</a>"
+        addressLabel: "Adresse",
+        addressValue: "Rue Orger Meurice 12, 6500 Beaumont, Belgique",
+        emailLabel: "E-mail",
+        phoneLabel: "Téléphone",
+        whatsappLabel: "WhatsApp",
+        swipeInstruction: "← Glissez pour naviguer →"
     }
 };
 
@@ -119,14 +133,69 @@ const translations = {
 
     // Set initial language
     const userLanguage = localStorage.getItem('language') || 'fr';
-    document.getElementById('language-select').value = userLanguage;
     translatePage(userLanguage);
 
+    // Update language button display
+    function updateLanguageButton(lang) {
+        const langButton = document.getElementById('lang-button');
+        const flagSpan = langButton.querySelector('.lang-flag');
+        const textSpan = langButton.querySelector('.lang-text');
+
+        if (lang === 'fr') {
+            flagSpan.textContent = '🇫🇷';
+            textSpan.textContent = 'FR';
+        } else {
+            flagSpan.textContent = '🇬🇧';
+            textSpan.textContent = 'EN';
+        }
+    }
+
+    updateLanguageButton(userLanguage);
+
+    // Language switcher dropdown toggle
+    const langButton = document.getElementById('lang-button');
+    const langDropdown = document.getElementById('lang-dropdown');
+
+    langButton.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !isExpanded);
+        langDropdown.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.language-switcher')) {
+            langButton.setAttribute('aria-expanded', 'false');
+            langDropdown.classList.remove('active');
+        }
+    });
+
     // Language selection event listener
-    document.getElementById('language-select').addEventListener('change', function () {
-        const selectedLanguage = this.value;
-        localStorage.setItem('language', selectedLanguage);
-        translatePage(selectedLanguage);
+    const langOptions = document.querySelectorAll('.lang-option');
+    langOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const selectedLanguage = this.getAttribute('data-lang');
+            localStorage.setItem('language', selectedLanguage);
+            translatePage(selectedLanguage);
+            updateLanguageButton(selectedLanguage);
+
+            // Close dropdown
+            langButton.setAttribute('aria-expanded', 'false');
+            langDropdown.classList.remove('active');
+
+            // Announce language change to screen readers
+            const announcement = document.getElementById('language-announcement');
+            if (announcement) {
+                announcement.textContent = `Language changed to ${selectedLanguage === 'en' ? 'English' : 'French'}`;
+                setTimeout(() => {
+                    announcement.textContent = '';
+                }, 1000);
+            }
+
+            // Update HTML lang attribute
+            document.documentElement.lang = selectedLanguage;
+        });
     });
 
     // GDPR Consent Management
@@ -151,32 +220,66 @@ const translations = {
 
 // Gallery functionality
     let currentImageIndex = 0;
-    const galleryItems = document.querySelectorAll('.gallery-item img');
-    const galleryTitles = Array.from(galleryItems).map(item => item.nextElementSibling);
+    const galleryItems = document.querySelectorAll('.gallery-item picture img, .gallery-item img');
+    const galleryTitles = Array.from(galleryItems).map(item => {
+        // Get the parent picture element if it exists, then get the next sibling
+        const parent = item.parentElement.tagName === 'PICTURE' ? item.parentElement : item;
+        return parent.nextElementSibling;
+    });
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxTitle = document.getElementById('lightbox-title');
 
+    let previouslyFocusedElement;
+
     function openLightbox(index) {
         currentImageIndex = index;
         lightboxImg.src = galleryItems[index].src;
+        lightboxImg.alt = galleryItems[index].alt || 'Gallery image';
         lightboxTitle.textContent = translations[userLanguage][galleryTitles[index].getAttribute('data-key')] || galleryTitles[index].textContent;
         lightbox.style.display = 'flex';
+
+        // Store previously focused element for accessibility
+        previouslyFocusedElement = document.activeElement;
+
+        // Focus the lightbox for keyboard navigation
+        setTimeout(() => {
+            const closeButton = lightbox.querySelector('.close');
+            if (closeButton) closeButton.focus();
+        }, 100);
     }
 
     function closeLightbox() {
         lightbox.style.display = 'none';
+
+        // Return focus to previously focused element
+        if (previouslyFocusedElement) {
+            previouslyFocusedElement.focus();
+        }
     }
 
     function changeImage(direction) {
-        currentImageIndex += direction;
-        if (currentImageIndex < 0) {
-            currentImageIndex = galleryItems.length - 1;
-        } else if (currentImageIndex >= galleryItems.length) {
-            currentImageIndex = 0;
-        }
-        lightboxImg.src = galleryItems[currentImageIndex].src;
-        lightboxTitle.textContent = translations[userLanguage][galleryTitles[currentImageIndex].getAttribute('data-key')] || galleryTitles[currentImageIndex].textContent;
+        // Fade out current image
+        lightboxImg.style.opacity = '0';
+        lightboxTitle.style.opacity = '0';
+
+        setTimeout(() => {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) {
+                currentImageIndex = galleryItems.length - 1;
+            } else if (currentImageIndex >= galleryItems.length) {
+                currentImageIndex = 0;
+            }
+
+            lightboxImg.src = galleryItems[currentImageIndex].src;
+            lightboxTitle.textContent = translations[userLanguage][galleryTitles[currentImageIndex].getAttribute('data-key')] || galleryTitles[currentImageIndex].textContent;
+
+            // Fade in new image
+            setTimeout(() => {
+                lightboxImg.style.opacity = '1';
+                lightboxTitle.style.opacity = '1';
+            }, 50);
+        }, 200);
     }
 
     document.addEventListener('keydown', function (e) {
@@ -209,6 +312,9 @@ const translations = {
         if (!xDown) {
             return;
         }
+
+        // Prevent default to stop background from moving
+        evt.preventDefault();
 
         const xUp = evt.touches[0].clientX;
         const xDiff = xDown - xUp;
@@ -252,7 +358,9 @@ const translations = {
     const navLinks = document.querySelector('.nav-links');
 
     hamburger.addEventListener('click', function () {
-        navLinks.classList.toggle('show');
+        const isExpanded = navLinks.classList.toggle('show');
+        // Update ARIA attribute for accessibility
+        hamburger.setAttribute('aria-expanded', isExpanded);
     });
 
     // Close hamburger menu after selection on mobile
@@ -286,4 +394,114 @@ const translations = {
     sections.forEach(section => {
         observer.observe(section);
     });
+
+    // Back to Top Button
+    const backToTopButton = document.getElementById('backToTop');
+
+    if (backToTopButton) {
+        // Show/hide button based on scroll position and footer proximity
+        window.addEventListener('scroll', () => {
+            const footer = document.querySelector('.footer');
+            const scrollPosition = window.scrollY + window.innerHeight;
+            const footerTop = footer.offsetTop;
+            const distanceFromFooter = footerTop - scrollPosition;
+
+            // Show button if scrolled down more than 500px and not near footer
+            if (window.scrollY > 500 && distanceFromFooter > 100) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        // Scroll to top on click
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Active Menu Highlighting based on scroll position
+    const navLinksElements = document.querySelectorAll('.nav-links a[href^="#"]');
+    const sectionElements = document.querySelectorAll('section[id]');
+
+    function highlightActiveSection() {
+        const scrollY = window.scrollY;
+        const headerOffset = header.offsetHeight;
+
+        sectionElements.forEach(section => {
+            const sectionTop = section.offsetTop - headerOffset - 100;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+
+            if (scrollY >= sectionTop && scrollY < sectionBottom) {
+                // Remove active class from all links
+                navLinksElements.forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                // Add active class to current section link
+                const activeLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        });
+    }
+
+    // Update active section on scroll
+    window.addEventListener('scroll', highlightActiveSection);
+
+    // Initial highlight on page load
+    highlightActiveSection();
+
+    // Lazy Loading for All Images (Gallery and Services)
+    const lazyLoadImages = () => {
+        const lazyImages = document.querySelectorAll('img[data-src]');
+
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    const picture = img.closest('picture');
+
+                    if (picture) {
+                        const source = picture.querySelector('source[data-srcset]');
+
+                        // Load WebP source
+                        if (source && source.dataset.srcset) {
+                            source.srcset = source.dataset.srcset;
+                            source.removeAttribute('data-srcset');
+                        }
+                    }
+
+                    // Load JPG/image fallback
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                    }
+
+                    // Add loaded class for fade-in effect
+                    img.classList.add('lazy-loaded');
+
+                    // Stop observing this image
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '100px' // Start loading 100px before entering viewport
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+    };
+
+    // Initialize lazy loading
+    lazyLoadImages();
+
+    // Make lightbox functions globally available
+    window.openLightbox = openLightbox;
+    window.closeLightbox = closeLightbox;
+    window.changeImage = changeImage;
 });

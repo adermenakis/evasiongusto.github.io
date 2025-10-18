@@ -1,0 +1,38 @@
+{
+  "name": "Évasion Gusto - Premium Catering Services",
+  "short_name": "Évasion Gusto",
+  "description": "Premium catering services in Beaumont, Mons: private chef, food delivery, wine tasting, culinary workshops, and event organization near NATO SHAPE.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#607244",
+  "theme_color": "#607244",
+  "orientation": "portrait-primary",
+  "lang": "fr",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/images/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "business", "lifestyle"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "View This Week's Menu",
+      "short_name": "Menu",
+      "description": "See this week's special dishes",
+      "url": "/#this-week",
+      "icons": []
+    },
+    {
+      "name": "Contact Us",
+      "short_name": "Contact",
+      "description": "Get in touch with Évasion Gusto",
+      "url": "/#contact",
+      "icons": []
+    }
+  ]
+}
