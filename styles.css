@@ -278,7 +278,12 @@ header.shrink .header-logo {
     position: relative;
     overflow: hidden;
     z-index: 1;
+    /* Use WebP with JPG fallback for better performance (saves ~110 KB) */
     background: url('images/hero-background.jpg') no-repeat center center/cover;
+    background: image-set(
+        url('images/hero-background.webp') type("image/webp"),
+        url('images/hero-background.jpg') type("image/jpeg")
+    ) no-repeat center center/cover;
     background-attachment: fixed;
     display: flex;
     align-items: center;
