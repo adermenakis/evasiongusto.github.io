@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.evasiongusto.be/</loc>
-    <lastmod>2025-10-18</lastmod>
+    <lastmod>2024-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.evasiongusto.be/?lang=fr"/>
@@ -11,31 +11,31 @@
   </url>
   <url>
     <loc>https://www.evasiongusto.be/#this-week</loc>
-    <lastmod>2025-10-18</lastmod>
+    <lastmod>2024-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.evasiongusto.be/#services</loc>
-    <lastmod>2025-10-18</lastmod>
+    <lastmod>2024-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.evasiongusto.be/#about</loc>
-    <lastmod>2025-10-18</lastmod>
+    <lastmod>2024-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.evasiongusto.be/#gallery</loc>
-    <lastmod>2025-10-18</lastmod>
+    <lastmod>2024-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.evasiongusto.be/#contact</loc>
-    <lastmod>2025-10-18</lastmod>
+    <lastmod>2024-10-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>

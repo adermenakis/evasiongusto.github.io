@@ -353,18 +353,18 @@ header.shrink .header-logo {
     background: rgba(96, 114, 68, 0.8); /* Dark green with transparency */
     color: var(--nav-bar-font-color);
     text-align: center;
-    padding: 0.2rem 0; /* Reduced padding for a smaller height */
+    padding: 0.5rem 0; /* Reduced padding for a smaller height */
     backdrop-filter: blur(10px);
     position: fixed;
     bottom: 0;
     width: 100%;
     z-index: 1000;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
-    font-size: 0.75rem; /* Smaller text */
+    font-size: 0.875rem; /* Improved readability */
 }
 
 .footer p {
-    margin: 0.3rem 0; /* Adjust spacing */
+    margin: 0.2rem 0; /* Reduced spacing */
 }
 
 .footer a {
@@ -610,6 +610,10 @@ header.shrink .header-logo {
     text-align: center;
 }
 
+.social-media-footer {
+    margin: 10px auto; /* Reduced margin for footer */
+}
+
 .social-media a, .social-media-footer a {
     display: inline-flex;
     align-items: center;
@@ -620,6 +624,11 @@ header.shrink .header-logo {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     text-decoration: none;
+}
+
+.social-media-footer a {
+    padding: 10px 25px; /* Reduced padding for footer */
+    gap: 10px;
 }
 
 .social-media a:hover, .social-media-footer a:hover {
@@ -931,12 +940,96 @@ input:focus:not(:focus-visible) {
     animation: none;
 }
 
+/* Floating Facebook Button */
+.floating-facebook {
+    position: fixed;
+    bottom: 20px;
+    right: 90px;
+    width: 60px;
+    height: 60px;
+    background: #1877f2; /* Facebook blue */
+    border-radius: 50%;
+    display: none; /* Hidden on desktop */
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    transition: all 0.3s ease;
+    animation: pulseFacebook 2s infinite;
+}
+
+.floating-facebook:hover,
+.floating-facebook:focus {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    animation: none;
+}
+
+.floating-facebook-icon {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+}
+
+/* Floating WhatsApp Button */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 160px;
+    width: 60px;
+    height: 60px;
+    background: #25D366; /* WhatsApp green */
+    border-radius: 50%;
+    display: none; /* Hidden on desktop */
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    transition: all 0.3s ease;
+    animation: pulseWhatsApp 2s infinite;
+}
+
+.floating-whatsapp:hover,
+.floating-whatsapp:focus {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    animation: none;
+}
+
+.floating-whatsapp-icon {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+}
+
 @keyframes pulse {
     0%, 100% {
         box-shadow: 0 4px 15px rgba(134, 194, 50, 0.4);
     }
     50% {
         box-shadow: 0 4px 25px rgba(134, 194, 50, 0.8);
+    }
+}
+
+@keyframes pulseFacebook {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(24, 119, 242, 0.8);
+    }
+}
+
+@keyframes pulseWhatsApp {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(37, 211, 102, 0.8);
     }
 }
 
@@ -1100,7 +1193,7 @@ button,
     
     
     .footer p {
-        margin: 0; /* Adjust spacing */
+        margin: 0.1rem 0; /* Minimal spacing */
     }
     
     .gallery-title {
@@ -1117,9 +1210,10 @@ button,
 
     /* Fix footer readability */
     .footer {
-        font-size: 0.875rem; /* Increased from 0.75rem */
-        position: static; /* Change from fixed on mobile */
-        padding: 1rem 0.5rem;
+        font-size: 0.8rem; /* Slightly smaller on mobile */
+        position: fixed; /* Keep fixed on mobile */
+        padding: 0.4rem 0.5rem; /* Reduced padding */
+        bottom: 0;
     }
 
     /* Stack CTA buttons vertically on mobile */
@@ -1138,15 +1232,48 @@ button,
         display: flex;
         width: 50px;
         height: 50px;
-        bottom: 15px;
+        bottom: 95px; /* Position above footer */
         right: 15px;
         font-size: 24px;
+    }
+
+    /* Show and adjust floating Facebook button for mobile */
+    .floating-facebook {
+        display: flex;
+        width: 50px;
+        height: 50px;
+        bottom: 95px; /* Position above footer */
+        right: 75px; /* Positioned to the left of phone button */
+    }
+
+    .floating-facebook-icon {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    /* Show and adjust floating WhatsApp button for mobile */
+    .floating-whatsapp {
+        display: flex;
+        width: 50px;
+        height: 50px;
+        bottom: 95px; /* Position above footer */
+        right: 135px; /* Positioned to the left of Facebook button */
+    }
+
+    .floating-whatsapp-icon {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    /* Hide Facebook section in footer on mobile */
+    .social-media-footer {
+        display: none;
     }
 
     .back-to-top {
         width: 45px;
         height: 45px;
-        bottom: 80px;
+        bottom: 160px; /* Position above floating buttons */
         right: 15px;
         font-size: 20px;
     }
@@ -1179,4 +1306,17 @@ button,
         max-height: 70vh;
         object-fit: contain;
     }
+}
+
+.menu-viewer {
+    margin: 30px auto;
+    text-align: center;
+}
+
+.menu-viewer .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    padding: 16px 32px;
 }

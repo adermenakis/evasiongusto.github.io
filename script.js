@@ -17,6 +17,7 @@ const translations = {
         thisWeekTitle: "This Week's Menu",
         thisWeekDesc: "This week, Évasion Gusto presents an exquisite selection of dishes crafted with the freshest seasonal ingredients sourced from local producers and other high-quality partners. Explore our weekly menu and discover new favorites that will delight your taste buds. We welcome your feedback and invite you to suggest specific dishes you'd like to see us prepare for you, your family, and your guests.",
         thisWeekLink: "Discover the Full Menu of This Week",
+        viewMenuButton: "📄 View This Week's Menu",
         servicesTitle: "Our Exquisite Services",
         service1Title: "Wine and Beer Tasting",
         service1Desc: "Savor carefully selected wine and beer tastings. We also offer the option to organize private events featuring beer or wine tastings paired with thoughtfully chosen food. Our wine and beer expert curates a sensory journey that blends flavors and aromas, providing an educational and deeply enjoyable experience. During these tastings, we emphasize understanding the products you will be enjoying, offering a mini presentation to explore their origins and craftsmanship. We can tailor your experience to focus on specific grape varieties, wine-producing regions, or countries. Whether you are a connoisseur or a casual enthusiast, our tastings are designed to broaden your horizons and deepen your appreciation of fine beverages.",
@@ -73,6 +74,7 @@ const translations = {
         thisWeekTitle: "Menu de Cette Semaine",
         thisWeekDesc: "Cette semaine, Évasion Gusto vous propose une sélection exquise de plats élaborés avec les ingrédients saisonniers les plus frais, provenant de producteurs locaux et d'autres partenaires de haute qualité. Découvrez notre menu hebdomadaire et laissez-vous séduire par de nouveaux favoris qui raviront vos papilles. Nous apprécions vos retours et nous vous invitons à suggérer des plats spécifiques que vous souhaiteriez que nous préparions pour vous, votre famille et vos invités.",
         thisWeekLink: "Découvrez le Menu Complet de Cette Semaine",
+        viewMenuButton: "📄 Voir le Menu de Cette Semaine",
         servicesTitle: "Nos Services Exquis",
         service1Title: "Dégustation de Vins et Bières",
         service1Desc: "Savourez des dégustations de vins et de bières soigneusement sélectionnés. Nous offrons également la possibilité d'organiser des événements privés avec des dégustations de bières ou de vins accompagnées de mets judicieusement choisis. Notre expert en vins et bières crée un voyage sensoriel qui associe saveurs et arômes, offrant une expérience à la fois éducative et profondément agréable. Lors de ces dégustations, nous mettons l'accent sur la compréhension des produits que vous allez déguster, en vous proposant une mini présentation pour explorer leurs origines et leur savoir-faire. Nous pouvons personnaliser votre expérience en fonction de cépages spécifiques, de régions viticoles ou de pays. Que vous soyez un connaisseur ou un amateur occasionnel, nos dégustations sont conçues pour élargir vos horizons et approfondir votre appréciation des boissons de qualité.",
@@ -218,8 +220,12 @@ const translations = {
 
 // Gallery functionality
     let currentImageIndex = 0;
-    const galleryItems = document.querySelectorAll('.gallery-item img');
-    const galleryTitles = Array.from(galleryItems).map(item => item.nextElementSibling);
+    const galleryItems = document.querySelectorAll('.gallery-item picture img, .gallery-item img');
+    const galleryTitles = Array.from(galleryItems).map(item => {
+        // Get the parent picture element if it exists, then get the next sibling
+        const parent = item.parentElement.tagName === 'PICTURE' ? item.parentElement : item;
+        return parent.nextElementSibling;
+    });
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxTitle = document.getElementById('lightbox-title');
