@@ -208,15 +208,16 @@ jobs:
           # Add all changes
           git add -A
 
-          # Create commit with deployment report using heredoc
-          git commit -F- <<EOF || echo "No changes to commit"
-🚀 Deploy minified assets to live-website
+          # Build commit message
+          echo "🚀 Deploy minified assets to live-website" > commit-msg.txt
+          echo "" >> commit-msg.txt
+          cat deployment-report.txt >> commit-msg.txt
+          echo "" >> commit-msg.txt
+          echo "Source: ${{ inputs.source_branch }}" >> commit-msg.txt
+          echo "Deployed by: @${{ github.actor }}" >> commit-msg.txt
 
-$(cat deployment-report.txt)
-
-Source: ${{ inputs.source_branch }}
-Deployed by: @${{ github.actor }}
-EOF
+          # Commit with the message file
+          git commit -F commit-msg.txt || echo "No changes to commit"
 
       - name: 📤 Push to live-website branch
         env:
