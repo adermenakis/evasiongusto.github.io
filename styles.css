@@ -404,10 +404,30 @@ header.shrink .header-logo {
     height: auto;
     border-radius: 5px;
     cursor: pointer;
+    transition: opacity 0.5s ease;
+}
+
+/* Lazy loading placeholder */
+.gallery-grid img.lazy {
     opacity: 0;
-    transform: scale(0.8);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    animation: fadeInUp 0.6s ease forwards;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Loaded state */
+.gallery-grid img.lazy-loaded {
+    opacity: 1;
+    animation: none;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }
 
 .gallery-grid img.visible {
@@ -1050,7 +1070,20 @@ input:focus:not(:focus-visible) {
 
 .service img {
     border-radius: 8px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.5s ease;
+}
+
+/* Lazy loading for service images */
+.service img.lazy {
+    opacity: 0;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.service img.lazy-loaded {
+    opacity: 1;
+    animation: none;
 }
 
 .service:hover img {

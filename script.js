@@ -457,6 +457,49 @@ const translations = {
     // Initial highlight on page load
     highlightActiveSection();
 
+    // Lazy Loading for All Images (Gallery and Services)
+    const lazyLoadImages = () => {
+        const lazyImages = document.querySelectorAll('img[data-src]');
+
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    const picture = img.closest('picture');
+
+                    if (picture) {
+                        const source = picture.querySelector('source[data-srcset]');
+
+                        // Load WebP source
+                        if (source && source.dataset.srcset) {
+                            source.srcset = source.dataset.srcset;
+                            source.removeAttribute('data-srcset');
+                        }
+                    }
+
+                    // Load JPG/image fallback
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                    }
+
+                    // Add loaded class for fade-in effect
+                    img.classList.add('lazy-loaded');
+
+                    // Stop observing this image
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '100px' // Start loading 100px before entering viewport
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+    };
+
+    // Initialize lazy loading
+    lazyLoadImages();
+
     // Make lightbox functions globally available
     window.openLightbox = openLightbox;
     window.closeLightbox = closeLightbox;
