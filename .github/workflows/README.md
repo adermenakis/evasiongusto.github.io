@@ -33,7 +33,13 @@ This workflow allows you to **manually trigger** a deployment that minifies all 
 1. Go to **Actions** tab in your GitHub repository
 2. Click **"Deploy to Live Website (Manual)"** workflow in the left sidebar
 3. Click **"Run workflow"** button (top right)
-4. Select source branch (usually `dev` or `main`)
+4. Choose deployment type:
+   - **Deploy from branch** (recommended for regular deployments):
+     - Select "branch" as deploy type
+     - Choose source branch (usually `dev` or `main`)
+   - **Deploy from specific commit** (for rollbacks or testing specific versions):
+     - Select "commit" as deploy type
+     - Enter commit SHA (e.g., `cc685f7` or full hash `cc685f7c85824ab549c49b4e405039f8c871fc82`)
 5. Click the green **"Run workflow"** button
 6. Wait ~30 seconds for completion
 7. Check deployment report for file size savings
@@ -96,6 +102,7 @@ Based on current file sizes:
 
 ### Development Workflow
 
+#### Regular Deployment (from branch)
 ```bash
 # 1. Work on your feature in dev branch
 git checkout dev
@@ -107,11 +114,32 @@ git push origin dev
 # 2. When ready to deploy to production:
 # - Go to GitHub Actions
 # - Run "Deploy to Live Website" workflow
-# - Select "dev" as source branch
+# - Select deploy type: "branch"
+# - Select source branch: "dev"
 # - Wait for deployment to complete
 
 # 3. Your live site is updated!
 # No need to touch the live-website branch manually
+```
+
+#### Rollback to Previous Version (from commit)
+```bash
+# 1. Find the commit you want to deploy
+git log --oneline -10
+
+# Example output:
+# cc685f7 UI improvements (good version)
+# 8eec66d fix of syntax issue (broken)
+# f715d2e fix of syntax issue take 2 (broken)
+
+# 2. Deploy the specific commit:
+# - Go to GitHub Actions
+# - Run "Deploy to Live Website" workflow
+# - Select deploy type: "commit"
+# - Enter commit SHA: "cc685f7"
+# - Wait for deployment to complete
+
+# 3. Your live site is now running the selected commit!
 ```
 
 ### Troubleshooting
