@@ -257,13 +257,43 @@ const translations = {
 
             const targetElement = document.getElementById(targetId);
 
-            // Use scrollIntoView which respects CSS scroll-margin-top
-            // This works correctly with lazy loading and dynamic content
             if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                // Load all images ABOVE the target section to ensure correct page height
+                const allSections = document.querySelectorAll('section[id]');
+                let foundTarget = false;
+
+                allSections.forEach(section => {
+                    if (section.id === targetId) {
+                        foundTarget = true;
+                    }
+                    // Load images in all sections above and including the target
+                    if (!foundTarget || section.id === targetId) {
+                        const lazyImagesInSection = section.querySelectorAll('img[data-src]');
+                        lazyImagesInSection.forEach(img => {
+                            const picture = img.closest('picture');
+                            if (picture) {
+                                const source = picture.querySelector('source[data-srcset]');
+                                if (source && source.dataset.srcset) {
+                                    source.srcset = source.dataset.srcset;
+                                    source.removeAttribute('data-srcset');
+                                }
+                            }
+                            if (img.dataset.src) {
+                                img.src = img.dataset.src;
+                                img.removeAttribute('data-src');
+                                img.classList.add('lazy-loaded');
+                            }
+                        });
+                    }
                 });
+
+                // Wait a tiny bit for images to start loading, then scroll
+                setTimeout(() => {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 50);
             }
         });
     });
