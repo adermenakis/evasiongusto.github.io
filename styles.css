@@ -286,6 +286,7 @@ header.shrink .header-logo {
     position: relative;
     overflow: hidden;
     z-index: 1;
+    scroll-margin-top: 100px; /* Account for fixed header in smooth scrolling */
     /* Use WebP with JPG fallback for better performance (saves ~110 KB) */
     background: url('images/hero-background.jpg') no-repeat center center/cover;
     background: image-set(
