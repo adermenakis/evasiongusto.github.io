@@ -261,6 +261,7 @@ const translations = {
                 // Load all images ABOVE the target section to ensure correct page height
                 const allSections = document.querySelectorAll('section[id]');
                 let foundTarget = false;
+                const imageLoadPromises = [];
 
                 allSections.forEach(section => {
                     if (section.id === targetId) {
@@ -279,6 +280,17 @@ const translations = {
                                 }
                             }
                             if (img.dataset.src) {
+                                // Create promise for image load
+                                const loadPromise = new Promise((resolve) => {
+                                    if (img.complete) {
+                                        resolve();
+                                    } else {
+                                        img.onload = resolve;
+                                        img.onerror = resolve;
+                                    }
+                                });
+                                imageLoadPromises.push(loadPromise);
+
                                 img.src = img.dataset.src;
                                 img.removeAttribute('data-src');
                                 img.classList.add('lazy-loaded');
@@ -287,13 +299,16 @@ const translations = {
                     }
                 });
 
-                // Wait a tiny bit for images to start loading, then scroll
-                setTimeout(() => {
+                // Wait for critical images to load (or 300ms timeout), then scroll
+                Promise.race([
+                    Promise.all(imageLoadPromises),
+                    new Promise(resolve => setTimeout(resolve, 300))
+                ]).then(() => {
                     targetElement.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
-                }, 50);
+                });
             }
         });
     });
