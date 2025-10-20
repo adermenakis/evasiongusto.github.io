@@ -113,11 +113,11 @@
     </script>
 
     <!-- Favicon -->
-    <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="images/logo.svg" type="image/svg+xml" async>
 
     <!-- Preconnect for faster loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" async>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin async>
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="styles.css">
@@ -138,11 +138,6 @@
 
     <!-- Screen Reader Announcements -->
     <div aria-live="polite" aria-atomic="true" class="sr-only" id="language-announcement"></div>
-
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
     <!-- Header Section with Navigation Bar -->
     <header id="header">
@@ -189,11 +184,11 @@
         <section id="home" class="section fade-section">
             <div class="hero-content">
                 <img src="images/logo.svg" alt="Évasion Gusto - Traiteur Gastronomique près de l'OTAN SHAPE, Mons" class="main-body-logo" width="400" height="400">
-                <h1 class="animate-fade-in" data-key="intro">Évasion Gusto: Élevez Votre Voyage Culinaire</h1>
-                <p class="animate-fade-in" data-key="introDesc">Des services de traiteur haut de gamme adaptés à chacun de vos besoins, idéalement situés près de l'OTAN SHAPE à Mons.</p>
+                <h1 data-key="intro">Évasion Gusto: Élevez Votre Voyage Culinaire</h1>
+                <p data-key="introDesc">Des services de traiteur haut de gamme adaptés à chacun de vos besoins, idéalement situés près de l'OTAN SHAPE à Mons.</p>
 
                 <!-- Call-to-Action Buttons -->
-                <div class="hero-cta animate-slide-in">
+                <div class="hero-cta">
                     <a href="#this-week" class="btn btn-primary" data-key="ctaViewMenu">Découvrez le Menu de Cette Semaine</a>
                     <a href="#contact" class="btn btn-secondary" data-key="ctaContact">Demander un Devis</a>
                 </div>
@@ -201,7 +196,7 @@
                 <div class="social-media">
                     <a href="https://www.facebook.com/profile.php?id=61563989882231" target="_blank" rel="noopener noreferrer">
                         <img src="images/facebook-icon.svg" alt="Follow us on Facebook" class="social-icon"><br/>
-                        <p class="follow-text" >Suivez-nous sur Facebook</p>
+                        <p class="follow-text" data-key="followUs">Suivez-nous sur Facebook</p>
                     </a>
                 </div>
             </div>
@@ -210,8 +205,8 @@
         <!-- This Week Section -->
         <section id="this-week" class="section fade-section">
             <div class="content-box">
-                <h2 class="animate-fade-in" data-key="thisWeekTitle">Menu de Cette Semaine</h2>
-                <p class="animate-fade-in" data-key="thisWeekDesc">Cette semaine, Évasion Gusto présente une sélection exquise de plats élaborés avec les ingrédients saisonniers les plus frais. Nos chefs ont créé un menu qui non seulement ravira les papilles, mais met également en valeur le meilleur de ce que la saison a à offrir. Des amuse-bouches alléchants aux desserts décadents, chaque plat est une célébration de saveurs et de créativité. Plongez dans notre menu hebdomadaire et découvrez de nouveaux favoris qui raviront vos papilles et vous laisseront en redemander.</p>
+                <h2 data-key="thisWeekTitle">Menu de Cette Semaine</h2>
+                <p data-key="thisWeekDesc">Cette semaine, Évasion Gusto présente une sélection exquise de plats élaborés avec les ingrédients saisonniers les plus frais. Nos chefs ont créé un menu qui non seulement ravira les papilles, mais met également en valeur le meilleur de ce que la saison a à offrir. Des amuse-bouches alléchants aux desserts décadents, chaque plat est une célébration de saveurs et de créativité. Plongez dans notre menu hebdomadaire et découvrez de nouveaux favoris qui raviront vos papilles et vous laisseront en redemander.</p>
                 <iframe src="https://drive.google.com/file/d/1yjaPTS9nFbm8eVBIxwH_zT35Tt3r7iL5/preview" width="100%" height="600px" allow="autoplay"></iframe>
             </div>
         </section>
@@ -219,8 +214,8 @@
         <!-- Services Section -->
         <section id="services" class="section fade-section">
             <div class="content-box">
-                <h2 class="animate-fade-in" data-key="servicesTitle">Nos Services Exquis</h2>
-                <div class="service animate-fade-in">
+                <h2 data-key="servicesTitle">Nos Services Exquis</h2>
+                <div class="service">
                     <picture>
                         <source data-srcset="images/services/pexels-maria-das-dores-1606375-3084603.webp" type="image/webp">
                         <img src="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3C/svg%3E" data-src="images/services/pexels-maria-das-dores-1606375-3084603.jpg" alt="Wine and beer tasting with gourmet food pairings" width="400" height="300" class="lazy">
@@ -229,7 +224,7 @@
                     <p data-key="service1Desc">Savourez des dégustations de vins et de bières soigneusement sélectionnés, parfaitement assortis à des plats gastronomiques pour ravir vos papilles. Nos sommeliers et experts en bière créent un voyage sensoriel qui combine saveurs et arômes, offrant une expérience éducative et profondément agréable. Que vous soyez un connaisseur ou un amateur occasionnel, nos dégustations sont conçues pour élargir vos horizons et enrichir votre appréciation des boissons fines.</p>
                 </div>
                 <div class="service-separator"></div>
-                <div class="service animate-fade-in">
+                <div class="service">
                     <picture>
                         <source data-srcset="images/services/pexels-mikhail-nilov-6613050.webp" type="image/webp">
                         <img src="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3C/svg%3E" data-src="images/services/pexels-mikhail-nilov-6613050.jpg" alt="Gourmet food delivery and take away meals freshly prepared" width="400" height="300" class="lazy">
@@ -238,7 +233,7 @@
                     <p data-key="service2Desc">Profitez du luxe de repas gastronomiques à domicile. Notre service de plats à emporter et de livraison apporte des plats fraîchement préparés de qualité restaurant directement à votre porte. Chaque repas est élaboré avec les meilleurs ingrédients et soigneusement emballé pour garantir qu'il arrive en parfait état. Idéal pour les professionnels occupés, les dîners en famille ou les occasions spéciales, notre service offre commodité sans compromettre la qualité.</p>
                 </div>
                 <div class="service-separator"></div>
-                <div class="service animate-fade-in">
+                <div class="service">
                     <picture>
                         <source data-srcset="images/services/pexels-mat-brown-150387-1395964.webp" type="image/webp">
                         <img src="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3C/svg%3E" data-src="images/services/pexels-mat-brown-150387-1395964.jpg" alt="Event organization and catering for special occasions" width="400" height="300" class="lazy">
@@ -247,7 +242,7 @@
                     <p data-key="service3Desc">Transformez n'importe quel lieu en un cadre parfait pour votre événement. Qu'il s'agisse d'une réunion intime ou d'une grande célébration, nous donnons vie à votre vision. Nos planificateurs d'événements travaillent en étroite collaboration avec vous pour concevoir et exécuter chaque détail, de la décoration et du divertissement aux menus sur mesure. Notre objectif est de créer des expériences inoubliables qui reflètent votre style et vos préférences, assurant un événement sans stress et sans accroc.</p>
                 </div>
                 <div class="service-separator"></div>
-                <div class="service animate-fade-in">
+                <div class="service">
                     <picture>
                         <source data-srcset="images/services/pexels-kristina-snowasp-81019562-9986235.webp" type="image/webp">
                         <img src="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3C/svg%3E" data-src="images/services/pexels-kristina-snowasp-81019562-9986235.jpg" alt="Private chef service preparing gourmet meals at home" width="400" height="300" class="lazy">
@@ -256,7 +251,7 @@
                     <p data-key="service4Desc">Découvrez l'art de la haute cuisine chez vous. Nos chefs privés créent des menus personnalisés et préparent des repas exquis adaptés à vos goûts. Profitez d'une expérience culinaire de qualité restaurant sans quitter votre résidence, parfaite pour des dîners intimes, des célébrations spéciales ou tout simplement pour se faire plaisir avec un repas gastronomique. Nos chefs s'occupent de tout, de l'achat des ingrédients au nettoyage, vous permettant de vous détendre et de savourer l'occasion.</p>
                 </div>
                 <div class="service-separator"></div>
-                <div class="service animate-fade-in">
+                <div class="service">
                     <picture>
                         <source data-srcset="images/services/pexels-furkanfdemir-6309784.webp" type="image/webp">
                         <img src="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3C/svg%3E" data-src="images/services/pexels-furkanfdemir-6309784.jpg" alt="Interactive culinary workshops and cooking classes" width="400" height="300" class="lazy">
@@ -265,7 +260,7 @@
                     <p data-key="service5Desc">Développez vos compétences culinaires avec nos ateliers interactifs. De la maîtrise des techniques à l'exploration de nouvelles recettes, nos chefs experts vous guident à chaque étape. Que vous soyez un novice cherchant à acquérir des compétences de base ou un cuisinier chevronné désireux d'apprendre des techniques avancées, nos ateliers offrent un apprentissage pratique dans une ambiance ludique et interactive. Découvrez la joie de cuisiner et repartez avec les connaissances pour impressionner vos proches.</p>
                 </div>
                 <div class="service-separator"></div>
-                <div class="service animate-fade-in">
+                <div class="service">
                     <picture>
                         <source data-srcset="images/services/pexels-tima-miroshnichenko-5834741.webp" type="image/webp">
                         <img src="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3C/svg%3E" data-src="images/services/pexels-tima-miroshnichenko-5834741.jpg" alt="Team building workshops with food and cooking activities" width="400" height="300" class="lazy">
@@ -279,22 +274,22 @@
         <!-- About Section -->
         <section id="about" class="section fade-section">
             <div class="content-box">
-                <h2 class="animate-fade-in" data-key="aboutTitle">À propos d'Évasion Gusto</h2>
+                <h2 data-key="aboutTitle">À propos d'Évasion Gusto</h2>
                 <picture>
                         <source data-srcset="images/services/pexels-olly-3756448.webp" type="image/webp">
                         <img src="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3C/svg%3E" data-src="images/services/pexels-olly-3756448.jpg" alt="Évasion Gusto team passionate about exceptional culinary experiences" width="400" height="300" class="lazy">
                     </picture>
-                <p class="animate-fade-in" data-key="aboutDesc1">Chez Évasion Gusto, nous sommes passionnés par la création d'expériences culinaires exceptionnelles. Situés à Mons, près de l'OTAN SHAPE, nous sommes fiers de notre capacité à offrir des solutions de traiteur personnalisées qui dépassent les attentes. Notre équipe dévouée combine créativité, expertise et amour de la nourriture pour vous offrir le meilleur des services de traiteur.</p>
-                <p class="animate-fade-in" data-key="aboutDesc2">Fondée sur les principes de qualité et d'innovation, Évasion Gusto sert la communauté de Mons et au-delà depuis plus de dix ans. Notre engagement envers l'excellence se reflète dans chaque plat que nous préparons, chaque événement que nous organisons et chaque atelier que nous menons. Nous croyons que la nourriture ne se résume pas à la nutrition, mais qu'elle crée également des liens et des souvenirs. Que vous organisiez une célébration somptueuse, un événement d'entreprise ou un dîner chaleureux à domicile, nous sommes là pour rendre l'occasion extraordinaire.</p>
-                <p class="animate-fade-in" data-key="aboutDesc3">Notre équipe est composée de chefs talentueux, de sommeliers qualifiés et de planificateurs d'événements expérimentés qui travaillent sans relâche pour garantir que chaque aspect de notre service répond aux normes les plus élevées. Nous sélectionnons les ingrédients les plus frais, utilisons des équipements à la pointe de la technologie et perfectionnons continuellement nos techniques pour rester à l'avant-garde de l'industrie culinaire. Chez Évasion Gusto, nous ne nous contentons pas de répondre à vos besoins; nous élevons votre expérience gastronomique.</p>
+                <p data-key="aboutDesc1">Chez Évasion Gusto, nous sommes passionnés par la création d'expériences culinaires exceptionnelles. Situés à Mons, près de l'OTAN SHAPE, nous sommes fiers de notre capacité à offrir des solutions de traiteur personnalisées qui dépassent les attentes. Notre équipe dévouée combine créativité, expertise et amour de la nourriture pour vous offrir le meilleur des services de traiteur.</p>
+                <p data-key="aboutDesc2">Fondée sur les principes de qualité et d'innovation, Évasion Gusto sert la communauté de Mons et au-delà depuis plus de dix ans. Notre engagement envers l'excellence se reflète dans chaque plat que nous préparons, chaque événement que nous organisons et chaque atelier que nous menons. Nous croyons que la nourriture ne se résume pas à la nutrition, mais qu'elle crée également des liens et des souvenirs. Que vous organisiez une célébration somptueuse, un événement d'entreprise ou un dîner chaleureux à domicile, nous sommes là pour rendre l'occasion extraordinaire.</p>
+                <p data-key="aboutDesc3">Notre équipe est composée de chefs talentueux, de sommeliers qualifiés et de planificateurs d'événements expérimentés qui travaillent sans relâche pour garantir que chaque aspect de notre service répond aux normes les plus élevées. Nous sélectionnons les ingrédients les plus frais, utilisons des équipements à la pointe de la technologie et perfectionnons continuellement nos techniques pour rester à l'avant-garde de l'industrie culinaire. Chez Évasion Gusto, nous ne nous contentons pas de répondre à vos besoins; nous élevons votre expérience gastronomique.</p>
             </div>
         </section>
 
         <!-- Gallery Section -->
         <section id="gallery" class="section fade-section">
             <div class="content-box">
-                <h2 class="animate-fade-in" data-key="galleryTitle">Galerie</h2>
-                <div class="gallery-grid animate-fade-in">
+                <h2 data-key="galleryTitle">Galerie</h2>
+                <div class="gallery-grid">
                     <!-- Images for the gallery -->
                     <div class="gallery-item">
                         <picture onclick="openLightbox(0)" style="cursor: pointer;">
@@ -381,16 +376,16 @@
                         <div class="gallery-title" data-key="gallery12Title">Renforcement d'Équipe</div>
                     </div>
                 </div>
-                <p class="animate-fade-in" data-key="galleryDesc">Explorez notre galerie pour voir l'art et l'attention aux détails qui entrent dans chaque plat que nous préparons. Des repas élégamment dressés aux buffets somptueux, la présentation de nos plats reflète notre engagement envers la qualité et la créativité. Qu'il s'agisse d'un amuse-gueule joliment garni, d'un dessert décadent ou d'un plateau de charcuterie méticuleusement arrangé, chaque image raconte l'histoire de notre excellence culinaire.</p>
+                <p data-key="galleryDesc">Explorez notre galerie pour voir l'art et l'attention aux détails qui entrent dans chaque plat que nous préparons. Des repas élégamment dressés aux buffets somptueux, la présentation de nos plats reflète notre engagement envers la qualité et la créativité. Qu'il s'agisse d'un amuse-gueule joliment garni, d'un dessert décadent ou d'un plateau de charcuterie méticuleusement arrangé, chaque image raconte l'histoire de notre excellence culinaire.</p>
             </div>
         </section>
 
         <!-- Contact Section -->
         <section id="contact" class="section fade-section">
             <div class="content-box">
-                <h2 class="animate-fade-in" data-key="contactTitle">Contactez Évasion Gusto</h2>
-                <p class="animate-fade-in" data-key="contactDesc">Prêt à commencer à planifier votre prochain événement ou avez-vous des questions sur nos services? Nous serions ravis de vous entendre. Visitez-nous, appelez-nous, ou envoyez-nous un e-mail dès aujourd'hui pour discuter de vos besoins en matière de restauration, demander un devis, ou planifier une consultation. Laissez Évasion Gusto apporter la magie de la gastronomie à votre table.</p>
-                <div class="contact-info-container animate-fade-in">
+                <h2 data-key="contactTitle">Contactez Évasion Gusto</h2>
+                <p data-key="contactDesc">Prêt à commencer à planifier votre prochain événement ou avez-vous des questions sur nos services? Nous serions ravis de vous entendre. Visitez-nous, appelez-nous, ou envoyez-nous un e-mail dès aujourd'hui pour discuter de vos besoins en matière de restauration, demander un devis, ou planifier une consultation. Laissez Évasion Gusto apporter la magie de la gastronomie à votre table.</p>
+                <div class="contact-info-container">
                     <div class="contact-info">
                         <div class="contact-item">
                             <span class="contact-icon">📍</span>
@@ -422,7 +417,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="contact-map animate-fade-in">
+                <div class="contact-map">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2552.4739256206767!2d4.2012718!3d50.2270505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2154d024ce013%3A0x6be2f8b6a322b9c6!2s%C3%89vasion%20Gusto!5e0!3m2!1sen!2sbe!4v1760743263973!5m2!1sen!2sbe"
                         width="100%"
