@@ -249,12 +249,22 @@ const translations = {
             e.preventDefault();
 
             const targetId = this.getAttribute('href').substring(1);
+
+            // Skip if it's just a "#" (like the logo link)
+            if (!targetId) {
+                return;
+            }
+
             const targetElement = document.getElementById(targetId);
 
-            window.scrollTo({
-                top: targetElement.offsetTop - header.offsetHeight,
-                behavior: 'smooth'
-            });
+            // Use scrollIntoView which respects CSS scroll-margin-top
+            // This works correctly with lazy loading and dynamic content
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         });
     });
 
