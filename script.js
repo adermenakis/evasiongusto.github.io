@@ -396,7 +396,7 @@ const translations = {
                 }
             });
         }, {
-            rootMargin: '100px' // Start loading 100px before entering viewport
+            rootMargin: '200px' // Start loading 200px before entering viewport (optimized for better UX)
         });
 
         lazyImages.forEach(img => imageObserver.observe(img));
