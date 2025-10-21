@@ -20,13 +20,35 @@
 }
 
 html {
-    /* Apply background to html element so it covers the entire viewport including padding */
+    /* Background handled by body::before pseudo-element for progressive loading */
+    position: relative;
+}
+
+/* Progressive background using pseudo-element to avoid blurring content */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Start with LQIP (tiny, blurred placeholder) */
+    background: url('data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAPABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECA//EABsQAAIDAQEBAAAAAAAAAAAAAAABAgMxEiFB/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAEC/8QAFxEBAQEBAAAAAAAAAAAAAAAAABEBAv/aAAwDAQACEQMRAD8ApWxnpFnLwSr50Tg2zO9LGfEfoDdfugKR/9k=') no-repeat center center/cover;
+    filter: blur(20px);
+    transform: scale(1.1);
+    transition: filter 1s ease-out, transform 1s ease-out;
+}
+
+/* Once full background loads, remove blur */
+body.bg-loaded::before {
     background: url('images/hero-background.jpg') no-repeat center center/cover;
     background: image-set(
         url('images/hero-background.webp') type("image/webp"),
         url('images/hero-background.jpg') type("image/jpeg")
     ) no-repeat center center/cover;
-    background-attachment: fixed;
+    filter: blur(0);
+    transform: scale(1);
 }
 
 body {
@@ -287,13 +309,7 @@ header.shrink .header-logo {
     overflow: hidden;
     z-index: 1;
     scroll-margin-top: 100px; /* Account for fixed header in smooth scrolling */
-    /* Use WebP with JPG fallback for better performance (saves ~110 KB) */
-    background: url('images/hero-background.jpg') no-repeat center center/cover;
-    background: image-set(
-        url('images/hero-background.webp') type("image/webp"),
-        url('images/hero-background.jpg') type("image/jpeg")
-    ) no-repeat center center/cover;
-    background-attachment: fixed;
+    /* Background is inherited from html element (with progressive loading) */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -331,8 +347,8 @@ header.shrink .header-logo {
     margin-bottom: 1rem;
     color: var(--primary-color);
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    filter: blur(10px);
+    transition: opacity 0.8s ease, filter 0.8s ease;
 }
 
 .section p {
@@ -340,8 +356,8 @@ header.shrink .header-logo {
     margin: 0 auto;
     color: var(--text-color);
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    filter: blur(10px);
+    transition: opacity 0.8s ease, filter 0.8s ease;
 }
 
 .section.visible h1,
@@ -349,7 +365,7 @@ header.shrink .header-logo {
 .section.visible p,
 .section.visible img {
     opacity: 1;
-    transform: translateY(0);
+    filter: blur(0);
 }
 
 /* Service Section Separators */
@@ -421,18 +437,20 @@ header.shrink .header-logo {
     transition: opacity 0.5s ease;
 }
 
-/* Lazy loading placeholder */
+/* Progressive Image Loading - Blur-up Effect */
 .gallery-grid img.lazy {
-    opacity: 0;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+    /* Show the LQIP immediately with blur */
+    filter: blur(20px);
+    transform: scale(1.1); /* Slight scale to hide blur edges */
+    opacity: 1; /* Show immediately, not hidden */
+    transition: filter 0.5s ease-out, transform 0.5s ease-out;
 }
 
-/* Loaded state */
+/* Loaded state - Remove blur smoothly */
 .gallery-grid img.lazy-loaded {
+    filter: blur(0);
+    transform: scale(1);
     opacity: 1;
-    animation: none;
 }
 
 @keyframes shimmer {
@@ -452,11 +470,11 @@ header.shrink .header-logo {
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        filter: blur(10px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        filter: blur(0);
     }
 }
 
@@ -1094,17 +1112,19 @@ input:focus:not(:focus-visible) {
     transition: transform 0.3s ease, opacity 0.5s ease;
 }
 
-/* Lazy loading for service images */
+/* Progressive Image Loading for service images - Blur-up Effect */
 .service img.lazy {
-    opacity: 0;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+    /* Show the LQIP immediately with blur */
+    filter: blur(20px);
+    transform: scale(1.1); /* Slight scale to hide blur edges */
+    opacity: 1; /* Show immediately, not hidden */
+    transition: filter 0.5s ease-out, transform 0.5s ease-out;
 }
 
 .service img.lazy-loaded {
+    filter: blur(0);
+    transform: scale(1);
     opacity: 1;
-    animation: none;
 }
 
 .service:hover img {
@@ -1172,7 +1192,7 @@ button,
 }
 
 /* Responsive Styles for Mobile */
-@media (max-width: 768px) {
+@media (max-width: 875px) {
     header {
         padding: 0.5rem;
     }

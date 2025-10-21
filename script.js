@@ -1,3 +1,20 @@
+// Progressive Background Loading (runs before DOMContentLoaded for faster start)
+(function() {
+    // Preload the full hero background image
+    const bgImage = new Image();
+    bgImage.onload = function() {
+        // Once loaded, add class to body to remove blur from background pseudo-element
+        document.body.classList.add('bg-loaded');
+    };
+    // Start loading - browser will use WebP if supported
+    bgImage.src = 'images/hero-background.webp';
+
+    // Fallback to JPG if WebP fails
+    bgImage.onerror = function() {
+        bgImage.src = 'images/hero-background.jpg';
+    };
+})();
+
 document.addEventListener('DOMContentLoaded', function () {
     // Translation Data
 const translations = {
@@ -243,7 +260,102 @@ const translations = {
         }
     });
 
-    // Smooth scroll to sections
+    // Centralized scroll to section function
+    function scrollToSection(targetId, smooth = true) {
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+            // Load all images ABOVE the target section to ensure correct page height
+            const allSections = document.querySelectorAll('section[id]');
+            let foundTarget = false;
+            const imageLoadPromises = [];
+
+            allSections.forEach(section => {
+                if (section.id === targetId) {
+                    foundTarget = true;
+                }
+                // Load images in all sections above and including the target
+                if (!foundTarget || section.id === targetId) {
+                    const lazyImagesInSection = section.querySelectorAll('img[data-src]');
+                    lazyImagesInSection.forEach(img => {
+                        const picture = img.closest('picture');
+                        if (picture) {
+                            const source = picture.querySelector('source[data-srcset]');
+                            if (source && source.dataset.srcset) {
+                                source.srcset = source.dataset.srcset;
+                                source.removeAttribute('data-srcset');
+                            }
+                        }
+                        if (img.dataset.src) {
+                            // Create promise for image load
+                            const loadPromise = new Promise((resolve) => {
+                                if (img.complete) {
+                                    resolve();
+                                } else {
+                                    img.onload = resolve;
+                                    img.onerror = resolve;
+                                }
+                            });
+                            imageLoadPromises.push(loadPromise);
+
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            img.classList.add('lazy-loaded');
+                        }
+                    });
+                }
+            });
+
+            // Wait for ALL images to load, then give browser time to reflow before scrolling
+            Promise.all(imageLoadPromises).then(() => {
+                // Small delay to let browser reflow with new image dimensions
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        targetElement.scrollIntoView({
+                            behavior: smooth ? 'smooth' : 'auto',
+                            block: 'start'
+                        });
+                    });
+                });
+            });
+        }
+    }
+
+    // Handle initial page load with hash
+    // Check if this is a refresh (reload) or back/forward navigation
+    const navigationType = performance.getEntriesByType('navigation')[0]?.type || 'navigate';
+    const isReload = navigationType === 'reload';
+    const isBackForward = navigationType === 'back_forward';
+
+    // Store the initial scroll position before any JavaScript runs
+    const initialScrollY = window.scrollY || window.pageYOffset || 0;
+
+    if (window.location.hash && !isReload && !isBackForward) {
+        // Fresh navigation with hash - scroll to that section
+        const initialHash = window.location.hash.substring(1);
+        if (initialHash) {
+            // Prevent default browser scroll on load
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            // Scroll to the hash target after a short delay to ensure page is ready
+            setTimeout(() => {
+                scrollToSection(initialHash, false);
+            }, 100);
+        }
+    } else if (isReload || isBackForward) {
+        // Page refresh or back/forward - restore saved scroll position
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'auto';
+        }
+
+        // Update the active menu item based on current scroll position after browser restores it
+        setTimeout(() => {
+            highlightActiveSection();
+        }, 200);
+    }
+
+    // Smooth scroll to sections on link click
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -252,66 +364,15 @@ const translations = {
 
             // Skip if it's just a "#" (like the logo link)
             if (!targetId) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
 
-            const targetElement = document.getElementById(targetId);
+            // Update URL hash without triggering scroll
+            history.pushState(null, null, '#' + targetId);
 
-            if (targetElement) {
-                // Load all images ABOVE the target section to ensure correct page height
-                const allSections = document.querySelectorAll('section[id]');
-                let foundTarget = false;
-                const imageLoadPromises = [];
-
-                allSections.forEach(section => {
-                    if (section.id === targetId) {
-                        foundTarget = true;
-                    }
-                    // Load images in all sections above and including the target
-                    if (!foundTarget || section.id === targetId) {
-                        const lazyImagesInSection = section.querySelectorAll('img[data-src]');
-                        lazyImagesInSection.forEach(img => {
-                            const picture = img.closest('picture');
-                            if (picture) {
-                                const source = picture.querySelector('source[data-srcset]');
-                                if (source && source.dataset.srcset) {
-                                    source.srcset = source.dataset.srcset;
-                                    source.removeAttribute('data-srcset');
-                                }
-                            }
-                            if (img.dataset.src) {
-                                // Create promise for image load
-                                const loadPromise = new Promise((resolve) => {
-                                    if (img.complete) {
-                                        resolve();
-                                    } else {
-                                        img.onload = resolve;
-                                        img.onerror = resolve;
-                                    }
-                                });
-                                imageLoadPromises.push(loadPromise);
-
-                                img.src = img.dataset.src;
-                                img.removeAttribute('data-src');
-                                img.classList.add('lazy-loaded');
-                            }
-                        });
-                    }
-                });
-
-                // Wait for ALL images to load, then give browser time to reflow before scrolling
-                Promise.all(imageLoadPromises).then(() => {
-                    // Small delay to let browser reflow with new image dimensions
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            targetElement.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        });
-                    });
-                });
-            }
+            // Scroll to section
+            scrollToSection(targetId, true);
         });
     });
 
@@ -347,8 +408,8 @@ const translations = {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-            } else {
-                entry.target.classList.remove('visible');
+                // Stop observing once visible - animation should only happen once
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -441,12 +502,29 @@ const translations = {
 
                     // Load JPG/image fallback
                     if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                    }
+                        // Create a new image to load in the background
+                        const fullImage = new Image();
 
-                    // Add loaded class for fade-in effect
-                    img.classList.add('lazy-loaded');
+                        fullImage.onload = () => {
+                            // Once the full image is loaded, update src and remove blur
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            img.classList.add('lazy-loaded');
+                        };
+
+                        fullImage.onerror = () => {
+                            // If loading fails, still remove blur and update src
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            img.classList.add('lazy-loaded');
+                        };
+
+                        // Start loading the full image
+                        fullImage.src = img.dataset.src;
+                    } else {
+                        // No data-src, just add loaded class
+                        img.classList.add('lazy-loaded');
+                    }
 
                     // Stop observing this image
                     observer.unobserve(img);

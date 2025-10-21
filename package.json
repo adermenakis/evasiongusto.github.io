@@ -1,0 +1,13 @@
+{
+  "name": "evasiongusto-website",
+  "version": "1.0.0",
+  "description": "Évasion Gusto website with progressive image loading",
+  "scripts": {
+    "lqip:generate": "node generate-lqip.js",
+    "lqip:inject": "node inject-lqip-simple.js && sed -i 's|\"http://www.w3.org/2000/svg\" viewBox=\"0 0 [0-9]* [0-9]*\"%3E%3C/svg%3E||g' index.html",
+    "lqip": "npm run lqip:generate && npm run lqip:inject"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.4"
+  }
+}
