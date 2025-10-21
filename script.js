@@ -656,8 +656,6 @@ const translations = {
                     pdfObserver.unobserve(pdfContainer);
                     pdfObserver.disconnect();
 
-                    console.log('📄 PDF section is 50% visible - Starting load');
-
                     // Get current language for loading text
                     const currentLanguage = localStorage.getItem('language') || 'fr';
                     const loadingText = translations[currentLanguage].pdfLoading;
@@ -681,7 +679,6 @@ const translations = {
                     });
 
                     iframe.onload = function() {
-                        console.log('✅ PDF iframe loaded');
                         handleIframeLoad(progressInterval, 'pdf-load-progress', 'pdf-loading-spinner', pdfContainer, iframe);
                     };
 
@@ -701,7 +698,6 @@ const translations = {
         });
 
         pdfObserver.observe(pdfContainer);
-        console.log('👁️ PDF observer initialized (threshold: 0.5)');
     }
 
     // Google Maps Lazy Loading with IntersectionObserver
@@ -715,8 +711,6 @@ const translations = {
                     mapLoaded = true;
                     mapObserver.unobserve(mapContainer);
                     mapObserver.disconnect();
-
-                    console.log('🗺️ Map section is 50% visible - Starting load');
 
                     // Get current language for loading text
                     const currentLanguage = localStorage.getItem('language') || 'fr';
@@ -742,7 +736,6 @@ const translations = {
                     });
 
                     iframe.onload = function() {
-                        console.log('✅ Map iframe loaded');
                         handleIframeLoad(progressInterval, 'map-load-progress', 'map-loading-spinner', mapContainer, iframe);
                     };
 
@@ -762,6 +755,5 @@ const translations = {
         });
 
         mapObserver.observe(mapContainer);
-        console.log('👁️ Map observer initialized (threshold: 0.5)');
     }
 });
