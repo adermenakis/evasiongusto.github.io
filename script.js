@@ -1,3 +1,20 @@
+// Progressive Background Loading (runs before DOMContentLoaded for faster start)
+(function() {
+    // Preload the full hero background image
+    const bgImage = new Image();
+    bgImage.onload = function() {
+        // Once loaded, add class to body to remove blur from background pseudo-element
+        document.body.classList.add('bg-loaded');
+    };
+    // Start loading - browser will use WebP if supported
+    bgImage.src = 'images/hero-background.webp';
+
+    // Fallback to JPG if WebP fails
+    bgImage.onerror = function() {
+        bgImage.src = 'images/hero-background.jpg';
+    };
+})();
+
 document.addEventListener('DOMContentLoaded', function () {
     // Translation Data
 const translations = {
@@ -17,6 +34,7 @@ const translations = {
         thisWeekTitle: "This Week's Menu",
         thisWeekDesc: "This week, Évasion Gusto presents an exquisite selection of dishes crafted with the freshest seasonal ingredients sourced from local producers and other high-quality partners. Explore our weekly menu and discover new favorites that will delight your taste buds. We welcome your feedback and invite you to suggest specific dishes you'd like to see us prepare for you, your family, and your guests.",
         thisWeekLink: "Discover the Full Menu of This Week",
+        pdfLoading: "Loading the PDF menu...",
         viewMenuButton: "📄 View This Week's Menu",
         servicesTitle: "Our Exquisite Services",
         service1Title: "Wine and Beer Tasting",
@@ -74,6 +92,7 @@ const translations = {
         thisWeekTitle: "Menu de Cette Semaine",
         thisWeekDesc: "Cette semaine, Évasion Gusto vous propose une sélection exquise de plats élaborés avec les ingrédients saisonniers les plus frais, provenant de producteurs locaux et d'autres partenaires de haute qualité. Découvrez notre menu hebdomadaire et laissez-vous séduire par de nouveaux favoris qui raviront vos papilles. Nous apprécions vos retours et nous vous invitons à suggérer des plats spécifiques que vous souhaiteriez que nous préparions pour vous, votre famille et vos invités.",
         thisWeekLink: "Découvrez le Menu Complet de Cette Semaine",
+        pdfLoading: "Chargement du menu PDF...",
         viewMenuButton: "📄 Voir le Menu de Cette Semaine",
         servicesTitle: "Nos Services Exquis",
         service1Title: "Dégustation de Vins et Bières",
@@ -243,7 +262,102 @@ const translations = {
         }
     });
 
-    // Smooth scroll to sections
+    // Centralized scroll to section function
+    function scrollToSection(targetId, smooth = true) {
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+            // Load all images ABOVE the target section to ensure correct page height
+            const allSections = document.querySelectorAll('section[id]');
+            let foundTarget = false;
+            const imageLoadPromises = [];
+
+            allSections.forEach(section => {
+                if (section.id === targetId) {
+                    foundTarget = true;
+                }
+                // Load images in all sections above and including the target
+                if (!foundTarget || section.id === targetId) {
+                    const lazyImagesInSection = section.querySelectorAll('img[data-src]');
+                    lazyImagesInSection.forEach(img => {
+                        const picture = img.closest('picture');
+                        if (picture) {
+                            const source = picture.querySelector('source[data-srcset]');
+                            if (source && source.dataset.srcset) {
+                                source.srcset = source.dataset.srcset;
+                                source.removeAttribute('data-srcset');
+                            }
+                        }
+                        if (img.dataset.src) {
+                            // Create promise for image load
+                            const loadPromise = new Promise((resolve) => {
+                                if (img.complete) {
+                                    resolve();
+                                } else {
+                                    img.onload = resolve;
+                                    img.onerror = resolve;
+                                }
+                            });
+                            imageLoadPromises.push(loadPromise);
+
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            img.classList.add('lazy-loaded');
+                        }
+                    });
+                }
+            });
+
+            // Wait for ALL images to load, then give browser time to reflow before scrolling
+            Promise.all(imageLoadPromises).then(() => {
+                // Small delay to let browser reflow with new image dimensions
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        targetElement.scrollIntoView({
+                            behavior: smooth ? 'smooth' : 'auto',
+                            block: 'start'
+                        });
+                    });
+                });
+            });
+        }
+    }
+
+    // Handle initial page load with hash
+    // Check if this is a refresh (reload) or back/forward navigation
+    const navigationType = performance.getEntriesByType('navigation')[0]?.type || 'navigate';
+    const isReload = navigationType === 'reload';
+    const isBackForward = navigationType === 'back_forward';
+
+    // Store the initial scroll position before any JavaScript runs
+    const initialScrollY = window.scrollY || window.pageYOffset || 0;
+
+    if (window.location.hash && !isReload && !isBackForward) {
+        // Fresh navigation with hash - scroll to that section
+        const initialHash = window.location.hash.substring(1);
+        if (initialHash) {
+            // Prevent default browser scroll on load
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            // Scroll to the hash target after a short delay to ensure page is ready
+            setTimeout(() => {
+                scrollToSection(initialHash, false);
+            }, 100);
+        }
+    } else if (isReload || isBackForward) {
+        // Page refresh or back/forward - restore saved scroll position
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'auto';
+        }
+
+        // Update the active menu item based on current scroll position after browser restores it
+        setTimeout(() => {
+            highlightActiveSection();
+        }, 200);
+    }
+
+    // Smooth scroll to sections on link click
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -252,66 +366,15 @@ const translations = {
 
             // Skip if it's just a "#" (like the logo link)
             if (!targetId) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
 
-            const targetElement = document.getElementById(targetId);
+            // Update URL hash without triggering scroll
+            history.pushState(null, null, '#' + targetId);
 
-            if (targetElement) {
-                // Load all images ABOVE the target section to ensure correct page height
-                const allSections = document.querySelectorAll('section[id]');
-                let foundTarget = false;
-                const imageLoadPromises = [];
-
-                allSections.forEach(section => {
-                    if (section.id === targetId) {
-                        foundTarget = true;
-                    }
-                    // Load images in all sections above and including the target
-                    if (!foundTarget || section.id === targetId) {
-                        const lazyImagesInSection = section.querySelectorAll('img[data-src]');
-                        lazyImagesInSection.forEach(img => {
-                            const picture = img.closest('picture');
-                            if (picture) {
-                                const source = picture.querySelector('source[data-srcset]');
-                                if (source && source.dataset.srcset) {
-                                    source.srcset = source.dataset.srcset;
-                                    source.removeAttribute('data-srcset');
-                                }
-                            }
-                            if (img.dataset.src) {
-                                // Create promise for image load
-                                const loadPromise = new Promise((resolve) => {
-                                    if (img.complete) {
-                                        resolve();
-                                    } else {
-                                        img.onload = resolve;
-                                        img.onerror = resolve;
-                                    }
-                                });
-                                imageLoadPromises.push(loadPromise);
-
-                                img.src = img.dataset.src;
-                                img.removeAttribute('data-src');
-                                img.classList.add('lazy-loaded');
-                            }
-                        });
-                    }
-                });
-
-                // Wait for ALL images to load, then give browser time to reflow before scrolling
-                Promise.all(imageLoadPromises).then(() => {
-                    // Small delay to let browser reflow with new image dimensions
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            targetElement.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        });
-                    });
-                });
-            }
+            // Scroll to section
+            scrollToSection(targetId, true);
         });
     });
 
@@ -347,8 +410,8 @@ const translations = {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-            } else {
-                entry.target.classList.remove('visible');
+                // Stop observing once visible - animation should only happen once
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -441,12 +504,29 @@ const translations = {
 
                     // Load JPG/image fallback
                     if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                    }
+                        // Create a new image to load in the background
+                        const fullImage = new Image();
 
-                    // Add loaded class for fade-in effect
-                    img.classList.add('lazy-loaded');
+                        fullImage.onload = () => {
+                            // Once the full image is loaded, update src and remove blur
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            img.classList.add('lazy-loaded');
+                        };
+
+                        fullImage.onerror = () => {
+                            // If loading fails, still remove blur and update src
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            img.classList.add('lazy-loaded');
+                        };
+
+                        // Start loading the full image
+                        fullImage.src = img.dataset.src;
+                    } else {
+                        // No data-src, just add loaded class
+                        img.classList.add('lazy-loaded');
+                    }
 
                     // Stop observing this image
                     observer.unobserve(img);
@@ -461,4 +541,219 @@ const translations = {
 
     // Initialize lazy loading
     lazyLoadImages();
+
+    // ============================================
+    // REUSABLE LAZY LOADING FUNCTIONS
+    // ============================================
+
+    /**
+     * Creates a loading spinner HTML
+     * @param {string} spinnerId - ID for the spinner element
+     * @param {string} progressId - ID for the progress text element
+     * @param {string} loadingText - Text to display below spinner
+     * @returns {string} HTML string for spinner
+     */
+    function createSpinnerHTML(spinnerId, progressId, loadingText) {
+        return `
+            <div id="${spinnerId}">
+                <div style="position: relative; width: 80px; height: 80px; margin-bottom: 1.5rem;">
+                    <div style="position: absolute; width: 100%; height: 100%; border: 4px solid #e0e0e0; border-top: 4px solid #607244; border-radius: 50%; animation: spin-pdf 1s linear infinite; box-shadow: 0 0 20px rgba(96, 114, 68, 0.3);"></div>
+                    <p id="${progressId}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #607244; font-size: 18px; margin: 0; font-weight: 700; text-shadow: 0 0 10px rgba(96, 114, 68, 0.4);">0%</p>
+                </div>
+                <p style="color: #607244; font-size: 18px; margin: 0; font-weight: 600;">${loadingText}</p>
+            </div>
+        `;
+    }
+
+    /**
+     * Simulates loading progress with animation
+     * @param {string} progressId - ID of the progress element to update
+     * @returns {number} Interval ID that can be cleared later
+     */
+    function simulateLoadingProgress(progressId) {
+        let progress = 0;
+        return setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 90) progress = 90; // Cap at 90% until actual load
+            const progressElement = document.getElementById(progressId);
+            if (progressElement) {
+                progressElement.textContent = Math.floor(progress) + '%';
+            }
+        }, 200);
+    }
+
+    /**
+     * Handles iframe load completion - shows 100% and fades in iframe
+     * @param {number} progressInterval - Interval ID to clear
+     * @param {string} progressId - ID of progress element
+     * @param {string} spinnerId - ID of spinner element
+     * @param {HTMLElement} container - Container element
+     * @param {HTMLIFrameElement} iframe - Iframe element to fade in
+     */
+    function handleIframeLoad(progressInterval, progressId, spinnerId, container, iframe) {
+        // Stop progress simulation and show 100%
+        clearInterval(progressInterval);
+        const progressElement = document.getElementById(progressId);
+        if (progressElement) {
+            progressElement.textContent = '100%';
+        }
+
+        // Brief delay to show 100%, then hide spinner
+        setTimeout(() => {
+            const spinner = document.getElementById(spinnerId);
+            if (spinner) spinner.remove();
+
+            // Clear container styling
+            container.style.background = 'transparent';
+            container.style.animation = 'none';
+            if (container.id === 'pdf-lazy-container') {
+                container.style.minHeight = 'auto';
+            }
+
+            // Fade in iframe
+            iframe.style.opacity = '1';
+        }, 300);
+    }
+
+    /**
+     * Creates and configures an iframe element
+     * @param {Object} config - Configuration object
+     * @returns {HTMLIFrameElement} Configured iframe element
+     */
+    function createIframe(config) {
+        const iframe = document.createElement('iframe');
+        iframe.src = config.src;
+        iframe.width = config.width || '100%';
+        iframe.height = config.height;
+        iframe.title = config.title;
+        iframe.style.border = config.border || '0';
+        iframe.style.borderRadius = config.borderRadius || '8px';
+        iframe.style.opacity = '0';
+        iframe.style.transition = 'opacity 0.6s ease';
+        iframe.style.display = 'block';
+
+        if (config.allow) iframe.allow = config.allow;
+        if (config.allowFullscreen) iframe.allowFullscreen = config.allowFullscreen;
+        if (config.referrerPolicy) iframe.referrerPolicy = config.referrerPolicy;
+        if (config.ariaLabel) iframe.setAttribute('aria-label', config.ariaLabel);
+
+        return iframe;
+    }
+
+    // ============================================
+    // PDF LAZY LOADING
+    // ============================================
+
+    // PDF Lazy Loading with IntersectionObserver
+    const pdfContainer = document.getElementById('pdf-lazy-container');
+    if (pdfContainer) {
+        let pdfLoaded = false;
+
+        const pdfObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !pdfLoaded) {
+                    pdfLoaded = true;
+                    pdfObserver.unobserve(pdfContainer);
+                    pdfObserver.disconnect();
+
+                    // Get current language for loading text
+                    const currentLanguage = localStorage.getItem('language') || 'fr';
+                    const loadingText = translations[currentLanguage].pdfLoading;
+
+                    // Clear inline styles
+                    pdfContainer.removeAttribute('style');
+
+                    // Show loading spinner
+                    pdfContainer.innerHTML = createSpinnerHTML('pdf-loading-spinner', 'pdf-load-progress', loadingText);
+
+                    // Start simulating progress
+                    const progressInterval = simulateLoadingProgress('pdf-load-progress');
+
+                    // Create PDF iframe
+                    const iframe = createIframe({
+                        src: 'https://drive.google.com/file/d/1yjaPTS9nFbm8eVBIxwH_zT35Tt3r7iL5/preview',
+                        height: '850px',
+                        allow: 'autoplay',
+                        title: "This Week's Menu PDF",
+                        border: 'none'
+                    });
+
+                    iframe.onload = function() {
+                        handleIframeLoad(progressInterval, 'pdf-load-progress', 'pdf-loading-spinner', pdfContainer, iframe);
+                    };
+
+                    iframe.onerror = function() {
+                        console.error('❌ Failed to load PDF iframe');
+                        pdfContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><p style="color: #c00;">Error loading menu.</p></div>';
+                    };
+
+                    // Add iframe to container
+                    pdfContainer.appendChild(iframe);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        });
+
+        pdfObserver.observe(pdfContainer);
+    }
+
+    // Google Maps Lazy Loading with IntersectionObserver
+    const mapContainer = document.getElementById('map-lazy-container');
+    if (mapContainer) {
+        let mapLoaded = false;
+
+        const mapObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !mapLoaded) {
+                    mapLoaded = true;
+                    mapObserver.unobserve(mapContainer);
+                    mapObserver.disconnect();
+
+                    // Get current language for loading text
+                    const currentLanguage = localStorage.getItem('language') || 'fr';
+                    const loadingText = currentLanguage === 'fr' ? 'Chargement de la carte...' : 'Loading map...';
+
+                    // Clear inline styles
+                    mapContainer.removeAttribute('style');
+
+                    // Show loading spinner
+                    mapContainer.innerHTML = createSpinnerHTML('map-loading-spinner', 'map-load-progress', loadingText);
+
+                    // Start simulating progress
+                    const progressInterval = simulateLoadingProgress('map-load-progress');
+
+                    // Create Google Maps iframe
+                    const iframe = createIframe({
+                        src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2552.4739256206767!2d4.2012718!3d50.2270505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2154d024ce013%3A0x6be2f8b6a322b9c6!2s%C3%89vasion%20Gusto!5e0!3m2!1sen!2sbe!4v1760743263973!5m2!1sen!2sbe',
+                        height: '400',
+                        title: 'Évasion Gusto Location',
+                        allowFullscreen: true,
+                        referrerPolicy: 'no-referrer-when-downgrade',
+                        ariaLabel: 'Map showing Évasion Gusto location in Beaumont, Belgium'
+                    });
+
+                    iframe.onload = function() {
+                        handleIframeLoad(progressInterval, 'map-load-progress', 'map-loading-spinner', mapContainer, iframe);
+                    };
+
+                    iframe.onerror = function() {
+                        console.error('❌ Failed to load Map iframe');
+                        mapContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><p style="color: #c00;">Error loading map.</p></div>';
+                    };
+
+                    // Add iframe to container
+                    mapContainer.appendChild(iframe);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        });
+
+        mapObserver.observe(mapContainer);
+    }
 });

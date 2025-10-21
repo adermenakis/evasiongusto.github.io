@@ -20,13 +20,35 @@
 }
 
 html {
-    /* Apply background to html element so it covers the entire viewport including padding */
+    /* Background handled by body::before pseudo-element for progressive loading */
+    position: relative;
+}
+
+/* Progressive background using pseudo-element to avoid blurring content */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Start with LQIP (tiny, blurred placeholder) */
+    background: url('data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAPABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECA//EABsQAAIDAQEBAAAAAAAAAAAAAAABAgMxEiFB/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAEC/8QAFxEBAQEBAAAAAAAAAAAAAAAAABEBAv/aAAwDAQACEQMRAD8ApWxnpFnLwSr50Tg2zO9LGfEfoDdfugKR/9k=') no-repeat center center/cover;
+    filter: blur(20px);
+    transform: scale(1.1);
+    transition: filter 1s ease-out, transform 1s ease-out;
+}
+
+/* Once full background loads, remove blur */
+body.bg-loaded::before {
     background: url('images/hero-background.jpg') no-repeat center center/cover;
     background: image-set(
         url('images/hero-background.webp') type("image/webp"),
         url('images/hero-background.jpg') type("image/jpeg")
     ) no-repeat center center/cover;
-    background-attachment: fixed;
+    filter: blur(0);
+    transform: scale(1);
 }
 
 body {
@@ -287,13 +309,7 @@ header.shrink .header-logo {
     overflow: hidden;
     z-index: 1;
     scroll-margin-top: 100px; /* Account for fixed header in smooth scrolling */
-    /* Use WebP with JPG fallback for better performance (saves ~110 KB) */
-    background: url('images/hero-background.jpg') no-repeat center center/cover;
-    background: image-set(
-        url('images/hero-background.webp') type("image/webp"),
-        url('images/hero-background.jpg') type("image/jpeg")
-    ) no-repeat center center/cover;
-    background-attachment: fixed;
+    /* Background is inherited from html element (with progressive loading) */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -331,8 +347,8 @@ header.shrink .header-logo {
     margin-bottom: 1rem;
     color: var(--primary-color);
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    filter: blur(10px);
+    transition: opacity 0.8s ease, filter 0.8s ease;
 }
 
 .section p {
@@ -340,8 +356,8 @@ header.shrink .header-logo {
     margin: 0 auto;
     color: var(--text-color);
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    filter: blur(10px);
+    transition: opacity 0.8s ease, filter 0.8s ease;
 }
 
 .section.visible h1,
@@ -349,7 +365,7 @@ header.shrink .header-logo {
 .section.visible p,
 .section.visible img {
     opacity: 1;
-    transform: translateY(0);
+    filter: blur(0);
 }
 
 /* Service Section Separators */
@@ -421,18 +437,20 @@ header.shrink .header-logo {
     transition: opacity 0.5s ease;
 }
 
-/* Lazy loading placeholder */
+/* Progressive Image Loading - Blur-up Effect */
 .gallery-grid img.lazy {
-    opacity: 0;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+    /* Show the LQIP immediately with blur */
+    filter: blur(20px);
+    transform: scale(1.1); /* Slight scale to hide blur edges */
+    opacity: 1; /* Show immediately, not hidden */
+    transition: filter 0.5s ease-out, transform 0.5s ease-out;
 }
 
-/* Loaded state */
+/* Loaded state - Remove blur smoothly */
 .gallery-grid img.lazy-loaded {
+    filter: blur(0);
+    transform: scale(1);
     opacity: 1;
-    animation: none;
 }
 
 @keyframes shimmer {
@@ -452,11 +470,11 @@ header.shrink .header-logo {
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        filter: blur(10px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        filter: blur(0);
     }
 }
 
@@ -954,10 +972,97 @@ input:focus:not(:focus-visible) {
     width: 100%;
 }
 
+/* ============================================
+   LAZY LOADING STYLES
+   ============================================ */
+
+/* PDF Container Wrapper - matches contact-map styling */
+.pdf-container-wrapper {
+    margin-top: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* PDF Lazy Loading Container */
+#pdf-lazy-container {
+    position: relative;
+    min-height: 850px;
+}
+
+#pdf-lazy-container iframe {
+    display: block;
+    width: 100%;
+}
+
+/* PDF Placeholder Text Centering */
+#pdf-lazy-container > p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    text-align: center;
+}
+
+/* PDF Loading Spinner - Centered */
+#pdf-loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Map Lazy Loading Container */
+#map-lazy-container {
+    position: relative;
+    height: 400px;
+}
+
+/* Map Placeholder Text Centering */
+#map-lazy-container > p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    text-align: center;
+}
+
+/* Map Loading Spinner - Centered */
+#map-loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Animation: Spinner Rotation */
+@keyframes spin-pdf {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animation: Shimmer Effect for Placeholders */
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
 /* Floating Contact Button */
 .floating-cta {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px; /* Above footer with comfortable spacing */
     right: 20px;
     width: 60px;
     height: 60px;
@@ -969,7 +1074,7 @@ input:focus:not(:focus-visible) {
     font-size: 28px;
     text-decoration: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 999;
+    z-index: 1001; /* Higher than footer (1000) */
     transition: all 0.3s ease;
     animation: pulse 2s infinite;
 }
@@ -984,20 +1089,50 @@ input:focus:not(:focus-visible) {
 /* Floating Facebook Button */
 .floating-facebook {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px; /* Above footer with comfortable spacing */
     right: 90px;
     width: 60px;
     height: 60px;
     background: #1877f2; /* Facebook blue */
     border-radius: 50%;
-    display: none; /* Hidden on desktop */
+    display: flex; /* Show on desktop with tooltip */
     align-items: center;
     justify-content: center;
     text-decoration: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 999;
+    z-index: 1001; /* Higher than footer (1000) */
     transition: all 0.3s ease;
     animation: pulseFacebook 2s infinite;
+}
+
+/* Tooltip on hover - positioned to the left */
+.floating-facebook::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 70px; /* Position to the left of icon */
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Arrow pointing to the icon */
+.floating-facebook::after {
+    content: '';
+    position: absolute;
+    right: 60px;
+    border: 6px solid transparent;
+    border-left-color: rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
 }
 
 .floating-facebook:hover,
@@ -1005,6 +1140,15 @@ input:focus:not(:focus-visible) {
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     animation: none;
+}
+
+/* Show tooltip on hover */
+.floating-facebook:hover::before,
+.floating-facebook:focus::before,
+.floating-facebook:hover::after,
+.floating-facebook:focus::after {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .floating-facebook-icon {
@@ -1017,7 +1161,7 @@ input:focus:not(:focus-visible) {
 /* Floating WhatsApp Button */
 .floating-whatsapp {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px; /* Above footer with comfortable spacing */
     right: 160px;
     width: 60px;
     height: 60px;
@@ -1028,7 +1172,7 @@ input:focus:not(:focus-visible) {
     justify-content: center;
     text-decoration: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 999;
+    z-index: 1001; /* Higher than footer (1000) */
     transition: all 0.3s ease;
     animation: pulseWhatsApp 2s infinite;
 }
@@ -1094,17 +1238,19 @@ input:focus:not(:focus-visible) {
     transition: transform 0.3s ease, opacity 0.5s ease;
 }
 
-/* Lazy loading for service images */
+/* Progressive Image Loading for service images - Blur-up Effect */
 .service img.lazy {
-    opacity: 0;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+    /* Show the LQIP immediately with blur */
+    filter: blur(20px);
+    transform: scale(1.1); /* Slight scale to hide blur edges */
+    opacity: 1; /* Show immediately, not hidden */
+    transition: filter 0.5s ease-out, transform 0.5s ease-out;
 }
 
 .service img.lazy-loaded {
+    filter: blur(0);
+    transform: scale(1);
     opacity: 1;
-    animation: none;
 }
 
 .service:hover img {
@@ -1172,7 +1318,7 @@ button,
 }
 
 /* Responsive Styles for Mobile */
-@media (max-width: 768px) {
+@media (max-width: 875px) {
     header {
         padding: 0.5rem;
     }
@@ -1286,7 +1432,7 @@ button,
         display: flex;
         width: 50px;
         height: 50px;
-        bottom: 95px; /* Position above footer */
+        bottom: 80px; /* Position above footer */
         right: 15px;
         font-size: 24px;
     }
@@ -1296,8 +1442,14 @@ button,
         display: flex;
         width: 50px;
         height: 50px;
-        bottom: 95px; /* Position above footer */
+        bottom: 80px; /* Position above footer */
         right: 75px; /* Positioned to the left of phone button */
+    }
+
+    /* Hide tooltip on mobile */
+    .floating-facebook::before,
+    .floating-facebook::after {
+        display: none;
     }
 
     .floating-facebook-icon {
@@ -1310,7 +1462,7 @@ button,
         display: flex;
         width: 50px;
         height: 50px;
-        bottom: 95px; /* Position above footer */
+        bottom: 80px; /* Position above footer */
         right: 135px; /* Positioned to the left of Facebook button */
     }
 

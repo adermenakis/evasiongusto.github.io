@@ -39,6 +39,7 @@ A professional, bilingual (French/English) website for Évasion Gusto, a premium
 
 - **Responsive Design**: Mobile-first approach, fully responsive across all devices
 - **Single Page Application**: Smooth scrolling navigation between sections
+- **Progressive Image Loading**: Blur-up effect for improved perceived performance ([learn more](#progressive-image-loading))
 - **Image Gallery**: Interactive lightbox gallery with touch/swipe support
 - **SEO Optimized**: Meta tags, Open Graph, Twitter Cards, and structured data
 - **GDPR Compliant**: Cookie consent popup with localStorage management
@@ -109,10 +110,76 @@ The menu ranges from simple grilled meats to complex plated dishes with wine/bee
 - Hreflang tags for language targeting
 - Optimized for local search (Mons, Beaumont, NATO SHAPE area)
 
+## Progressive Image Loading
+
+This website implements progressive image loading with a blur-up effect, providing instant visual feedback and improving perceived performance.
+
+### What is Progressive Image Loading?
+
+Instead of showing blank spaces while images load, visitors see a tiny, blurred preview that smoothly transitions to the full-quality image. This creates a more polished, professional experience.
+
+**Benefits:**
+- ✅ **Faster perceived load time** - Images appear instantly (blurred)
+- ✅ **Better UX** - Smooth blur-to-sharp transitions, no jarring "pop-in"
+- ✅ **Reduced layout shift** - Image dimensions known from the start
+- ✅ **Smaller initial page size** - All image placeholders combined: only ~17KB
+- ✅ **Fixes navigation issues** - Proper image loading prevents scroll bugs
+
+### Implementation
+
+The technique uses Low-Quality Image Placeholders (LQIP):
+
+1. **Tiny preview images** (~300 bytes each, 20px wide, heavily compressed)
+2. **Embedded as base64 data URIs** in the HTML `src` attribute
+3. **CSS blur filter** creates the blur-up effect
+4. **JavaScript lazy loading** loads full images when they enter viewport
+5. **Smooth transition** from blurred to sharp when full image is ready
+
+### How to Use
+
+**When adding new images to the site:**
+
+1. Add image files to `images/gallery/` or `images/services/`
+
+2. Update `index.html` with the lazy loading pattern:
+   ```html
+   <img src="data:image/svg+xml,..."
+        data-src="images/path/to/image.jpg"
+        class="lazy"
+        alt="Description">
+   ```
+
+3. Regenerate LQIPs:
+   ```bash
+   npm run lqip
+   ```
+
+This command will:
+- Generate tiny, blurred placeholders for all images
+- Inject them into `index.html` automatically
+- Update the `lqip-data.json` file
+
+### Technical Details
+
+See [PROGRESSIVE_IMAGES.md](PROGRESSIVE_IMAGES.md) for complete technical documentation including:
+- How LQIP generation works
+- CSS and JavaScript implementation details
+- File size comparisons
+- Browser compatibility
+- Troubleshooting guide
+
+### Requirements
+
+```bash
+npm install
+```
+
+This installs `sharp` (image processing library) needed for LQIP generation.
+
 ## Development & Maintenance
 
 ### Local Development
-Simply open `index.html` in a modern web browser. No build process required.
+Simply open `index.html` in a modern web browser. No build process required (unless regenerating LQIPs).
 
 ### Deployment
 
