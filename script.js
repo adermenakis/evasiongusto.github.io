@@ -34,6 +34,7 @@ const translations = {
         thisWeekTitle: "This Week's Menu",
         thisWeekDesc: "This week, Évasion Gusto presents an exquisite selection of dishes crafted with the freshest seasonal ingredients sourced from local producers and other high-quality partners. Explore our weekly menu and discover new favorites that will delight your taste buds. We welcome your feedback and invite you to suggest specific dishes you'd like to see us prepare for you, your family, and your guests.",
         thisWeekLink: "Discover the Full Menu of This Week",
+        pdfLoading: "Loading the PDF menu...",
         viewMenuButton: "📄 View This Week's Menu",
         servicesTitle: "Our Exquisite Services",
         service1Title: "Wine and Beer Tasting",
@@ -91,6 +92,7 @@ const translations = {
         thisWeekTitle: "Menu de Cette Semaine",
         thisWeekDesc: "Cette semaine, Évasion Gusto vous propose une sélection exquise de plats élaborés avec les ingrédients saisonniers les plus frais, provenant de producteurs locaux et d'autres partenaires de haute qualité. Découvrez notre menu hebdomadaire et laissez-vous séduire par de nouveaux favoris qui raviront vos papilles. Nous apprécions vos retours et nous vous invitons à suggérer des plats spécifiques que vous souhaiteriez que nous préparions pour vous, votre famille et vos invités.",
         thisWeekLink: "Découvrez le Menu Complet de Cette Semaine",
+        pdfLoading: "Chargement du menu PDF...",
         viewMenuButton: "📄 Voir le Menu de Cette Semaine",
         servicesTitle: "Nos Services Exquis",
         service1Title: "Dégustation de Vins et Bières",
@@ -539,4 +541,208 @@ const translations = {
 
     // Initialize lazy loading
     lazyLoadImages();
+
+    // PDF Lazy Loading with IntersectionObserver
+    const pdfContainer = document.getElementById('pdf-lazy-container');
+    if (pdfContainer) {
+        let pdfLoaded = false;
+
+        const pdfObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !pdfLoaded) {
+                    pdfLoaded = true;
+                    pdfObserver.unobserve(pdfContainer);
+                    pdfObserver.disconnect();
+
+                    console.log('📄 PDF section is 50% visible - Starting load');
+
+                    // Get current language for loading text
+                    const currentLanguage = localStorage.getItem('language') || 'fr';
+                    const loadingText = translations[currentLanguage].pdfLoading;
+
+                    // Clear inline styles - centering is handled by CSS in <head>
+                    pdfContainer.removeAttribute('style');
+
+                    // Show loading spinner (will be centered by CSS absolute positioning)
+                    pdfContainer.innerHTML = `
+                        <div id="pdf-loading-spinner">
+                            <div style="position: relative; width: 80px; height: 80px; margin-bottom: 1.5rem;">
+                                <div style="position: absolute; width: 100%; height: 100%; border: 4px solid #e0e0e0; border-top: 4px solid #607244; border-radius: 50%; animation: spin-pdf 1s linear infinite; box-shadow: 0 0 20px rgba(96, 114, 68, 0.3);"></div>
+                                <p id="pdf-load-progress" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #607244; font-size: 18px; margin: 0; font-weight: 700; text-shadow: 0 0 10px rgba(96, 114, 68, 0.4);">0%</p>
+                            </div>
+                            <p style="color: #607244; font-size: 18px; margin: 0; font-weight: 600;">${loadingText}</p>
+                        </div>
+                    `;
+
+                    // Simulate loading progress (since we can't track actual iframe load progress)
+                    let progress = 0;
+                    const progressInterval = setInterval(() => {
+                        progress += Math.random() * 15;
+                        if (progress > 90) progress = 90; // Cap at 90% until actual load
+                        const progressElement = document.getElementById('pdf-load-progress');
+                        if (progressElement) {
+                            progressElement.textContent = Math.floor(progress) + '%';
+                        }
+                    }, 200);
+
+                    // Create iframe - plain and simple like main branch
+                    const iframe = document.createElement('iframe');
+                    iframe.src = 'https://drive.google.com/file/d/1yjaPTS9nFbm8eVBIxwH_zT35Tt3r7iL5/preview';
+                    iframe.width = '100%';
+                    iframe.height = '850px';
+                    iframe.allow = 'autoplay';
+                    iframe.title = "This Week's Menu PDF";
+                    iframe.style.border = 'none';
+                    iframe.style.borderRadius = '8px';
+                    iframe.style.display = 'block';
+
+                    // Start hidden for fade-in effect
+                    iframe.style.opacity = '0';
+                    iframe.style.transition = 'opacity 0.6s ease';
+
+                    iframe.onload = function() {
+                        console.log('✅ PDF iframe loaded');
+
+                        // Stop progress simulation and show 100%
+                        clearInterval(progressInterval);
+                        const progressElement = document.getElementById('pdf-load-progress');
+                        if (progressElement) {
+                            progressElement.textContent = '100%';
+                        }
+
+                        // Brief delay to show 100%, then hide spinner
+                        setTimeout(() => {
+                            const spinner = document.getElementById('pdf-loading-spinner');
+                            if (spinner) spinner.remove();
+
+                            // Clear container styling
+                            pdfContainer.style.background = 'transparent';
+                            pdfContainer.style.animation = 'none';
+                            pdfContainer.style.minHeight = 'auto';
+
+                            // Fade in iframe
+                            iframe.style.opacity = '1';
+                        }, 300);
+                    };
+
+                    iframe.onerror = function() {
+                        console.error('❌ Failed to load PDF iframe');
+                        pdfContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><p style="color: #c00;">Error loading menu.</p></div>';
+                    };
+
+                    // Add iframe to container
+                    pdfContainer.appendChild(iframe);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        });
+
+        pdfObserver.observe(pdfContainer);
+        console.log('👁️ PDF observer initialized (threshold: 0.5)');
+    }
+
+    // Google Maps Lazy Loading with IntersectionObserver
+    const mapContainer = document.getElementById('map-lazy-container');
+    if (mapContainer) {
+        let mapLoaded = false;
+
+        const mapObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !mapLoaded) {
+                    mapLoaded = true;
+                    mapObserver.unobserve(mapContainer);
+                    mapObserver.disconnect();
+
+                    console.log('🗺️ Map section is 50% visible - Starting load');
+
+                    // Get current language for loading text
+                    const currentLanguage = localStorage.getItem('language') || 'fr';
+                    const loadingText = currentLanguage === 'fr' ? 'Chargement de la carte...' : 'Loading map...';
+
+                    // Clear inline styles - centering is handled by CSS in <head>
+                    mapContainer.removeAttribute('style');
+
+                    // Show loading spinner (will be centered by CSS absolute positioning)
+                    mapContainer.innerHTML = `
+                        <div id="map-loading-spinner">
+                            <div style="position: relative; width: 80px; height: 80px; margin-bottom: 1.5rem;">
+                                <div style="position: absolute; width: 100%; height: 100%; border: 4px solid #e0e0e0; border-top: 4px solid #607244; border-radius: 50%; animation: spin-pdf 1s linear infinite; box-shadow: 0 0 20px rgba(96, 114, 68, 0.3);"></div>
+                                <p id="map-load-progress" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #607244; font-size: 18px; margin: 0; font-weight: 700; text-shadow: 0 0 10px rgba(96, 114, 68, 0.4);">0%</p>
+                            </div>
+                            <p style="color: #607244; font-size: 18px; margin: 0; font-weight: 600;">${loadingText}</p>
+                        </div>
+                    `;
+
+                    // Simulate loading progress
+                    let progress = 0;
+                    const progressInterval = setInterval(() => {
+                        progress += Math.random() * 15;
+                        if (progress > 90) progress = 90; // Cap at 90% until actual load
+                        const progressElement = document.getElementById('map-load-progress');
+                        if (progressElement) {
+                            progressElement.textContent = Math.floor(progress) + '%';
+                        }
+                    }, 200);
+
+                    // Create iframe for Google Maps
+                    const iframe = document.createElement('iframe');
+                    iframe.src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2552.4739256206767!2d4.2012718!3d50.2270505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2154d024ce013%3A0x6be2f8b6a322b9c6!2s%C3%89vasion%20Gusto!5e0!3m2!1sen!2sbe!4v1760743263973!5m2!1sen!2sbe';
+                    iframe.width = '100%';
+                    iframe.height = '400';
+                    iframe.style.border = '0';
+                    iframe.allowFullscreen = true;
+                    iframe.referrerPolicy = 'no-referrer-when-downgrade';
+                    iframe.title = 'Évasion Gusto Location';
+                    iframe.setAttribute('aria-label', 'Map showing Évasion Gusto location in Beaumont, Belgium');
+
+                    // Start hidden for fade-in effect
+                    iframe.style.opacity = '0';
+                    iframe.style.transition = 'opacity 0.6s ease';
+                    iframe.style.borderRadius = '8px';
+
+                    iframe.onload = function() {
+                        console.log('✅ Map iframe loaded');
+
+                        // Stop progress simulation and show 100%
+                        clearInterval(progressInterval);
+                        const progressElement = document.getElementById('map-load-progress');
+                        if (progressElement) {
+                            progressElement.textContent = '100%';
+                        }
+
+                        // Brief delay to show 100%, then hide spinner
+                        setTimeout(() => {
+                            const spinner = document.getElementById('map-loading-spinner');
+                            if (spinner) spinner.remove();
+
+                            // Clear container styling
+                            mapContainer.style.background = 'transparent';
+                            mapContainer.style.animation = 'none';
+
+                            // Fade in iframe
+                            iframe.style.opacity = '1';
+                        }, 300);
+                    };
+
+                    iframe.onerror = function() {
+                        console.error('❌ Failed to load Map iframe');
+                        mapContainer.innerHTML = '<div style="text-align: center; padding: 2rem;"><p style="color: #c00;">Error loading map.</p></div>';
+                    };
+
+                    // Add iframe to container
+                    mapContainer.appendChild(iframe);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        });
+
+        mapObserver.observe(mapContainer);
+        console.log('👁️ Map observer initialized (threshold: 0.5)');
+    }
 });
