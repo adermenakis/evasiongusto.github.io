@@ -1151,6 +1151,13 @@ input:focus:not(:focus-visible) {
     transform: translateX(0);
 }
 
+/* Hide tooltip when clicked/active */
+.floating-facebook:active::before,
+.floating-facebook:active::after {
+    opacity: 0;
+    display: none;
+}
+
 .floating-facebook-icon {
     width: 32px !important;
     height: 32px !important;
