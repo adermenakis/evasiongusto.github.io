@@ -1062,7 +1062,7 @@ input:focus:not(:focus-visible) {
 /* Floating Contact Button */
 .floating-cta {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px; /* Above footer with comfortable spacing */
     right: 20px;
     width: 60px;
     height: 60px;
@@ -1074,7 +1074,7 @@ input:focus:not(:focus-visible) {
     font-size: 28px;
     text-decoration: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 999;
+    z-index: 1001; /* Higher than footer (1000) */
     transition: all 0.3s ease;
     animation: pulse 2s infinite;
 }
@@ -1089,20 +1089,50 @@ input:focus:not(:focus-visible) {
 /* Floating Facebook Button */
 .floating-facebook {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px; /* Above footer with comfortable spacing */
     right: 90px;
     width: 60px;
     height: 60px;
     background: #1877f2; /* Facebook blue */
     border-radius: 50%;
-    display: none; /* Hidden on desktop */
+    display: flex; /* Show on desktop with tooltip */
     align-items: center;
     justify-content: center;
     text-decoration: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 999;
+    z-index: 1001; /* Higher than footer (1000) */
     transition: all 0.3s ease;
     animation: pulseFacebook 2s infinite;
+}
+
+/* Tooltip on hover - positioned to the left */
+.floating-facebook::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 70px; /* Position to the left of icon */
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Arrow pointing to the icon */
+.floating-facebook::after {
+    content: '';
+    position: absolute;
+    right: 60px;
+    border: 6px solid transparent;
+    border-left-color: rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
 }
 
 .floating-facebook:hover,
@@ -1110,6 +1140,15 @@ input:focus:not(:focus-visible) {
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     animation: none;
+}
+
+/* Show tooltip on hover */
+.floating-facebook:hover::before,
+.floating-facebook:focus::before,
+.floating-facebook:hover::after,
+.floating-facebook:focus::after {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .floating-facebook-icon {
@@ -1122,7 +1161,7 @@ input:focus:not(:focus-visible) {
 /* Floating WhatsApp Button */
 .floating-whatsapp {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px; /* Above footer with comfortable spacing */
     right: 160px;
     width: 60px;
     height: 60px;
@@ -1133,7 +1172,7 @@ input:focus:not(:focus-visible) {
     justify-content: center;
     text-decoration: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 999;
+    z-index: 1001; /* Higher than footer (1000) */
     transition: all 0.3s ease;
     animation: pulseWhatsApp 2s infinite;
 }
@@ -1393,7 +1432,7 @@ button,
         display: flex;
         width: 50px;
         height: 50px;
-        bottom: 95px; /* Position above footer */
+        bottom: 80px; /* Position above footer */
         right: 15px;
         font-size: 24px;
     }
@@ -1403,8 +1442,14 @@ button,
         display: flex;
         width: 50px;
         height: 50px;
-        bottom: 95px; /* Position above footer */
+        bottom: 80px; /* Position above footer */
         right: 75px; /* Positioned to the left of phone button */
+    }
+
+    /* Hide tooltip on mobile */
+    .floating-facebook::before,
+    .floating-facebook::after {
+        display: none;
     }
 
     .floating-facebook-icon {
@@ -1417,7 +1462,7 @@ button,
         display: flex;
         width: 50px;
         height: 50px;
-        bottom: 95px; /* Position above footer */
+        bottom: 80px; /* Position above footer */
         right: 135px; /* Positioned to the left of Facebook button */
     }
 
