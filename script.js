@@ -299,14 +299,16 @@ const translations = {
                     }
                 });
 
-                // Wait for critical images to load (or 300ms timeout), then scroll
-                Promise.race([
-                    Promise.all(imageLoadPromises),
-                    new Promise(resolve => setTimeout(resolve, 300))
-                ]).then(() => {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                // Wait for ALL images to load, then give browser time to reflow before scrolling
+                Promise.all(imageLoadPromises).then(() => {
+                    // Small delay to let browser reflow with new image dimensions
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        });
                     });
                 });
             }
