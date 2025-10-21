@@ -756,4 +756,12 @@ const translations = {
 
         mapObserver.observe(mapContainer);
     }
+
+    // Remove focus from Facebook button after click to hide tooltip
+    const facebookButton = document.querySelector('.floating-facebook');
+    if (facebookButton) {
+        facebookButton.addEventListener('click', function() {
+            this.blur();
+        });
+    }
 });
