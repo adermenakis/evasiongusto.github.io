@@ -972,6 +972,93 @@ input:focus:not(:focus-visible) {
     width: 100%;
 }
 
+/* ============================================
+   LAZY LOADING STYLES
+   ============================================ */
+
+/* PDF Container Wrapper - matches contact-map styling */
+.pdf-container-wrapper {
+    margin-top: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* PDF Lazy Loading Container */
+#pdf-lazy-container {
+    position: relative;
+    min-height: 850px;
+}
+
+#pdf-lazy-container iframe {
+    display: block;
+    width: 100%;
+}
+
+/* PDF Placeholder Text Centering */
+#pdf-lazy-container > p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    text-align: center;
+}
+
+/* PDF Loading Spinner - Centered */
+#pdf-loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Map Lazy Loading Container */
+#map-lazy-container {
+    position: relative;
+    height: 400px;
+}
+
+/* Map Placeholder Text Centering */
+#map-lazy-container > p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    text-align: center;
+}
+
+/* Map Loading Spinner - Centered */
+#map-loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Animation: Spinner Rotation */
+@keyframes spin-pdf {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animation: Shimmer Effect for Placeholders */
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
 /* Floating Contact Button */
 .floating-cta {
     position: fixed;

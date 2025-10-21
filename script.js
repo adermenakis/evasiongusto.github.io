@@ -542,6 +542,108 @@ const translations = {
     // Initialize lazy loading
     lazyLoadImages();
 
+    // ============================================
+    // REUSABLE LAZY LOADING FUNCTIONS
+    // ============================================
+
+    /**
+     * Creates a loading spinner HTML
+     * @param {string} spinnerId - ID for the spinner element
+     * @param {string} progressId - ID for the progress text element
+     * @param {string} loadingText - Text to display below spinner
+     * @returns {string} HTML string for spinner
+     */
+    function createSpinnerHTML(spinnerId, progressId, loadingText) {
+        return `
+            <div id="${spinnerId}">
+                <div style="position: relative; width: 80px; height: 80px; margin-bottom: 1.5rem;">
+                    <div style="position: absolute; width: 100%; height: 100%; border: 4px solid #e0e0e0; border-top: 4px solid #607244; border-radius: 50%; animation: spin-pdf 1s linear infinite; box-shadow: 0 0 20px rgba(96, 114, 68, 0.3);"></div>
+                    <p id="${progressId}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #607244; font-size: 18px; margin: 0; font-weight: 700; text-shadow: 0 0 10px rgba(96, 114, 68, 0.4);">0%</p>
+                </div>
+                <p style="color: #607244; font-size: 18px; margin: 0; font-weight: 600;">${loadingText}</p>
+            </div>
+        `;
+    }
+
+    /**
+     * Simulates loading progress with animation
+     * @param {string} progressId - ID of the progress element to update
+     * @returns {number} Interval ID that can be cleared later
+     */
+    function simulateLoadingProgress(progressId) {
+        let progress = 0;
+        return setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 90) progress = 90; // Cap at 90% until actual load
+            const progressElement = document.getElementById(progressId);
+            if (progressElement) {
+                progressElement.textContent = Math.floor(progress) + '%';
+            }
+        }, 200);
+    }
+
+    /**
+     * Handles iframe load completion - shows 100% and fades in iframe
+     * @param {number} progressInterval - Interval ID to clear
+     * @param {string} progressId - ID of progress element
+     * @param {string} spinnerId - ID of spinner element
+     * @param {HTMLElement} container - Container element
+     * @param {HTMLIFrameElement} iframe - Iframe element to fade in
+     */
+    function handleIframeLoad(progressInterval, progressId, spinnerId, container, iframe) {
+        // Stop progress simulation and show 100%
+        clearInterval(progressInterval);
+        const progressElement = document.getElementById(progressId);
+        if (progressElement) {
+            progressElement.textContent = '100%';
+        }
+
+        // Brief delay to show 100%, then hide spinner
+        setTimeout(() => {
+            const spinner = document.getElementById(spinnerId);
+            if (spinner) spinner.remove();
+
+            // Clear container styling
+            container.style.background = 'transparent';
+            container.style.animation = 'none';
+            if (container.id === 'pdf-lazy-container') {
+                container.style.minHeight = 'auto';
+            }
+
+            // Fade in iframe
+            iframe.style.opacity = '1';
+        }, 300);
+    }
+
+    /**
+     * Creates and configures an iframe element
+     * @param {Object} config - Configuration object
+     * @returns {HTMLIFrameElement} Configured iframe element
+     */
+    function createIframe(config) {
+        const iframe = document.createElement('iframe');
+        iframe.src = config.src;
+        iframe.width = config.width || '100%';
+        iframe.height = config.height;
+        iframe.title = config.title;
+        iframe.style.border = config.border || '0';
+        iframe.style.borderRadius = config.borderRadius || '8px';
+        iframe.style.opacity = '0';
+        iframe.style.transition = 'opacity 0.6s ease';
+        iframe.style.display = 'block';
+
+        if (config.allow) iframe.allow = config.allow;
+        if (config.allowFullscreen) iframe.allowFullscreen = config.allowFullscreen;
+        if (config.referrerPolicy) iframe.referrerPolicy = config.referrerPolicy;
+        if (config.ariaLabel) iframe.setAttribute('aria-label', config.ariaLabel);
+
+        return iframe;
+    }
+
+    // ============================================
+    // PDF LAZY LOADING
+    // ============================================
+
     // PDF Lazy Loading with IntersectionObserver
     const pdfContainer = document.getElementById('pdf-lazy-container');
     if (pdfContainer) {
@@ -560,69 +662,27 @@ const translations = {
                     const currentLanguage = localStorage.getItem('language') || 'fr';
                     const loadingText = translations[currentLanguage].pdfLoading;
 
-                    // Clear inline styles - centering is handled by CSS in <head>
+                    // Clear inline styles
                     pdfContainer.removeAttribute('style');
 
-                    // Show loading spinner (will be centered by CSS absolute positioning)
-                    pdfContainer.innerHTML = `
-                        <div id="pdf-loading-spinner">
-                            <div style="position: relative; width: 80px; height: 80px; margin-bottom: 1.5rem;">
-                                <div style="position: absolute; width: 100%; height: 100%; border: 4px solid #e0e0e0; border-top: 4px solid #607244; border-radius: 50%; animation: spin-pdf 1s linear infinite; box-shadow: 0 0 20px rgba(96, 114, 68, 0.3);"></div>
-                                <p id="pdf-load-progress" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #607244; font-size: 18px; margin: 0; font-weight: 700; text-shadow: 0 0 10px rgba(96, 114, 68, 0.4);">0%</p>
-                            </div>
-                            <p style="color: #607244; font-size: 18px; margin: 0; font-weight: 600;">${loadingText}</p>
-                        </div>
-                    `;
+                    // Show loading spinner
+                    pdfContainer.innerHTML = createSpinnerHTML('pdf-loading-spinner', 'pdf-load-progress', loadingText);
 
-                    // Simulate loading progress (since we can't track actual iframe load progress)
-                    let progress = 0;
-                    const progressInterval = setInterval(() => {
-                        progress += Math.random() * 15;
-                        if (progress > 90) progress = 90; // Cap at 90% until actual load
-                        const progressElement = document.getElementById('pdf-load-progress');
-                        if (progressElement) {
-                            progressElement.textContent = Math.floor(progress) + '%';
-                        }
-                    }, 200);
+                    // Start simulating progress
+                    const progressInterval = simulateLoadingProgress('pdf-load-progress');
 
-                    // Create iframe - plain and simple like main branch
-                    const iframe = document.createElement('iframe');
-                    iframe.src = 'https://drive.google.com/file/d/1yjaPTS9nFbm8eVBIxwH_zT35Tt3r7iL5/preview';
-                    iframe.width = '100%';
-                    iframe.height = '850px';
-                    iframe.allow = 'autoplay';
-                    iframe.title = "This Week's Menu PDF";
-                    iframe.style.border = 'none';
-                    iframe.style.borderRadius = '8px';
-                    iframe.style.display = 'block';
-
-                    // Start hidden for fade-in effect
-                    iframe.style.opacity = '0';
-                    iframe.style.transition = 'opacity 0.6s ease';
+                    // Create PDF iframe
+                    const iframe = createIframe({
+                        src: 'https://drive.google.com/file/d/1yjaPTS9nFbm8eVBIxwH_zT35Tt3r7iL5/preview',
+                        height: '850px',
+                        allow: 'autoplay',
+                        title: "This Week's Menu PDF",
+                        border: 'none'
+                    });
 
                     iframe.onload = function() {
                         console.log('✅ PDF iframe loaded');
-
-                        // Stop progress simulation and show 100%
-                        clearInterval(progressInterval);
-                        const progressElement = document.getElementById('pdf-load-progress');
-                        if (progressElement) {
-                            progressElement.textContent = '100%';
-                        }
-
-                        // Brief delay to show 100%, then hide spinner
-                        setTimeout(() => {
-                            const spinner = document.getElementById('pdf-loading-spinner');
-                            if (spinner) spinner.remove();
-
-                            // Clear container styling
-                            pdfContainer.style.background = 'transparent';
-                            pdfContainer.style.animation = 'none';
-                            pdfContainer.style.minHeight = 'auto';
-
-                            // Fade in iframe
-                            iframe.style.opacity = '1';
-                        }, 300);
+                        handleIframeLoad(progressInterval, 'pdf-load-progress', 'pdf-loading-spinner', pdfContainer, iframe);
                     };
 
                     iframe.onerror = function() {
@@ -662,69 +722,28 @@ const translations = {
                     const currentLanguage = localStorage.getItem('language') || 'fr';
                     const loadingText = currentLanguage === 'fr' ? 'Chargement de la carte...' : 'Loading map...';
 
-                    // Clear inline styles - centering is handled by CSS in <head>
+                    // Clear inline styles
                     mapContainer.removeAttribute('style');
 
-                    // Show loading spinner (will be centered by CSS absolute positioning)
-                    mapContainer.innerHTML = `
-                        <div id="map-loading-spinner">
-                            <div style="position: relative; width: 80px; height: 80px; margin-bottom: 1.5rem;">
-                                <div style="position: absolute; width: 100%; height: 100%; border: 4px solid #e0e0e0; border-top: 4px solid #607244; border-radius: 50%; animation: spin-pdf 1s linear infinite; box-shadow: 0 0 20px rgba(96, 114, 68, 0.3);"></div>
-                                <p id="map-load-progress" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #607244; font-size: 18px; margin: 0; font-weight: 700; text-shadow: 0 0 10px rgba(96, 114, 68, 0.4);">0%</p>
-                            </div>
-                            <p style="color: #607244; font-size: 18px; margin: 0; font-weight: 600;">${loadingText}</p>
-                        </div>
-                    `;
+                    // Show loading spinner
+                    mapContainer.innerHTML = createSpinnerHTML('map-loading-spinner', 'map-load-progress', loadingText);
 
-                    // Simulate loading progress
-                    let progress = 0;
-                    const progressInterval = setInterval(() => {
-                        progress += Math.random() * 15;
-                        if (progress > 90) progress = 90; // Cap at 90% until actual load
-                        const progressElement = document.getElementById('map-load-progress');
-                        if (progressElement) {
-                            progressElement.textContent = Math.floor(progress) + '%';
-                        }
-                    }, 200);
+                    // Start simulating progress
+                    const progressInterval = simulateLoadingProgress('map-load-progress');
 
-                    // Create iframe for Google Maps
-                    const iframe = document.createElement('iframe');
-                    iframe.src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2552.4739256206767!2d4.2012718!3d50.2270505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2154d024ce013%3A0x6be2f8b6a322b9c6!2s%C3%89vasion%20Gusto!5e0!3m2!1sen!2sbe!4v1760743263973!5m2!1sen!2sbe';
-                    iframe.width = '100%';
-                    iframe.height = '400';
-                    iframe.style.border = '0';
-                    iframe.allowFullscreen = true;
-                    iframe.referrerPolicy = 'no-referrer-when-downgrade';
-                    iframe.title = 'Évasion Gusto Location';
-                    iframe.setAttribute('aria-label', 'Map showing Évasion Gusto location in Beaumont, Belgium');
-
-                    // Start hidden for fade-in effect
-                    iframe.style.opacity = '0';
-                    iframe.style.transition = 'opacity 0.6s ease';
-                    iframe.style.borderRadius = '8px';
+                    // Create Google Maps iframe
+                    const iframe = createIframe({
+                        src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2552.4739256206767!2d4.2012718!3d50.2270505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2154d024ce013%3A0x6be2f8b6a322b9c6!2s%C3%89vasion%20Gusto!5e0!3m2!1sen!2sbe!4v1760743263973!5m2!1sen!2sbe',
+                        height: '400',
+                        title: 'Évasion Gusto Location',
+                        allowFullscreen: true,
+                        referrerPolicy: 'no-referrer-when-downgrade',
+                        ariaLabel: 'Map showing Évasion Gusto location in Beaumont, Belgium'
+                    });
 
                     iframe.onload = function() {
                         console.log('✅ Map iframe loaded');
-
-                        // Stop progress simulation and show 100%
-                        clearInterval(progressInterval);
-                        const progressElement = document.getElementById('map-load-progress');
-                        if (progressElement) {
-                            progressElement.textContent = '100%';
-                        }
-
-                        // Brief delay to show 100%, then hide spinner
-                        setTimeout(() => {
-                            const spinner = document.getElementById('map-loading-spinner');
-                            if (spinner) spinner.remove();
-
-                            // Clear container styling
-                            mapContainer.style.background = 'transparent';
-                            mapContainer.style.animation = 'none';
-
-                            // Fade in iframe
-                            iframe.style.opacity = '1';
-                        }, 300);
+                        handleIframeLoad(progressInterval, 'map-load-progress', 'map-loading-spinner', mapContainer, iframe);
                     };
 
                     iframe.onerror = function() {
