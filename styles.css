@@ -343,6 +343,12 @@ header.shrink .header-logo {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+h1 {
+/* matches default user-agent size */
+  font-size: 2em;
+}
+
+
 .section h1, .section h2 {
     margin-bottom: 1rem;
     color: var(--primary-color);
@@ -379,6 +385,11 @@ header.shrink .header-logo {
 }
 
 /* Footer Styles */
+
+.bold-link {
+  font-weight: bold;
+}
+
 .footer {
     background: rgba(96, 114, 68, 0.8); /* Dark green with transparency */
     color: var(--nav-bar-font-color);

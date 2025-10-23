@@ -138,16 +138,32 @@ const translations = {
 
     // Translate function
     function translatePage(language) {
-        document.querySelectorAll('[data-key]').forEach((element) => {
-            const key = element.getAttribute('data-key');
-            if (translations[language][key]) {
-                if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'P' || element.tagName === 'H1' || element.tagName === 'H2' || element.tagName === 'H3') {
-                    element.innerHTML = translations[language][key];
-                } else {
-                    element.textContent = translations[language][key];
-                }
+    document.querySelectorAll('[data-key], [data-key-tooltip]').forEach((element) => {
+        // Prefer data-key, fallback to data-key-tooltip
+        const key = element.getAttribute('data-key') || element.getAttribute('data-key-tooltip');
+        if (translations[language][key]) {
+        if (element.hasAttribute('data-key')) {
+            // Usual translation for innerHTML/textContent
+            if (
+            element.tagName === 'A' ||
+            element.tagName === 'BUTTON' ||
+            element.tagName === 'P' ||
+            element.tagName === 'H1' ||
+            element.tagName === 'H2' ||
+            element.tagName === 'H3'
+            ) {
+            element.innerHTML = translations[language][key];
+            } else {
+            element.textContent = translations[language][key];
             }
-        });
+        }
+        if (element.hasAttribute('data-key-tooltip')) {
+            // Tooltip translation
+            element.setAttribute('data-tooltip', translations[language][key]);
+            element.setAttribute('title', translations[language][key]);
+        }
+        }
+    });
     }
 
     // Set initial language
