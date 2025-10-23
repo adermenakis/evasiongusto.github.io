@@ -15,6 +15,34 @@
     };
 })();
 
+// GDPR Consent Check (Executed immediately)
+(function() {
+    const consentStatus = localStorage.getItem('gdpr-consent');
+    const gdprPopup = document.getElementById('gdpr-consent-popup');
+    
+    if (!consentStatus && gdprPopup) {
+        gdprPopup.style.display = 'flex';
+        
+        // Set up event listeners immediately
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+        
+        if (acceptCookies) {
+            acceptCookies.addEventListener('click', () => {
+                localStorage.setItem('gdpr-consent', 'accepted');
+                gdprPopup.style.display = 'none';
+            });
+        }
+        
+        if (declineCookies) {
+            declineCookies.addEventListener('click', () => {
+                localStorage.setItem('gdpr-consent', 'declined');
+                gdprPopup.style.display = 'none';
+            });
+        }
+    }
+})();
+
 document.addEventListener('DOMContentLoaded', function () {
     // Translation Data
 const translations = {
@@ -233,40 +261,7 @@ const translations = {
         });
     });
 
-    // GDPR Consent Management
-    // Delay popup to improve LCP (Largest Contentful Paint)
-    const gdprPopup = document.getElementById('gdpr-consent-popup');
-    const acceptCookies = document.getElementById('accept-cookies');
-    const declineCookies = document.getElementById('decline-cookies');
-    const consentStatus = localStorage.getItem('gdpr-consent');
-
-    // Show popup after page has loaded and user can see content
-    if (!consentStatus) {
-        // Wait for page to be fully loaded and interactive
-        if (document.readyState === 'complete') {
-            // Page already loaded, show after 1 second
-            setTimeout(() => {
-                gdprPopup.style.display = 'flex';
-            }, 1000);
-        } else {
-            // Wait for page to load, then show after 1 second
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    gdprPopup.style.display = 'flex';
-                }, 1000);
-            });
-        }
-    }
-
-    acceptCookies.addEventListener('click', () => {
-        localStorage.setItem('gdpr-consent', 'accepted');
-        gdprPopup.style.display = 'none';
-    });
-
-    declineCookies.addEventListener('click', () => {
-        localStorage.setItem('gdpr-consent', 'declined');
-        gdprPopup.style.display = 'none';
-    });
+    // GDPR event listeners already set up in the immediate execution code above
 
     // Header shrink effect
     const header = document.getElementById('header');
