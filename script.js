@@ -240,20 +240,14 @@ const translations = {
     const declineCookies = document.getElementById('decline-cookies');
     const consentStatus = localStorage.getItem('gdpr-consent');
 
-    // Show popup after page has loaded and user can see content
+    // Show popup immediately if consent not given
     if (!consentStatus) {
-        // Wait for page to be fully loaded and interactive
         if (document.readyState === 'complete') {
-            // Page already loaded, show after 1 second
-            setTimeout(() => {
-                gdprPopup.style.display = 'flex';
-            }, 1000);
+            gdprPopup.style.display = 'flex';
         } else {
-            // Wait for page to load, then show after 1 second
+            // If page not fully loaded, show as soon as it is
             window.addEventListener('load', () => {
-                setTimeout(() => {
-                    gdprPopup.style.display = 'flex';
-                }, 1000);
+                gdprPopup.style.display = 'flex';
             });
         }
     }
