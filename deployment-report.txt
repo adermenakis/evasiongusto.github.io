@@ -1,0 +1,23 @@
+=== Deployment Report ===
+
+Deploy Type: branch
+Source Branch: main
+Deployed Commit: df79e17 (Merge pull request #22 from adermenakis/dev)
+Target Branch: live-website
+Deployed at: 2025-10-28 16:29:45 UTC
+
+=== File Size Report ===
+
+CSS Files:
+  styles.css                          33823 →      20628 bytes (-39%)
+
+JavaScript Files:
+  analytics.js                         1070 →        525 bytes (-50%)
+  gallery-script.js                    8044 →       4321 bytes (-46%)
+  generate-lqip.js                     2950 →       1406 bytes (-52%)
+  inject-lqip-simple.js                1507 →        747 bytes (-50%)
+  script.js                           43137 →      25296 bytes (-41%)
+
+================================
+Total:                               90531 →      52923 bytes (-41%)
+Total Savings:                       37608 bytes (36.7 KB)
