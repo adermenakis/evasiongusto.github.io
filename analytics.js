@@ -1,14 +1,25 @@
-// Google Analytics (Optimized Loading)
+// Google Analytics (GDPR-Compliant Loading)
 // Initialize dataLayer
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 
-// Load Google Analytics after page is interactive
-function loadGoogleAnalytics() {
-    var anonymize = localStorage.getItem('gdpr-consent');
+// Track if analytics has been loaded to prevent double-loading
+window.analyticsLoaded = false;
 
-    // Only load if user hasn't declined
-    if (anonymize !== 'declined') {
+// Function to load Google Analytics
+window.loadGoogleAnalytics = function() {
+    // Prevent double-loading
+    if (window.analyticsLoaded) {
+        return;
+    }
+
+    var consentStatus = localStorage.getItem('gdpr-consent');
+
+    // Only load if user has explicitly accepted OR hasn't made a choice yet (implicit consent)
+    // Change this to only load on 'accepted' if you want explicit consent only
+    if (consentStatus !== 'declined') {
+        window.analyticsLoaded = true;
+
         // Create and append script tag
         var script = document.createElement('script');
         script.async = true;
@@ -19,15 +30,22 @@ function loadGoogleAnalytics() {
         script.onload = function() {
             gtag('js', new Date());
             gtag('config', 'G-Z38L6G3HR0', {
-                'anonymize_ip': anonymize != 'accepted'
+                'anonymize_ip': consentStatus !== 'accepted'
             });
+            console.log('Google Analytics loaded with consent status:', consentStatus);
         };
     }
 }
 
-// Load after page is fully loaded (doesn't block rendering)
-if (document.readyState === 'complete') {
-    loadGoogleAnalytics();
-} else {
-    window.addEventListener('load', loadGoogleAnalytics);
+// For returning visitors who previously accepted: load immediately
+var consentStatus = localStorage.getItem('gdpr-consent');
+if (consentStatus === 'accepted') {
+    // Load after page is interactive (doesn't block rendering)
+    if (document.readyState === 'complete') {
+        window.loadGoogleAnalytics();
+    } else {
+        window.addEventListener('load', window.loadGoogleAnalytics);
+    }
 }
+
+// For first-time visitors: analytics will be loaded when they click "Accept" in script.js

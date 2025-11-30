@@ -31,13 +31,21 @@
             acceptCookies.addEventListener('click', () => {
                 localStorage.setItem('gdpr-consent', 'accepted');
                 gdprPopup.style.display = 'none';
+
+                // Load Google Analytics after user accepts
+                if (typeof window.loadGoogleAnalytics === 'function') {
+                    window.loadGoogleAnalytics();
+                }
             });
         }
-        
+
         if (declineCookies) {
             declineCookies.addEventListener('click', () => {
                 localStorage.setItem('gdpr-consent', 'declined');
                 gdprPopup.style.display = 'none';
+
+                // Analytics will not be loaded as user declined
+                console.log('User declined analytics tracking');
             });
         }
     }
