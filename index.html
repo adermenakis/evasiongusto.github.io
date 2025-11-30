@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Évasion Gusto - Services de Traiteur Exceptionnels</title>
+    <title>Évasion Gusto - Chef à Domicile, Traiteur & Cours de Cuisine | Beaumont, Chimay, Mons | Private Chef & Cooking Classes</title>
     
     <!-- Google Analytics (Optimized Loading) -->
     <!-- Deferred to improve page load performance -->
@@ -11,8 +11,8 @@
     <script src="analytics.js" defer></script>
 
     <!-- Meta Tags for SEO -->
-    <meta name="description" content="Évasion Gusto à Beaumont offre des services de traiteur premium : chef privé, livraison de repas gastronomiques, dégustation de vins et bières, ateliers culinaires. Près de Mons et SHAPE OTAN.">
-    <meta name="keywords" content="Évasion Gusto, Evasiongusto, traiteur Beaumont, catering Mons, chef privé Belgique, wine tasting, beer tasting, food delivery, event organization, private chef, culinary workshops, team building, NATO SHAPE, traiteur, dégustation des vins, dégustation des bières, livraison de repas, organisation d'événements, chef privé, ateliers culinaires, traiteur Chimay, catering Sivry">
+    <meta name="description" content="Chef à domicile, traiteur et cours de cuisine à Beaumont, Chimay, Mons, Thuin, Charleroi, Namur, Bruxelles. Plats à emporter, private chef, catering, cooking classes. Service Hainaut et toute la Belgique.">
+    <meta name="keywords" content="Évasion Gusto, chef à domicile, traiteur, plats à emporter, cours de cuisine, private chef, catering, takeout food, cooking classes, culinary workshops, Beaumont, Chimay, Mons, Thuin, Charleroi, Namur, Bruxelles, Brussels, wine tasting, beer tasting, dégustation vins, dégustation bières, atelier culinaire, team building, NATO SHAPE, Hainaut">
     <meta name="author" content="Évasion Gusto">
 
     <!-- Canonical URL -->
@@ -44,7 +44,7 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "LocalBusiness",
+        "@type": ["LocalBusiness", "FoodEstablishment", "EducationalOrganization"],
         "name": "Évasion Gusto",
         "image": "https://www.evasiongusto.be/images/logo.svg",
         "@id": "https://www.evasiongusto.be",
@@ -71,8 +71,21 @@
             "closes": "18:00"
         },
         "servesCuisine": ["French", "Belgian", "Greek", "Mediterranean", "Japanese"],
-        "description": "Services de traiteur haut de gamme, y compris la dégustation de vins et de bières, la livraison de repas, l'organisation d'événements, les services de chef privé et les ateliers culinaires à Beaumont, Mons, près de l'OTAN SHAPE.",
-        "areaServed": ["Beaumont", "Mons", "Chimay", "Sivry", "Rance", "SHAPE"],
+        "description": "Chef à domicile, traiteur et cours de cuisine à Beaumont et dans toute la province du Hainaut. Private chef services, catering, cooking classes, plats à emporter gastronomiques, dégustations de vins et bières.",
+        "serviceType": ["Private Chef", "Catering", "Takeout Food", "Cooking Classes", "Culinary Workshops", "Wine Tasting", "Beer Tasting", "Team Building", "Chef à domicile", "Traiteur", "Plats à emporter", "Cours de cuisine", "Ateliers culinaires", "Dégustation de vins", "Dégustation de bières"],
+        "areaServed": [
+            {"@type": "City", "name": "Beaumont"},
+            {"@type": "City", "name": "Chimay"},
+            {"@type": "City", "name": "Mons"},
+            {"@type": "City", "name": "Thuin"},
+            {"@type": "City", "name": "Charleroi"},
+            {"@type": "City", "name": "Sivry"},
+            {"@type": "City", "name": "Rance"},
+            {"@type": "City", "name": "Namur"},
+            {"@type": "City", "name": "Brussels"},
+            {"@type": "City", "name": "Bruxelles"},
+            {"@type": "AdministrativeArea", "name": "Hainaut"}
+        ],
         "sameAs": [
             "https://www.facebook.com/profile.php?id=61563989882231",
             "https://www.instagram.com/evasiongusto"
@@ -80,8 +93,13 @@
     }
     </script>
 
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico">
+    <!-- Favicons for all devices and browsers -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon28x28.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="favicon64x64.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon192x192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="favicon192x192.png">
 
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
