@@ -37,9 +37,9 @@ window.loadGoogleAnalytics = function() {
     }
 }
 
-// For returning visitors who previously accepted: load immediately
+// For returning visitors who previously accepted or haven't decided: load immediately
 var consentStatus = localStorage.getItem('gdpr-consent');
-if (consentStatus === 'accepted') {
+if (consentStatus !== 'declined') {
     // Load after page is interactive (doesn't block rendering)
     if (document.readyState === 'complete') {
         window.loadGoogleAnalytics();
