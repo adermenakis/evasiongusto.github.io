@@ -1,0 +1,23 @@
+=== Deployment Report ===
+
+Deploy Type: branch
+Source Branch: main
+Deployed Commit: 2a4ce11 (Merge pull request #27 from adermenakis/seo-performance-quickfixes)
+Target Branch: live-website
+Deployed at: 2026-01-16 19:09:55 UTC
+
+=== File Size Report ===
+
+CSS Files:
+  styles.css                          33823 →      20628 bytes (-39%)
+
+JavaScript Files:
+  analytics.js                         1842 →        776 bytes (-57%)
+  gallery-script.js                    8044 →       4321 bytes (-46%)
+  generate-lqip.js                     2950 →       1406 bytes (-52%)
+  inject-lqip-simple.js                1507 →        747 bytes (-50%)
+  script.js                           44841 →      26800 bytes (-40%)
+
+================================
+Total:                               93007 →      54678 bytes (-41%)
+Total Savings:                       38329 bytes (37.4 KB)
