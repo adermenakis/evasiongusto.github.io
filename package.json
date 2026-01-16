@@ -8,6 +8,7 @@
     "lqip": "npm run lqip:generate && npm run lqip:inject"
   },
   "devDependencies": {
-    "sharp": "^0.34.4"
+    "sharp": "^0.34.4",
+    "svgo": "^4.0.0"
   }
 }
