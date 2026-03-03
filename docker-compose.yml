@@ -2,15 +2,20 @@ version: '3.8'
 
 services:
   web:
-    image: nginx:alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: evasiongusto-web
     ports:
       - "8080:80"
-    volumes:
-      # Bind mount the current directory to nginx html folder
-      - .:/usr/share/nginx/html:ro
-      # Optional: Custom nginx config for better development
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    environment:
+      - TZ=Europe/Brussels
     restart: unless-stopped
     labels:
       - "description=Évasion Gusto Website Development Server"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
