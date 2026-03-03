@@ -1,8 +1,10 @@
 User-agent: *
 Allow: /
+
 Sitemap: https://www.evasiongusto.be/sitemap.xml
 
-# Optimize crawling
+# Block utility files from indexing
 User-agent: *
 Disallow: /images/og-image.jpg
 Disallow: /images/twitter-image.jpg
+Disallow: /js/
