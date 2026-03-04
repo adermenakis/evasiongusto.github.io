@@ -5,10 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Évasion Gusto - Chef à Domicile, Traiteur & Cours de Cuisine | Beaumont, Chimay, Mons | Private Chef & Cooking Classes</title>
     
-    <!-- Google Analytics (Optimized Loading) -->
-    <!-- Deferred to improve page load performance -->
-    <!-- Google Analytics (non-blocking, loaded after page interactive) -->
-    <script src="analytics.js" defer></script>
+    <!-- Google Tag Manager Consent Mode v2 (MUST be first script tag, before GTM) -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+
+        // Initialize consent with all tracking denied (user must opt-in)
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'functionality_storage': 'granted',
+            'security_storage': 'granted',
+            'wait_for_update': 500
+        });
+    </script>
+
+    <!-- Google Tag Manager (noscript) - loads immediately with Consent Mode v2 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-53GC8FTN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GTM-53GC8FTN');
+    </script>
+
+    <!-- GTM + Consent Mode v2 Manager -->
+    <script src="gtm-consent.js" defer></script>
 
     <!-- Meta Tags for SEO -->
     <meta name="description" content="Chef à domicile, traiteur et cours de cuisine à Beaumont, Chimay, Mons, Thuin, Charleroi, Namur, Bruxelles. Plats à emporter, private chef, catering, cooking classes. Service Hainaut et toute la Belgique.">
@@ -143,6 +167,11 @@
     <link rel="alternate" hreflang="x-default" href="https://www.evasiongusto.be/">
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53GC8FTN"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <!-- Skip Links for Accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -477,12 +506,54 @@
         <button class="next" onclick="changeImage(1)" aria-label="Next image" role="button">&#10095;</button>
     </div>
 
-    <!-- GDPR Cookie Consent Popup -->
+    <!-- GDPR Cookie Consent Banner (Granular) -->
     <div id="gdpr-consent-popup" class="gdpr-popup">
         <div class="gdpr-popup-content">
-            <p>Nous utilisons des cookies pour améliorer votre expérience sur notre site Web. En continuant à utiliser ce site, vous acceptez notre utilisation des cookies.</p>
-            <button id="accept-cookies">Accepter</button>
-            <button id="decline-cookies">Refuser</button>
+            <div class="consent-header">
+                <h3 data-key="consentTitle">Nous utilisons des cookies</h3>
+                <p data-key="consentDescription">Nous utilisons des cookies pour améliorer votre expérience. Consultez notre <a href="privacy-policy.html" target="_blank">politique de confidentialité</a> pour plus d'informations.</p>
+            </div>
+
+            <div class="consent-categories">
+                <!-- Necessary Cookies (Always Enabled) -->
+                <div class="consent-category">
+                    <label>
+                        <input type="checkbox" id="consent-necessary" checked disabled>
+                        <span class="consent-label">
+                            <strong data-key="consentNecessary">Nécessaires</strong>
+                            <span class="consent-description" data-key="consentNecessaryDesc">Toujours actifs</span>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Analytics Cookies -->
+                <div class="consent-category">
+                    <label>
+                        <input type="checkbox" id="consent-analytics">
+                        <span class="consent-label">
+                            <strong data-key="consentAnalytics">Analytiques</strong>
+                            <span class="consent-description" data-key="consentAnalyticsDesc">Pour améliorer notre site</span>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Marketing Cookies -->
+                <div class="consent-category">
+                    <label>
+                        <input type="checkbox" id="consent-marketing">
+                        <span class="consent-label">
+                            <strong data-key="consentMarketing">Marketing</strong>
+                            <span class="consent-description" data-key="consentMarketingDesc">Publicité personnalisée</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="consent-actions">
+                <button id="accept-all-cookies" class="btn-accept-all" data-key="consentAcceptAll">Tout accepter</button>
+                <button id="save-preferences-cookies" class="btn-save" data-key="consentSavePreferences">Enregistrer</button>
+                <button id="decline-all-cookies" class="btn-decline-all" data-key="consentDeclineAll">Tout refuser</button>
+            </div>
         </div>
     </div>
 

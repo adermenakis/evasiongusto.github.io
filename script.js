@@ -15,37 +15,59 @@
     };
 })();
 
-// GDPR Consent Check (Executed immediately)
+// GDPR Consent Check (Executed immediately - before DOMContentLoaded)
 (function() {
     const consentStatus = localStorage.getItem('gdpr-consent');
     const gdprPopup = document.getElementById('gdpr-consent-popup');
-    
-    if (!consentStatus && gdprPopup) {
-        gdprPopup.style.display = 'flex';
-        
-        // Set up event listeners immediately
-        const acceptCookies = document.getElementById('accept-cookies');
-        const declineCookies = document.getElementById('decline-cookies');
-        
-        if (acceptCookies) {
-            acceptCookies.addEventListener('click', () => {
-                localStorage.setItem('gdpr-consent', 'accepted');
-                gdprPopup.style.display = 'none';
 
-                // Load Google Analytics after user accepts
-                if (typeof window.loadGoogleAnalytics === 'function') {
-                    window.loadGoogleAnalytics();
+    if (!consentStatus && gdprPopup) {
+        // First-time visitor: show banner
+        gdprPopup.style.display = 'flex';
+
+        // Set up event listeners immediately
+        const acceptAllBtn = document.getElementById('accept-all-cookies');
+        const declineAllBtn = document.getElementById('decline-all-cookies');
+        const savePrefsBtn = document.getElementById('save-preferences-cookies');
+        const analyticsCheckbox = document.getElementById('consent-analytics');
+        const marketingCheckbox = document.getElementById('consent-marketing');
+
+        if (acceptAllBtn) {
+            acceptAllBtn.addEventListener('click', () => {
+                // Check all optional checkboxes and save
+                analyticsCheckbox.checked = true;
+                marketingCheckbox.checked = true;
+
+                if (typeof window.acceptAllConsent === 'function') {
+                    window.acceptAllConsent();
                 }
+                gdprPopup.style.display = 'none';
             });
         }
 
-        if (declineCookies) {
-            declineCookies.addEventListener('click', () => {
-                localStorage.setItem('gdpr-consent', 'declined');
-                gdprPopup.style.display = 'none';
+        if (declineAllBtn) {
+            declineAllBtn.addEventListener('click', () => {
+                // Uncheck all optional checkboxes and save
+                analyticsCheckbox.checked = false;
+                marketingCheckbox.checked = false;
 
-                // Analytics will not be loaded as user declined
-                console.log('User declined analytics tracking');
+                if (typeof window.declineAllConsent === 'function') {
+                    window.declineAllConsent();
+                }
+                gdprPopup.style.display = 'none';
+            });
+        }
+
+        if (savePrefsBtn) {
+            savePrefsBtn.addEventListener('click', () => {
+                // Save current checkbox state
+                if (typeof window.updateConsent === 'function') {
+                    window.updateConsent(
+                        analyticsCheckbox.checked,
+                        marketingCheckbox.checked,
+                        true
+                    );
+                }
+                gdprPopup.style.display = 'none';
             });
         }
     }
@@ -110,7 +132,18 @@ const translations = {
         emailLabel: "Email",
         phoneLabel: "Phone",
         whatsappLabel: "WhatsApp",
-        swipeInstruction: "← Swipe to navigate →"
+        swipeInstruction: "← Swipe to navigate →",
+        consentTitle: "We Use Cookies",
+        consentDescription: "We use cookies to improve your experience. Please consult our privacy policy for more information.",
+        consentNecessary: "Necessary",
+        consentNecessaryDesc: "Always active",
+        consentAnalytics: "Analytics",
+        consentAnalyticsDesc: "To improve our site",
+        consentMarketing: "Marketing",
+        consentMarketingDesc: "Personalized advertising",
+        consentAcceptAll: "Accept All",
+        consentSavePreferences: "Save Preferences",
+        consentDeclineAll: "Decline All"
     },
     fr: {
         home: "Accueil",
@@ -168,7 +201,18 @@ const translations = {
         emailLabel: "E-mail",
         phoneLabel: "Téléphone",
         whatsappLabel: "WhatsApp",
-        swipeInstruction: "← Glissez pour naviguer →"
+        swipeInstruction: "← Glissez pour naviguer →",
+        consentTitle: "Nous Utilisons des Cookies",
+        consentDescription: "Nous utilisons des cookies pour améliorer votre expérience. Consultez notre politique de confidentialité pour plus d'informations.",
+        consentNecessary: "Nécessaires",
+        consentNecessaryDesc: "Toujours actifs",
+        consentAnalytics: "Analytiques",
+        consentAnalyticsDesc: "Pour améliorer notre site",
+        consentMarketing: "Marketing",
+        consentMarketingDesc: "Publicité personnalisée",
+        consentAcceptAll: "Tout accepter",
+        consentSavePreferences: "Enregistrer",
+        consentDeclineAll: "Tout refuser"
     }
 };
 
