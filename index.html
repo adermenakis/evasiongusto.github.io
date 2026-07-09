@@ -89,12 +89,6 @@
             "latitude": 50.2270505,
             "longitude": 4.2012718
         },
-        "openingHoursSpecification": {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "09:00",
-            "closes": "18:00"
-        },
         "servesCuisine": ["French", "Belgian", "Greek", "Mediterranean", "Japanese"],
         "description": "Chef à domicile, traiteur et cours de cuisine à Beaumont et dans toute la province du Hainaut. Private chef services, catering, cooking classes, plats à emporter gastronomiques, dégustations de vins et bières.",
         "serviceType": ["Private Chef", "Catering", "Takeout Food", "Cooking Classes", "Culinary Workshops", "Wine Tasting", "Beer Tasting", "Team Building", "Chef à domicile", "Traiteur", "Plats à emporter", "Cours de cuisine", "Ateliers culinaires", "Dégustation de vins", "Dégustation de bières"],
@@ -143,6 +137,64 @@
         "name": "Évasion Gusto",
         "url": "https://www.evasiongusto.be",
         "inLanguage": ["fr-BE", "en"]
+    }
+    </script>
+
+    <!-- Structured Data (JSON-LD) - FAQ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Dans quelles villes intervenez-vous ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Nous intervenons à Beaumont, Chimay, Mons, Thuin, Charleroi et dans toute la province du Hainaut, ainsi qu'à Namur, Bruxelles et dans le reste de la Belgique pour des événements spéciaux. Des frais de déplacement supplémentaires peuvent s'appliquer selon la distance."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Comment se déroule une prestation de chef à domicile ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Notre chef se déplace directement chez vous, prépare un menu personnalisé selon vos goûts, et s'occupe de tout, de l'approvisionnement des ingrédients au nettoyage de la cuisine."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Proposez-vous des plats à emporter ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Oui, nous proposons des plats à emporter gastronomiques, à retirer ou en livraison selon les disponibilités."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Organisez-vous des événements d'entreprise et du team building ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Oui, nous proposons des ateliers de team building autour de la cuisine, de la fabrication de fromage, du brassage et de la charcuterie, idéaux pour les retraites d'entreprise et journées de cohésion d'équipe."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Comment fonctionne le menu du moment ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Notre menu évolue selon nos disponibilités et se commande à l'avance. Vous pouvez aussi nous contacter pour un menu entièrement sur mesure."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Comment vous contacter ou demander un devis ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Toutes nos prestations se font sur demande et sur rendez-vous. Contactez-nous par téléphone, WhatsApp ou e-mail."
+                }
+            }
+        ]
     }
     </script>
 
@@ -203,6 +255,7 @@
                 <li><a href="#services" data-key="services">Services</a></li>
                 <li><a href="#about" data-key="about">À Propos</a></li>
                 <li><a href="#gallery" data-key="gallery">Galerie</a></li>
+                <li><a href="#faq" data-key="faqNav">FAQ</a></li>
                 <li><a href="#contact" data-key="contact">Contact</a></li>
             </ul>
             <div class="language-switcher">
@@ -434,6 +487,37 @@
                     </div>
                 </div>
                 <p data-key="galleryDesc">Notre cuisine est principalement influencée par les traditions grecque, belge, française, japonaise et nord-américaine. Nous proposons des solutions sur mesure, allant de la simple préparation de viandes grillées à des plats complexes dressés à la perfection et accompagnés du vin, de la bière ou d'autres boissons appropriés. Évasion Gusto a été fondé pour partager le plaisir de découvrir différentes préparations culinaires et offrir un savoir-faire de qualité professionnelle à un prix abordable.</p>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="section fade-section">
+            <div class="content-box">
+                <h2 data-key="faqTitle">Questions Fréquentes</h2>
+                <div class="faq-item">
+                    <h3 data-key="faq1Q">Dans quelles villes intervenez-vous ?</h3>
+                    <p data-key="faq1A">Nous intervenons à Beaumont, Chimay, Mons, Thuin, Charleroi et dans toute la province du Hainaut, ainsi qu'à Namur, Bruxelles et dans le reste de la Belgique pour des événements spéciaux. Des frais de déplacement supplémentaires peuvent s'appliquer selon la distance.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 data-key="faq2Q">Comment se déroule une prestation de chef à domicile ?</h3>
+                    <p data-key="faq2A">Notre chef se déplace directement chez vous, prépare un menu personnalisé selon vos goûts, et s'occupe de tout, de l'approvisionnement des ingrédients au nettoyage de la cuisine.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 data-key="faq3Q">Proposez-vous des plats à emporter ?</h3>
+                    <p data-key="faq3A">Oui, nous proposons des plats à emporter gastronomiques, à retirer ou en livraison selon les disponibilités.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 data-key="faq4Q">Organisez-vous des événements d'entreprise et du team building ?</h3>
+                    <p data-key="faq4A">Oui, nous proposons des ateliers de team building autour de la cuisine, de la fabrication de fromage, du brassage et de la charcuterie, idéaux pour les retraites d'entreprise et journées de cohésion d'équipe.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 data-key="faq5Q">Comment fonctionne le menu du moment ?</h3>
+                    <p data-key="faq5A">Notre menu évolue selon nos disponibilités et se commande à l'avance. Vous pouvez aussi nous contacter pour un menu entièrement sur mesure.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 data-key="faq6Q">Comment vous contacter ou demander un devis ?</h3>
+                    <p data-key="faq6A">Toutes nos prestations se font sur demande et sur rendez-vous. Contactez-nous par téléphone, WhatsApp ou e-mail — voir nos coordonnées dans la section Contact.</p>
+                </div>
             </div>
         </section>
 
