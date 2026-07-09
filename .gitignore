@@ -3,6 +3,10 @@ node_modules/
 
 # Build artifacts
 lqip-data.json
+coverage/
+
+# Local tool config
+.claude/
 
 # Editor files
 .vscode/
