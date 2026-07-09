@@ -1,8 +1,32 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.evasiongusto.be/sitemap.xml
-
-# Optimize crawling
-User-agent: *
 Disallow: /images/og-image.jpg
 Disallow: /images/twitter-image.jpg
+
+# AI search / retrieval crawlers
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# AI training crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://www.evasiongusto.be/sitemap.xml
