@@ -16,7 +16,8 @@ const path = require('path');
 // Configuration
 const IMAGE_DIRS = [
     './images/gallery',
-    './images/services'
+    './images/services',
+    './images/recipes'
 ];
 
 const LQIP_WIDTH = 20; // Very small width for LQIP

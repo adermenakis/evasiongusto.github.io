@@ -3,24 +3,24 @@
 const fs = require('fs').promises;
 const path = require('path');
 
+// Note: menu.html's recipe cards are generated directly by
+// inject-menu-cards.js, which embeds LQIPs itself - it doesn't go through
+// this regex-based replacement (that pattern only worked historically
+// because of embedded quotes in the original placeholder format).
 const LQIP_DATA_FILE = './lqip-data.json';
-const HTML_FILE = './index.html';
+const HTML_FILES = ['./index.html'];
 
-async function main() {
-    console.log('🔄 Injecting LQIPs into HTML (Simple Replacement)...\n');
-
-    // Load LQIP data
-    const lqipData = JSON.parse(await fs.readFile(LQIP_DATA_FILE, 'utf8'));
-
-    // Create map
-    const lqipMap = new Map();
-    lqipData.forEach(item => {
-        const filename = path.basename(item.original);
-        lqipMap.set(filename, item.lqip);
-    });
-
-    // Load HTML
-    let html = await fs.readFile(HTML_FILE, 'utf8');
+async function injectIntoFile(htmlFile, lqipData) {
+    let html;
+    try {
+        html = await fs.readFile(htmlFile, 'utf8');
+    } catch (err) {
+        if (err.code === 'ENOENT') {
+            console.log(`⏭️  Skipping ${htmlFile} (not found)`);
+            return;
+        }
+        throw err;
+    }
 
     let count = 0;
 
@@ -40,16 +40,24 @@ async function main() {
 
         const newHtml = html.replace(pattern, replacement);
         if (newHtml !== html) {
-            console.log(`✓ ${imagePath}`);
+            console.log(`✓ [${htmlFile}] ${imagePath}`);
             html = newHtml;
             count++;
         }
     });
 
-    // Save
-    await fs.writeFile(HTML_FILE, html, 'utf8');
+    await fs.writeFile(htmlFile, html, 'utf8');
+    console.log(`✅ Updated ${count} images in ${htmlFile}`);
+}
 
-    console.log(`\n✅ Updated ${count} images with LQIPs`);
+async function main() {
+    console.log('🔄 Injecting LQIPs into HTML (Simple Replacement)...\n');
+
+    const lqipData = JSON.parse(await fs.readFile(LQIP_DATA_FILE, 'utf8'));
+
+    for (const htmlFile of HTML_FILES) {
+        await injectIntoFile(htmlFile, lqipData);
+    }
 }
 
 main().catch(console.error);

@@ -1,0 +1,481 @@
+[
+  {
+    "id": "2024-10-07__soupe-aux-lentilles",
+    "name": "Soupe aux lentilles, carottes et pommes de terre",
+    "description": "Soupe aux lentilles, carottes et pommes de terre accompagnés d'un morceau de feta (plat grec)",
+    "portions": 8,
+    "country": {
+      "name_fr": "Grèce",
+      "name_en": "Greece",
+      "iso_code": "GR"
+    },
+    "allergens": [
+      {
+        "id": "milk",
+        "name_fr": "Lait",
+        "name_en": "Milk"
+      }
+    ],
+    "price_with_vat": 5.9996,
+    "images": {
+      "card": "images/recipes/2024-10-07__soupe-aux-lentilles_1",
+      "detail": "images/recipes/2024-10-07__soupe-aux-lentilles_2"
+    }
+  },
+  {
+    "id": "2024-10-07__spaghetti-aux-scampis",
+    "name": "Spaghetti aux scampis",
+    "description": "Spaghetti avec une sauce aux tomates cerises, ail, scampis, vin blanc et fond de poisson fait maison",
+    "portions": 1,
+    "country": {
+      "name_fr": "Italie",
+      "name_en": "Italy",
+      "iso_code": "IT"
+    },
+    "allergens": [
+      {
+        "id": "crustaceans",
+        "name_fr": "Crustacés",
+        "name_en": "Crustaceans"
+      },
+      {
+        "id": "fish",
+        "name_fr": "Poisson",
+        "name_en": "Fish"
+      },
+      {
+        "id": "gluten",
+        "name_fr": "Céréales contenant du gluten",
+        "name_en": "Cereals containing gluten"
+      },
+      {
+        "id": "sulfites",
+        "name_fr": "Sulfites",
+        "name_en": "Sulfites"
+      }
+    ],
+    "price_with_vat": 11.501,
+    "images": {
+      "card": "images/recipes/2024-10-07__spaghetti-aux-scampis_1",
+      "detail": "images/recipes/2024-10-07__spaghetti-aux-scampis_2"
+    }
+  },
+  {
+    "id": "2024-10-14__joues-de-boeuf-a-la-grecque",
+    "name": "Joues de bœuf à la grecque",
+    "description": "Joues de bœuf en sauce tomate, accompagnées d'orzo et de brocoli à la vapeur.",
+    "portions": 16,
+    "country": {
+      "name_fr": "Grèce",
+      "name_en": "Greece",
+      "iso_code": "GR"
+    },
+    "allergens": [
+      {
+        "id": "gluten",
+        "name_fr": "Céréales contenant du gluten",
+        "name_en": "Cereals containing gluten"
+      },
+      {
+        "id": "peanuts",
+        "name_fr": "Arachides",
+        "name_en": "Peanuts"
+      }
+    ],
+    "price_with_vat": 9.4976,
+    "images": {
+      "card": "images/recipes/2024-10-14__joues-de-boeuf-a-la-grecque_1",
+      "detail": "images/recipes/2024-10-14__joues-de-boeuf-a-la-grecque_2"
+    }
+  },
+  {
+    "id": "2024-11-18__dinde-sauce-estragon-et-moutarde",
+    "name": "Dinde sauce estragon et moutarde",
+    "description": "Haute cuises de dinde cuit cuit dans une sauce à la creme et de l'estragon frais. Accompagné avec du riz, pricesses et carrotes.",
+    "portions": 7,
+    "country": {
+      "name_fr": "France",
+      "name_en": "France",
+      "iso_code": "FR"
+    },
+    "allergens": [
+      {
+        "id": "milk",
+        "name_fr": "Lait",
+        "name_en": "Milk"
+      },
+      {
+        "id": "mustard",
+        "name_fr": "Moutarde",
+        "name_en": "Mustard"
+      },
+      {
+        "id": "sulfites",
+        "name_fr": "Sulfites",
+        "name_en": "Sulfites"
+      },
+      {
+        "id": "gluten",
+        "name_fr": "Céréales contenant du gluten",
+        "name_en": "Cereals containing gluten"
+      }
+    ],
+    "price_with_vat": 8.003,
+    "images": {
+      "card": "images/recipes/2024-11-18__dinde-sauce-estragon-et-moutarde_1",
+      "detail": "images/recipes/2024-11-18__dinde-sauce-estragon-et-moutarde_2"
+    }
+  },
+  {
+    "id": "2024-11-18__raviolis-maison-aux-champignons-et-fromage",
+    "name": "Raviolis maison aux champignons et fromage",
+    "description": "Raviolis maison farcis aux champignons et au fromage, avec une sauce à la crème et au fond de volaille.",
+    "portions": 6,
+    "country": {
+      "name_fr": "Italie",
+      "name_en": "Italy",
+      "iso_code": "IT"
+    },
+    "allergens": [
+      {
+        "id": "gluten",
+        "name_fr": "Céréales contenant du gluten",
+        "name_en": "Cereals containing gluten"
+      },
+      {
+        "id": "eggs",
+        "name_fr": "Œufs",
+        "name_en": "Eggs"
+      },
+      {
+        "id": "milk",
+        "name_fr": "Lait",
+        "name_en": "Milk"
+      }
+    ],
+    "price_with_vat": 6.4978,
+    "images": {
+      "card": "images/recipes/2024-11-18__raviolis-maison-aux-champignons-et-fromage_1",
+      "detail": "images/recipes/2024-11-18__raviolis-maison-aux-champignons-et-fromage_2"
+    }
+  },
+  {
+    "id": "2024-11-25__crepes-sucrees-avec-cassonade",
+    "name": "Crêpes sucrées avec cassonade",
+    "description": "2 crêpes sucrées avec cassonade.",
+    "portions": 10,
+    "country": {
+      "name_fr": "France",
+      "name_en": "France",
+      "iso_code": "FR"
+    },
+    "allergens": [
+      {
+        "id": "eggs",
+        "name_fr": "Œufs",
+        "name_en": "Eggs"
+      },
+      {
+        "id": "gluten",
+        "name_fr": "Céréales contenant du gluten",
+        "name_en": "Cereals containing gluten"
+      },
+      {
+        "id": "milk",
+        "name_fr": "Lait",
+        "name_en": "Milk"
+      },
+      {
+        "id": "peanuts",
+        "name_fr": "Arachides",
+        "name_en": "Peanuts"
+      }
+    ],
+    "price_with_vat": 1.9928,
+    "images": {
+      "card": "images/recipes/2024-11-25__crepes-sucrees-avec-cassonade_1",
+      "detail": "images/recipes/2024-11-25__crepes-sucrees-avec-cassonade_2"
+    }
+  },
+  {
+    "id": "2024-11-25__hachis-parmentier",
+    "name": "Hachis parmentier",
+    "description": "Hachis parmentier au bœuf et aux carottes, déjà gratiné au four.",
+    "portions": 8,
+    "country": {
+      "name_fr": "France",
+      "name_en": "France",
+      "iso_code": "FR"
+    },
+    "allergens": [
+      {
+        "id": "milk",
+        "name_fr": "Lait",
+        "name_en": "Milk"
+      },
+      {
+        "id": "gluten",
+        "name_fr": "Céréales contenant du gluten",
+        "name_en": "Cereals containing gluten"
+      }
+    ],
+    "price_with_vat": 6.996,
+    "images": {
+      "card": "images/recipes/2024-11-25__hachis-parmentier_1",
+      "detail": "images/recipes/2024-11-25__hachis-parmentier_2"
+    }
+  },
+  {
+    "id": "2024-12-16__raviolis-maison-au-fromage-et-cepes",
+    "name": "Raviolis maison au fromage et cèpes",
+    "description": "Raviolis faits maison aux cèpes, Ricotta et Grana Padano, servis avec une sauce tomate menthe",
+    "portions": 10,
+    "country": {
+      "name_fr": "Italie",
+      "name_en": "Italy",
+      "iso_code": "IT"
+    },
+    "allergens": [
+      {
+        "id": "gluten",
+        "name_fr": "Céréales contenant du gluten",
+        "name_en": "Cereals containing gluten"
+      },
+      {
+        "id": "eggs",
+        "name_fr": "Œufs",
+        "name_en": "Eggs"
+      },
+      {
+        "id": "milk",
+        "name_fr": "Lait",
+        "name_en": "Milk"
+      },
+      {
+        "id": "sulfites",
+        "name_fr": "Sulfites",
+        "name_en": "Sulfites"
+      }
+    ],
+    "price_with_vat": 6.996,
+    "images": {
+      "card": "images/recipes/2024-12-16__raviolis-maison-au-fromage-et-cepes_1",
+      "detail": "images/recipes/2024-12-16__raviolis-maison-au-fromage-et-cepes_2"
+    }
+  },
+  {
+    "id": "2025-03-01__houmous",
+    "name": "Houmous",
+    "description": "Purée crémeuse de pois chiches avec tahini, citron frais et huile d'olive, préparation libanaise classique.",
+    "portions": 8,
+    "country": {
+      "name_fr": "Liban",
+      "name_en": "Lebanon",
+      "iso_code": "LB"
+    },
+    "allergens": [],
+    "price_with_vat": 8.9994,
+    "images": {
+      "card": "images/recipes/2025-03-01__houmous_1",
+      "detail": "images/recipes/2025-03-01__houmous_2"
+    }
+  },
+  {
+    "id": "2025-03-01__pickles-de-navet-libanais",
+    "name": "Pickles de navet libanais",
+    "description": "Navets marinés à la libanaise avec betterave rouge et vinaigre blanc, accompagnement aigre-doux traditionnel.",
+    "portions": 8,
+    "country": {
+      "name_fr": "Liban",
+      "name_en": "Lebanon",
+      "iso_code": "LB"
+    },
+    "allergens": [],
+    "price_with_vat": 9.9958,
+    "images": {
+      "card": "images/recipes/2025-03-01__pickles-de-navet-libanais_1",
+      "detail": "images/recipes/2025-03-01__pickles-de-navet-libanais_2"
+    }
+  },
+  {
+    "id": "2025-03-01__tzatziki",
+    "name": "Tzatziki",
+    "description": "Sauce yogourt fraîche à base de concombre, ail et herbes, accompagnement grec traditionnel.",
+    "portions": 8,
+    "country": {
+      "name_fr": "Grèce",
+      "name_en": "Greece",
+      "iso_code": "GR"
+    },
+    "allergens": [],
+    "price_with_vat": 8.003,
+    "images": {
+      "card": "images/recipes/2025-03-01__tzatziki_1",
+      "detail": "images/recipes/2025-03-01__tzatziki_2"
+    }
+  },
+  {
+    "id": "2025-03-17__irish-stew-casserole",
+    "name": "Irish Stew casserole",
+    "description": "Ragoût d'agneau traditionnelle avec oignons, carottes et pommes de terre, préparé selon la recette classique de la grand-mère irlandaise.",
+    "portions": 15,
+    "country": {
+      "name_fr": "France",
+      "name_en": "France",
+      "iso_code": "FR"
+    },
+    "allergens": [],
+    "price_with_vat": 12.0098,
+    "images": {
+      "card": "images/recipes/2025-03-17__irish-stew-casserole_1",
+      "detail": "images/recipes/2025-03-17__irish-stew-casserole_2"
+    }
+  },
+  {
+    "id": "2025-08-01__risotto-champignons-gwen",
+    "name": "Risotto champignons",
+    "description": "Risotto aux champignons préparé à partir de la base de risotto maison, complété par des champignons frais.",
+    "portions": 5,
+    "country": {
+      "name_fr": "Italie",
+      "name_en": "Italy",
+      "iso_code": "IT"
+    },
+    "allergens": [],
+    "price_with_vat": 10.6,
+    "images": {
+      "card": "images/recipes/2025-08-01__risotto-champignons-gwen_1",
+      "detail": "images/recipes/2025-08-01__risotto-champignons-gwen_2"
+    }
+  },
+  {
+    "id": "2025-09-15__ragoût-déchine-de-porc-à-la-tomate-et-vin-rouge",
+    "name": "Ragoût d'échine de porc à la tomate et vin rouge",
+    "description": "De l'échine de porc , longuement mijotée dans une sauce maison aux tomates cerises fraîches, vin rouge et un fond savoureux. Le tout est servi avec des bucatini.",
+    "portions": 7,
+    "country": {
+      "name_fr": "France",
+      "name_en": "France",
+      "iso_code": "FR"
+    },
+    "allergens": [
+      {
+        "id": "gluten",
+        "name_fr": "Céréales contenant du gluten",
+        "name_en": "Cereals containing gluten"
+      },
+      {
+        "id": "peanuts",
+        "name_fr": "Arachides",
+        "name_en": "Peanuts"
+      }
+    ],
+    "price_with_vat": 10.0064,
+    "images": {
+      "card": "images/recipes/2025-09-15__ragoût-déchine-de-porc-à-la-tomate-et-vin-rouge_1",
+      "detail": "images/recipes/2025-09-15__ragoût-déchine-de-porc-à-la-tomate-et-vin-rouge_2"
+    }
+  },
+  {
+    "id": "2025-11-16__jambonettes-de-poulet",
+    "name": "Jambonettes de poulet",
+    "description": "Jambonettes de poulet avec mayonnaise et mangue fraîche.",
+    "portions": 10,
+    "country": {
+      "name_fr": "France",
+      "name_en": "France",
+      "iso_code": "FR"
+    },
+    "allergens": [],
+    "price_with_vat": 2.014,
+    "images": {
+      "card": "images/recipes/2025-11-16__jambonettes-de-poulet_1",
+      "detail": "images/recipes/2025-11-16__jambonettes-de-poulet_2"
+    }
+  },
+  {
+    "id": "2025-11-23__cuisse-canard-confit-aux-morilles-et-fino",
+    "name": "Cuisse canard confit aux morilles et Fino",
+    "description": "Cuisses de canard confit accompagnées d'une sauce riche aux morilles et vin blanc Fino, avec légumes de saison.",
+    "portions": 11,
+    "country": {
+      "name_fr": "France",
+      "name_en": "France",
+      "iso_code": "FR"
+    },
+    "allergens": [],
+    "price_with_vat": 18.02,
+    "images": {
+      "card": "images/recipes/2025-11-23__cuisse-canard-confit-aux-morilles-et-fino_1",
+      "detail": "images/recipes/2025-11-23__cuisse-canard-confit-aux-morilles-et-fino_2"
+    }
+  },
+  {
+    "id": "2025-12-08__paella-aux-fruits-de-mer",
+    "name": "Paella aux fruits de mer",
+    "description": "Une paella généreuse avec de savoureux calamars, moules et scampi sautés, agrémentés de chorizo et de petits pois. Le tout est cuit dans un fond maison et délicatement parfumé au safran pour un goût authentique.",
+    "portions": 6,
+    "country": {
+      "name_fr": "Espagne",
+      "name_en": "Spain",
+      "iso_code": "ES"
+    },
+    "allergens": [],
+    "price_with_vat": 11.9992,
+    "images": {
+      "card": "images/recipes/2025-12-08__paella-aux-fruits-de-mer_1",
+      "detail": "images/recipes/2025-12-08__paella-aux-fruits-de-mer_2"
+    }
+  },
+  {
+    "id": "2026-01-19__paella",
+    "name": "Paella",
+    "description": "Une paella généreuse avec de savoureux calamars, moules et scampi sautés, agrémentés de chorizo et de petits pois. Le tout est cuit dans un fond maison et délicatement parfumé au safran pour un goût authentique.",
+    "portions": 6,
+    "country": {
+      "name_fr": "Espagne",
+      "name_en": "Spain",
+      "iso_code": "ES"
+    },
+    "allergens": [],
+    "price_with_vat": 11.9992,
+    "images": {
+      "card": "images/recipes/2026-01-19__paella_1",
+      "detail": "images/recipes/2026-01-19__paella_2"
+    }
+  },
+  {
+    "id": "2026-01-19__scampis-façon-saganaki-et-orzo",
+    "name": "Scampis façon « Saganaki » et orzo",
+    "description": "Scampis poêlés et déglacés au vin blanc, mijotés dans une sauce tomate maison, agrémentés d'aneth fraîche et de feta émiettée. Accompagnés de pâtes grecques style orzo.",
+    "portions": 1,
+    "country": {
+      "name_fr": "Grèce",
+      "name_en": "Greece",
+      "iso_code": "GR"
+    },
+    "allergens": [],
+    "price_with_vat": 14.999,
+    "images": {
+      "card": "images/recipes/2026-01-19__scampis-façon-saganaki-et-orzo_1",
+      "detail": "images/recipes/2026-01-19__scampis-façon-saganaki-et-orzo_2"
+    }
+  },
+  {
+    "id": "2026-03-23__hautes-cuisses-de-poulet-au-jambon",
+    "name": "Hautes cuisses de poulet au jambon",
+    "description": "De tendres hauts de cuisses désossés, farcis d'un authentique jambon fermier et de thym, délicatement grillés au four pour une peau dorée. Le tout est sublimé par une sauce onctueuse au vin blanc et à la crème, infusée au parfum boisé d'un bouillon de cèpes. Servi avec du riz et des carottes fondantes.",
+    "portions": 14,
+    "country": {
+      "name_fr": "France",
+      "name_en": "France",
+      "iso_code": "FR"
+    },
+    "allergens": [],
+    "price_with_vat": 9.9958,
+    "images": {
+      "card": "images/recipes/2026-03-23__hautes-cuisses-de-poulet-au-jambon_1",
+      "detail": "images/recipes/2026-03-23__hautes-cuisses-de-poulet-au-jambon_2"
+    }
+  }
+]

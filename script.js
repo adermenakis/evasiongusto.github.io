@@ -126,6 +126,13 @@ const translations = {
         gallery10Title: "Edible decorations",
         gallery11Title: "Juniper Berries",
         gallery12Title: "Herb-Roasted Poultry",
+        menuPageTitle: "Our Menu",
+        menuNoticeText: "All our dishes are prepared to order. Please contact us at least 2 to 3 days in advance. For fish-based dishes, orders must be placed before Wednesday.",
+        downloadMenuPdf: "Download the Menu (PDF)",
+        allergensLabel: "Allergens:",
+        fromPortionsLabel: "from",
+        portionsLabel: "portions",
+        perPortionLabel: "/ portion",
         faqTitle: "Frequently Asked Questions",
         faq1Q: "Which cities do you serve?",
         faq1A: "We serve Beaumont, Chimay, Mons, Thuin, Charleroi, and the wider Hainaut province, as well as Namur, Brussels, and the rest of Belgium for special events. Additional travel fees may apply depending on distance.",
@@ -209,6 +216,13 @@ const translations = {
         gallery10Title: "Décorations comestibles",
         gallery11Title: "Baies de Genièvre",
         gallery12Title: "Volaille Rôtie aux Herbes",
+        menuPageTitle: "Notre Menu",
+        menuNoticeText: "Toutes nos préparations sont réalisées sur commande. Merci de nous contacter au moins 2 à 3 jours à l'avance. Pour les plats à base de poisson, la commande doit être passée avant le mercredi.",
+        downloadMenuPdf: "Télécharger le Menu (PDF)",
+        allergensLabel: "Allergènes :",
+        fromPortionsLabel: "à partir de",
+        portionsLabel: "portions",
+        perPortionLabel: "/ portion",
         faqTitle: "Questions Fréquentes",
         faq1Q: "Dans quelles villes intervenez-vous ?",
         faq1A: "Nous intervenons à Beaumont, Chimay, Mons, Thuin, Charleroi et dans toute la province du Hainaut, ainsi qu'à Namur, Bruxelles et dans le reste de la Belgique pour des événements spéciaux. Des frais de déplacement supplémentaires peuvent s'appliquer selon la distance.",
@@ -271,6 +285,14 @@ const translations = {
             element.setAttribute('title', translations[language][key]);
         }
         }
+    });
+
+    // Per-instance bilingual data (e.g. recipe country/allergen names baked
+    // in at build time) - not a shared UI string, so not in `translations`.
+    document.querySelectorAll('[data-fr][data-en]').forEach((element) => {
+        element.textContent = language === 'en'
+            ? element.getAttribute('data-en')
+            : element.getAttribute('data-fr');
     });
     }
 

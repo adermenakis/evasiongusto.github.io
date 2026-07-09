@@ -5,7 +5,7 @@ services:
     image: nginx:alpine
     container_name: evasiongusto-web
     ports:
-      - "8080:80"
+      - "8088:80"
     volumes:
       # Bind mount the current directory to nginx html folder
       - .:/usr/share/nginx/html:ro

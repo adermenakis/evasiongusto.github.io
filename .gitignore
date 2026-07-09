@@ -5,6 +5,9 @@ node_modules/
 lqip-data.json
 coverage/
 
+# Raw recipe source data (1.2GB+) - processed output lives in images/recipes/ + menu-data.json
+recipe data/
+
 # Local tool config
 .claude/
 
